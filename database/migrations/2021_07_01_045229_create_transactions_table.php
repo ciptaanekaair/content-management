@@ -14,9 +14,9 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('voucher_id')->constrained('vouchers');
-            $table->foreignId('payment_code_id')->constrained('payment_codes');
+            $table->foreignId('kode_payment_id')->constrained('kode_bayars')->onDelete('cascade');
+            $table->foreignId('voucher_id')->constrained('vouchers')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('transaction_code');
             $table->date('transaction_date');
             $table->integer('total_item');

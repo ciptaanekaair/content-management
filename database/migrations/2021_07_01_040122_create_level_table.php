@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentCodesTable extends Migration
+class CreateLevelTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreatePaymentCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_codes', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_code');
-            $table->string('payment_name');
+            $table->string('nama_level');
+            $table->string('detail_level');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreatePaymentCodesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('payment_codes');
+        Schema::drop('levels');
     }
 }

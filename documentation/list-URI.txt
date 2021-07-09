@@ -1,0 +1,40 @@
+Berikut ini adalah Dokumentasi URI untuk API filterpedia.co.id
+
+Authentication
+==============================
+- Register [POST] = api/register [ name, email, password, password_confirmation ]
+- Login [POST]    = api/login [ email, password ]
+- Logout [GET]    = api/logout [ - ]
+
+Note: logout must have bearer_token
+
+
+Users
+==============================
+Profile:
+- User profile [GET]     = api/profile/{username}
+- Update Profile [PATCH] = api/profile/{username} [ name, password (optional), profile_photo_path ]
+
+Note= username using encrypted md5() of users.email
+
+
+Product Category & Products
+==============================
+Category:
+- Index / List Category Product = api/product-category
+- Product Detail [GET] 			= api/product-category/{slug}
+- Product Search [GET]			= api/product-category/search/{keywords}
+
+Products:
+- Index / List Product [GET] = api/products
+- Product Detail [GET]       = api/products/{slug}
+- Product Search [GET]       = api/products/search/{keywords} [ keyword ]
+
+
+Cart / Transaction Temporary [on progress]
+==============================
+Carts:
+- Index / List product in cart [GET] = api/cart
+- Add to cart [POST]                 = api/add-to-cart [ product_id, user_id, qty ]
+- Update product qty on cart [PATCH] = api/update-cart [ product_id, user_id, qty ]
+- Delete product from cart [DELETE]  = api/cart/delete [ product_id, user_id ]
