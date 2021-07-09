@@ -12,8 +12,8 @@ Note: logout must have bearer_token
 Users
 ==============================
 Profile:
-- User profile [GET]     = api/profile/{username}
-- Update Profile [PATCH] = api/profile/{username} [ name, password (optional), profile_photo_path ]
+- User profile [GET]   = api/profile/{username}
+- Update Profile [PUT] = api/profile/{username} [ name, password (optional), profile_photo_path ]
 
 Note= username using encrypted md5() of users.email
 

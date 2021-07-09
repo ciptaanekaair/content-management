@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use Validator;
 use App\Models\User;
 
 class AutentikasiController extends Controller
@@ -13,19 +14,28 @@ class AutentikasiController extends Controller
     // registrasi user melalui form register
     public function registrasi(Request $request)
     {
-        $validasi = $request->validate([
+        $rules = [
             'name' => 'required|string',
             'email' => 'required|unique:users,email',
             'password' => 'required|confirmed',
-        ]);
+        ];
 
-        $username = md5($validasi['email']);
+        $validasi = Validator::make($request->all(), $rules);
+
+        if ($validasi->fails()) {
+            return response([
+                'success' => false,
+                'message' => $validasi->errors(),
+            ], 400);
+        }
+
+        $username = md5($request['email']);
 
         $user = User::create([
-            'name'     => $validasi['name'],
-            'email'    => $validasi['email'],
+            'name'     => $request['name'],
+            'email'    => $request['email'],
             'username' => $username,
-            'password' => $validasi['password'],
+            'password' => $request['password'],
             'level_id' => 1
         ]);
 
@@ -40,16 +50,25 @@ class AutentikasiController extends Controller
 
     public function login(Request $request)
     {
-        $validasi = $request->validate([
+        $rules = [
             'email'    => 'required|email',
             'password' => 'required'
-        ]);
+        ];
 
-        $user = User::where('email', $validasi['email'])->first();
+        $validasi = Validator::make($request->all(), $rules);
 
-        if (!$user || !Hash::check($validasi['password'], $user->password)) {
+        if ($validasi->fails()) {
+            return response([
+                'success' => false,
+                'message' => $validasi->errors()
+            ], 401);
+        }
 
-            $response = ['message' => 'Autentikasi gagal, pastikan data yang dimasukan benar!'];
+        $user = User::where('email', $request['email'])->first();
+
+        if (!$user || !Hash::check($request['password'], $user->password)) {
+
+            $response = ['message' => 'Autentikasi gagal. pastikan data yang dimasukan benar!'];
             return response($response, 401);
 
         }

@@ -45,7 +45,7 @@ class CreateUserSeeder extends Seeder
         $user->name               = 'Saldi';
         $user->email              = 'saldi@localhost.com';
         $user->username           = md5('saldi@localhost.com');
-        $user->password           = Hash::make('saldi@localhost.com');
+        $user->password           = Hash::make('123456');
         $user->email_verified_at  = '2021-07-06 00:00:00';
         $user->level_id           = 3;
         $user->profile_photo_path = 'profile-photos/user.png';

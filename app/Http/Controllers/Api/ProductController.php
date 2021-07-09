@@ -20,9 +20,7 @@ class ProductController extends Controller
 
             $response = ['success' => true, 'message' => 'Belum ada data barang yang di input oleh admin. Silahkan hubungi admin!'];
 
-        }
-        
-        return response($response, 200);
+        }        
     }
 
     public function search($keyword)
