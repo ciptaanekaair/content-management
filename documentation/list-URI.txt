@@ -28,7 +28,7 @@ Category:
 Products:
 - Index / List Product [GET] = api/products
 - Product Detail [GET]       = api/products/{slug}
-- Product Search [GET]       = api/products/search/{keywords} [ keyword ]
+- Product Search [GET]       = api/products/search/{keywords}
 
 
 Cart / Transaction Temporary [on progress]

@@ -25,12 +25,12 @@ class ProductController extends Controller
         return response($response, 200);
     }
 
-    public function search(Request $request)
+    public function search($keyword)
     {
         $validasi = $request->validate(['keywords' => 'string']);
 
         $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 'products.product_name', 'products.slug', 'products.product_description', 'products.product_images', 'products.product_price', 'products.product_stock', 'products.status')
-                    ->where('product_name', 'LIKE', '%'.$request->search)
+                    ->where('product_name', 'LIKE', '%'.$keyword.'%')
                     ->where('status', 1)
                     ->get();
 

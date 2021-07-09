@@ -43,7 +43,7 @@ class ProductCategoryController extends Controller
 
     public function search($keyword)
     {
-        $pCategory = ProductCategory::where('category_name', 'LIKE', $keyword.'%')->orWhere('category_description', 'LIKE', '%'.$keyword)->get();
+        $pCategory = ProductCategory::where('category_name', 'LIKE', '%'.$keyword.'%')->where('status', 1)->get();
 
         if ($pCategory->count() > 0) {
             $response = [
