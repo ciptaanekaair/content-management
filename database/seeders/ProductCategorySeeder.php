@@ -41,5 +41,6 @@ class ProductCategorySeeder extends Seeder
                 'category_image'       => 'product_picture/267a0c54f684bc5b3a88237a183c9371.png',
                 'slug'                 => 'edi-electro-deionization'
         ]);
+
     }
 }

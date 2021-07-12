@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Image;
+use Validator;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -23,11 +24,18 @@ class ProfileController extends Controller
     public function updateProfile(Request $request, $username)
     {
         $rules = [
-            'name' => 'string',
+            'name' => 'required|string',
             'profile_photo' => 'image|mimes:jpg,png,bmp,svg|max:3084'
         ];
 
         $validasi = Validator::make($request->all(), $rules);
+
+        if ($validasi->fails()) {
+            return response([
+                'success' => false,
+                'message' => $validasi->errors()
+            ], 401);
+        }
 
         $user = User::where('username', $username)->first();
         $user->name = $request['name'];
@@ -55,6 +63,6 @@ class ProfileController extends Controller
             'data' => $user
         ];
 
-        return response($response, 200);
+        return response($response, 201);
     }
 }

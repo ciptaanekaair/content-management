@@ -16,6 +16,7 @@ class CreateGeneralSettingsTable extends Migration
             $table->id();
             $table->string('website_title');
             $table->string('website_logo');
+            $table->text('keywords');
             $table->longText('website_description');
             $table->string('midtrans_client_token');
             $table->string('midtrans_server_token');

@@ -19,9 +19,11 @@ class CreateProductsTable extends Migration
             $table->string('product_name');
             $table->string('slug');
             $table->longText('product_description');
+            $table->text('keywords');
+            $table->text('desctiprion_seo')->nullable();
             $table->string('product_images');
-            $table->float('product_price');
-            $table->float('product_commision');
+            $table->decimal('product_price', 16,2);
+            $table->decimal('product_commision', 12,2);
             $table->integer('product_stock');
             $table->integer('status')->default(1); // publish: 1, draft: 0
             $table->timestamps();

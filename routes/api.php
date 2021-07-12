@@ -43,8 +43,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     // Route for Cart
     Route::get('cart', [CartController::class, 'index'])->name('api_cart_data');
     Route::post('add-to-cart', [CartController::class, 'store'])->name('api_add_to_cart');
-    Route::patch('update-qty-cart', [CartController::class, 'update'])->name('api_update_cart');
-    Route::delete('cart/delete', [CartController::class, 'delete'])->name('api_delete_from_cart');
+    Route::put('update-cart', [CartController::class, 'updateCart'])->name('api_update_cart');
+    Route::delete('cart/delete/{id}', [CartController::class, 'deleteCart'])->name('api_delete_from_cart');
     
     // Logout route
     Route::get('/logout', [AutentikasiController::class, 'logout'])->name('api_logout');

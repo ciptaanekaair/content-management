@@ -30,7 +30,7 @@ class ProductCategoryController extends Controller
     {
         $pCategory = ProductCategory::where('slug', $slug)->first();
 
-        if (!$pCategory) {
+        if ($pCategory->count() < 1) {
             $response = ['error' => true, 'message' => 'Error! Category yang di pilih tidak terdapat di dalam database. Harap segera hubungi Admin.'];
 
             return response($response, 203);
@@ -48,7 +48,7 @@ class ProductCategoryController extends Controller
         if ($pCategory->count() > 0) {
             $response = [
                 'success' => true,
-                'message' => 'Pencarian membuahkan hasil.',
+                'message' => 'Produk yang sesuai dengan hasil search berhasil di tampilkan.',
                 'data' => $pCategory
             ];
 
@@ -56,7 +56,7 @@ class ProductCategoryController extends Controller
         } else {
             $response = [
                 'success' => true,
-                'message' => 'Penarian tidak membuahkan hasil, silahkan ganti kata kunci.'
+                'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian.'
             ];
 
             return response($response, 200);

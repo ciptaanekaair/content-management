@@ -17,6 +17,8 @@ class CreateProductCategoriesTable extends Migration
             $table->string('category_name');
             $table->string('slug');
             $table->longText('category_description');
+            $table->text('keywords');
+            $table->text('desctiprion_seo')->nullable();
             $table->string('category_image');
             $table->integer('status')->default(1);
             $table->timestamps();
