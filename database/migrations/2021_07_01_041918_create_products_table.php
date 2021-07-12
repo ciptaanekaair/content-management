@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('product_name');
             $table->string('slug');
             $table->longText('product_description');
-            $table->text('keywords');
-            $table->text('desctiprion_seo')->nullable();
+            $table->text('keywords')->nullable();
+            $table->text('description_seo')->nullable();
             $table->string('product_images');
             $table->decimal('product_price', 16,2);
             $table->decimal('product_commision', 12,2);
