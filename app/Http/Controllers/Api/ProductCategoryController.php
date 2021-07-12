@@ -36,14 +36,20 @@ class ProductCategoryController extends Controller
             return response($response, 203);
         }
 
-        $response = ['success' => true, 'message' => 'Berhasil load data category'];
+        $response = [
+            'success' => true, 
+            'message' => 'Berhasil load data category', 
+            'data' => $pCategory
+        ];
 
         return response($response, 200);
     }
 
     public function search($keyword)
     {
-        $pCategory = ProductCategory::where('category_name', 'LIKE', '%'.$keyword.'%')->where('status', 1)->get();
+        $pCategory = ProductCategory::where('category_name', 'LIKE', '%'.$keyword.'%')
+                    ->where('status', 1)
+                    ->get();
 
         if ($pCategory->count() > 0) {
             $response = [

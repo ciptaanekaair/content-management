@@ -9,7 +9,7 @@
             </a>
         </div>
         <ul class="sidebar-menu">
-            <li class="menu-header">Link Tet</li>
+            <li class="menu-header"> - </li>
             <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('dashboard') }}">
                     <i class="fas fa-fire"></i> <span>Dashboard</span>

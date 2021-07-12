@@ -4,34 +4,46 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Models\ProductCategory;
 
 class ProductCategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * get data index
      */
     public function index()
     {
-        //
+        $pCategory = ProductCategory::where('status', 1)
+                    ->orderBy('id', 'DESC')
+                    ->paginate(10);
+
+        return view('admin.products-category.index', compact('pCategory'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Pengambilan data menggunakan ajax.
+     * untuk kebutuhan datatables.
      */
-    public function create()
+    public function getData($search, $paging)
     {
-        //
+        if (!empty($sarch)) {
+            $pCategory = ProductCategory::where('status', 1)
+                        ->where('category_name', 'LIKE', '%'.$search.'%')
+                        ->orderBy('id', 'DESC')
+                        ->paginate($paging);
+
+            return view('admin.products-category.table-data', compact('pCategory'));
+        }
+
+        $pCategory = ProductCategory::where('status', 1)
+                    ->orderBy('id', 'DESC')
+                    ->paginate($paging);
+
+        return view('admin.products-category.table-data', compact('pCategory'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Simpan data baru.
      */
     public function store(Request $request)
     {

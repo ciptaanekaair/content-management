@@ -2,6 +2,7 @@ Berikut ini adalah Dokumentasi URI untuk API filterpedia.co.id
 
 Authentication
 ==============================
+https://documenter.getpostman.com/view/5639352/Tzm8EutV
 - Register [POST] = api/register [ name, email, password, password_confirmation ]
 - Login [POST]    = api/login [ email, password ]
 - Logout [GET]    = api/logout [ - ]
