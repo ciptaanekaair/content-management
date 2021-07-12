@@ -15,12 +15,19 @@ class CartController extends Controller
     {
         $items = TransactionTemporary::where('user_id', Auth::user()->id)->get();
 
+        $harga_total = 0;
+
         if ($items->count() > 0)
         {
+            foreach ($items as $item) {
+                $harga_total += $item->total_price;
+            }
+
             $response = [
-                'success' => true,
-                'message' => 'Berhasil load data Cart',
-                'data'    => $items
+                'success'     => true,
+                'message'     => 'Berhasil load data Cart',
+                'data'        => $items,
+                'harga_total' => $harga_total
             ];
         }
         else
@@ -69,8 +76,8 @@ class CartController extends Controller
         // jika ada produk, akan melakukan update
         if (!empty($cek_produk)) {
 
-            $cek_produk->qty         = $cek_produk->qty + $request->qty;
-            $cek_produk->total_price = $cek_produk->total_price + ($produk->product_price * $request->qty);
+            $cek_produk->qty         += $request->qty;
+            $cek_produk->total_price += ($produk->product_price * $request->qty);
             $cek_produk->update();
 
             $response = [
