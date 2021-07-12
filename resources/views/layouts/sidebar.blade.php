@@ -1,5 +1,3 @@
-
-
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
@@ -10,47 +8,46 @@
                 <img class="d-inline-block" width="32px" height="30.61px" src="" alt="">
             </a>
         </div>
-        @foreach ($navigation_links as $link)
         <ul class="sidebar-menu">
-            <li class="menu-header">{{ $link->text }}</li>
-            @if (!$link->is_multi)
-            <li class="{{ Request::routeIs($link->href) ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route($link->href) }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+            <li class="menu-header">Link Tet</li>
+            <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ url('dashboard') }}">
+                    <i class="fas fa-fire"></i> <span>Dashboard</span>
+                </a>
             </li>
-            @else
-                <li class="dropdown">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                        <i class="fa fa-list"></i> Product & Categories
-                    </a>
-                    <ul class="dropdown-menu">
+            <li class="dropdown {{ request()->routeIs('product-categories*') ? 'active' : '' }}
+                {{ request()->routeIs('product*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-list"></i> <span>Master Product</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('product-categories*') ? 'active' : '' }}">
                         <a href="{{ url('product-category') }}" class="nav-link">
-                            <i class="fa fa-sitemap "></i> Products Category
+                            Products-Category
                         </a>
-                        <a href="{{ url('product') }}" class="nav-link">
-                            <i class="fa fa-box"></i> Products
-                        </a>
-                    </ul>
-                </li>
-                @foreach ($link->href as $section)
-                    @php
-                    $routes = collect($section->section_list)->map(function ($child) {
-                        return Request::routeIs($child->href);
-                    })->toArray();
-
-                    $is_active = in_array(true, $routes);
-                    @endphp
-
-                    <li class="dropdown {{ ($is_active) ? 'active' : '' }}">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-chart-bar"></i> <span>{{ $section->section_text }}</span></a>
-                        <ul class="dropdown-menu">
-                            @foreach ($section->section_list as $child)
-                                <li class="{{ Request::routeIs($child->href) ? 'active' : '' }}"><a class="nav-link" href="{{ route($child->href) }}">{{ $child->text }}</a></li>
-                            @endforeach
-                        </ul>
                     </li>
-                @endforeach
-            @endif
+                    <li class="{{ request()->routeIs('product-categories*') ? 'active' : '' }}">
+                        <a href="{{ url('product') }}" class="nav-link">
+                            Products
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown {{ request()->routeIs('users*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-users"></i> <span>Users</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
+                        <a class="nav-link" href="#">List User</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
+                        <a class="nav-link" href="#">Create User</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
-        @endforeach
     </aside>
 </div>

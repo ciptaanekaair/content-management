@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'FilterPedia') }}</title>
         <!-- Styles -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap.min.css') }}">
@@ -24,24 +24,17 @@
     <body class="antialiased">
         <div id="app">
             <div class="main-wrapper">
-                
-
-                @include('components.navbar')
-                @include('components.sidebar')
-
+                @include('layouts.navbar')
+                @include('layouts.sidebar')
                 <!-- Main Content -->
                 <div class="main-content">
                     <section class="section">
                       <div class="section-header">
-                        @isset($header_content)
-                            {{ $header_content }}
-                        @else
-                            {{ __('Halaman') }}
-                        @endisset
+                        @yield('header')
                       </div>
 
                       <div class="section-body">
-                        {{ $slot }}
+                        @yield('content')
                       </div>
                     </section>
                   </div>
@@ -64,5 +57,6 @@
         <script src="{{ asset('stisla/js/stisla.js') }}"></script>
         <script src="{{ asset('stisla/js/scripts.js') }}"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
+        @yield('jq-script')
     </body>
 </html>
