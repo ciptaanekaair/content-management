@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::put('user/{username}', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');
 
     // Route for Cart
+    // https://documenter.getpostman.com/view/5639352/Tzm8EF9u
     Route::get('cart', [CartController::class, 'index'])->name('api_cart_data');
     Route::post('add-to-cart', [CartController::class, 'store'])->name('api_add_to_cart');
     Route::put('update-cart', [CartController::class, 'updateCart'])->name('api_update_cart');
