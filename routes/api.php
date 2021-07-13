@@ -20,7 +20,6 @@ Route::post('/login', [AutentikasiController::class, 'login'])->name('api_login'
 /**
  * Route API untuk product & kategori produk
  */
-// get all product
 Route::get('/products', [ProductController::class, 'index'])->name('api_products_data');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('api_product_detail');
 Route::get('/products/search/{keywords}', [ProductController::class, 'search'])->name('api_product_search');

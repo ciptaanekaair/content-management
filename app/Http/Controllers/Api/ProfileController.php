@@ -24,7 +24,7 @@ class ProfileController extends Controller
     public function updateProfile(Request $request, $username)
     {
         $rules = [
-            'name' => 'required|string',
+            'name'          => 'required|string',
             'profile_photo' => 'image|mimes:jpg,png,bmp,svg|max:3084'
         ];
 
@@ -38,7 +38,7 @@ class ProfileController extends Controller
         }
 
         $user = User::where('username', $username)->first();
-        $user->name = $request['name'];
+        $user->name = $request->name;
 
         if ($request->hasFile('profile_photo')) {
             if (Storage::exists('storage/'.$user->profile_photo_path)) {
@@ -52,7 +52,7 @@ class ProfileController extends Controller
         }
 
         if (!empty($request->password)) {
-            $user->password = Hash::make($request['password']);
+            $user->password = Hash::make($request->password);
         }
 
         $user->update();

@@ -27,7 +27,7 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $produk = Produk::where('slug', $slug)->first();
+        $produk = Product::where('slug', $slug)->first();
 
         if ($produk->count() < 1) {
             $response = ['error' => 'true', 'message' => 'Error! Produk yang di pilih tidak terdapat di dalam database. Harap segera hubungi Admin.'];

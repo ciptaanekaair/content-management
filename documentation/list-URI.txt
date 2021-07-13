@@ -12,6 +12,7 @@ Note: logout must have bearer_token
 
 Users
 ==============================
+https://documenter.getpostman.com/view/5639352/Tzm8EEhR
 Profile:
 - User profile [GET]   = api/profile/{username}
 - Update Profile [PUT] = api/profile/{username} [ name, password (optional), profile_photo_path ]
@@ -21,11 +22,13 @@ Note= username using encrypted md5() of users.email
 
 Product Category & Products
 ==============================
+https://documenter.getpostman.com/view/5639352/Tzm8Euta
 Category:
 - Index / List Category Product = api/product-category
 - Product Detail [GET] 			= api/product-category/{slug}
 - Product Search [GET]			= api/product-category/search/{keywords}
 
+https://documenter.getpostman.com/view/5639352/Tzm8Eutc
 Products:
 - Index / List Product [GET] = api/products
 - Product Detail [GET]       = api/products/{slug}
