@@ -20,8 +20,8 @@ class CreateTransactionsTable extends Migration
             $table->string('transaction_code');
             $table->date('transaction_date');
             $table->integer('total_item');
-            $table->float('total_price');
-            $table->float('payment');
+            $table->float('total_price', 16,2);
+            $table->float('sub_total_price', 16,2);
             $table->integer('status')->default(0); // complete payment: 1, not-complete: 0, shipping: 2
             $table->timestamps();
         });

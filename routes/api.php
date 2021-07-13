@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CheckoutController;
 
 /**
  * Route API untuk modul register dan login
@@ -45,6 +46,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('add-to-cart', [CartController::class, 'store'])->name('api_add_to_cart');
     Route::put('update-cart', [CartController::class, 'updateCart'])->name('api_update_cart');
     Route::delete('cart/delete/{id}', [CartController::class, 'deleteCart'])->name('api_delete_from_cart');
+
+    // Route for checkout
+    Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
     
     // Logout route
     Route::get('/logout', [AutentikasiController::class, 'logout'])->name('api_logout');

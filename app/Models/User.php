@@ -60,4 +60,19 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function loadCartData()
+    {
+        return $this->hasMany(TransactionTemporary::class);
+    }
+
+    public function countQty()
+    {
+        return $this->loadCartData()->sum('qty');
+    }
+
+    public function countTotalPrice()
+    {
+        return $this->loadCartData()->sum('total_price');
+    }
 }

@@ -34,14 +34,44 @@ class CheckoutController extends Controller
             ], 401);
         }
 
-        $lProduct = TransactionTemporary::where('user_id', Auth::user()->id)->get();
+        $lProduct  = TransactionTemporary::where('user_id', Auth::user()->id)->get();
+        $p_on_cart = $lProduct->count();
 
         if ($lProduct->isEmpty()) {
-            // code...
-            
+            $response = [
+                'success' => true,
+                'message' => 'Anda belum memilih product. Silahkan pilih product di halaman product.'
+            ];
+
+            return response($response, 200);
         }
 
-        $response = [];
+        $total_price = Auth::user()->countTotalPrice();
+        $pajakPPN   = $total_price * 0.1;
+
+        $transaksi = new Transaction;
+        $transaksi->user_id          = Auth::user()->id;
+        $transaksi->payment_code_id  = $request->payment_code_id == '' ? '' : $request->payment_code_id;
+        $transaksi->voucher_id       = $request->voucher_id == '' ? '' : $request->voucher_id;
+        $transaksi->transaction_code = 'TRN-'.date('ymd').rand('000', '999');
+        $transaksi->transaction_date = date('Y-m-d');
+        $transaksi->total_item       = Auth::user()->countQty();
+        $transaksi->total_price      = $total_price;
+        $transaksi->sub_total_price  = $total_price + $pajakPPN;
+        $transaksi->save();
+
+        $response = [
+            'success' => true,
+            'message' => 'Berhasil checout keranjang belanja anda. Segera lakukan pembayaran, dan lakukan konfirmasi pembayaran',
+            'data' => $transaksi
+        ];
+
+        // $response = [
+        //     'total_price'     => $total_price,
+        //     'pajak_ppn'       => $pajakPPN,
+        //     'total_item'      => Auth::user()->countQty().' item',
+        //     'sub_total_price' => $total_price + $pajakPPN
+        // ];
 
         return response($response, 200);
     }
