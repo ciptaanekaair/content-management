@@ -9,15 +9,17 @@ use App\Http\Models\ProductCategory;
 class ProductCategoryController extends Controller
 {
     /**
-     * get data index
+     * Get data index.
      */
     public function index()
     {
-        $pCategory = ProductCategory::where('status', 1)
+        if ($this->authorize('MOD1004-read') || $this->authorize('spesial')) {
+            $pCategory = ProductCategory::where('status', 1)
                     ->orderBy('id', 'DESC')
                     ->paginate(10);
 
-        return view('admin.products-category.index', compact('pCategory'));
+            return view('admin.products-category.index', compact('pCategory'));
+        }
     }
 
     /**
@@ -26,72 +28,64 @@ class ProductCategoryController extends Controller
      */
     public function getData($search, $paging)
     {
-        if (!empty($sarch)) {
+        if ($this->authorize('MOD1004-read') || $this->authorize('special')) {
+
+            if (!empty($sarch)) {
+                $pCategory = ProductCategory::where('status', 1)
+                            ->where('category_name', 'LIKE', '%'.$search.'%')
+                            ->orderBy('id', 'DESC')
+                            ->paginate($paging);
+
+                return view('admin.products-category.table-data', compact('pCategory'));
+            }
+
             $pCategory = ProductCategory::where('status', 1)
-                        ->where('category_name', 'LIKE', '%'.$search.'%')
                         ->orderBy('id', 'DESC')
                         ->paginate($paging);
 
             return view('admin.products-category.table-data', compact('pCategory'));
+
         }
-
-        $pCategory = ProductCategory::where('status', 1)
-                    ->orderBy('id', 'DESC')
-                    ->paginate($paging);
-
-        return view('admin.products-category.table-data', compact('pCategory'));
     }
 
     /**
-     * Simpan data baru.
+     * Penyimpanan data Product Categories baru.
      */
     public function store(Request $request)
     {
-        //
+        if ($this->authorize('MOD1004-create') || $this->authorize('spesial')) {
+            
+        }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Pengambilan data menggunakan ajax.
+     * untuk kebutuhan perubahan data.
      */
     public function edit($id)
     {
-        //
+        if ($this->authorize('MOD1004-edit') || $this->authorize('spesial')) {
+            
+        }
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Penyimpanan perubahan data Product Categories.
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($this->authorize('MOD1004-update') || $this->authorize('spesial')) {
+            
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Penyimpanan penghapusan data Product Categories.
      */
     public function destroy($id)
     {
-        //
+        if ($this->authorize('MOD1004-delete') || $this->authorize('spesial')) {
+            
+        }
     }
 }

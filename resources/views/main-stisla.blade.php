@@ -16,7 +16,7 @@
                     <h4>Total Users</h4>
                   </div>
                   <div class="card-body">
-                    10
+                    {{ $userCount }}
                   </div>
                 </div>
               </div>
@@ -31,7 +31,7 @@
                     <h4>Product</h4>
                   </div>
                   <div class="card-body">
-                    42
+                    {{ $productCount }}
                   </div>
                 </div>
               </div>
@@ -43,10 +43,10 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Reports</h4>
+                    <h4>Transaksi</h4>
                   </div>
                   <div class="card-body">
-                    1,201
+                    {{ $trnsctCount }}
                   </div>
                 </div>
               </div>

@@ -1,0 +1,15 @@
+MOD1001 = Users Modul
+
+MOD1002 = Levels Modul
+MOD1102 = Roles Modul
+
+MOD1003 = Provinces Modul
+
+MOD1004 = Product Categories Modul
+MOD1104 = Product Modul
+MOD1204 = Product Images Modul
+
+MOD1005 = Vouchers
+MOD1007 = Payment Codes
+
+MOD1009 = Product Reviews

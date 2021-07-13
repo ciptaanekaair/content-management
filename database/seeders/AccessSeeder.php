@@ -22,5 +22,8 @@ class AccessSeeder extends Seeder
 
         $admin3 = Level::findOrFail(3);
         $admin3->aksesRole()->attach([1, 2, 3, 4, 5]);
+
+        $admin3 = Level::findOrFail(4);
+        $admin3->aksesRole()->attach([1, 2, 3, 4, 5, 6]);
     }
 }

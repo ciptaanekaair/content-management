@@ -22,7 +22,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="{{ request()->routeIs('product-categories*') ? 'active' : '' }}">
-                        <a href="{{ url('product-category') }}" class="nav-link">
+                        <a href="{{ url('product-categories') }}" class="nav-link">
                             Products-Category
                         </a>
                     </li>
