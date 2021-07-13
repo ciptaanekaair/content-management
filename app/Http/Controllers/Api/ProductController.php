@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductImage;
 
 class ProductController extends Controller
 {
@@ -28,13 +29,14 @@ class ProductController extends Controller
     public function show($slug)
     {
         $produk = Product::where('slug', $slug)->first();
+        $pImage = ProductImage::where('product_id', $produk->id)->get();
 
         if ($produk->count() < 1) {
             $response = ['error' => 'true', 'message' => 'Error! Produk yang di pilih tidak terdapat di dalam database. Harap segera hubungi Admin.'];
 
             return response($response, 203);
         } else {
-            $response = ['success' => 'true', 'data' => $produk];
+            $response = ['success' => 'true', 'data' => $produk, 'image' => $pImage];
 
             return response($response, 200);
         }

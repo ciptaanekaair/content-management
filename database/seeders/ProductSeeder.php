@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use App\Models\ProductImage;
 
 class ProductSeeder extends Seeder
 {
@@ -49,6 +50,66 @@ class ProductSeeder extends Seeder
             'product_commision'   => '10',
             'product_stock'       => 200,
             'status'              => 1
+        ]);
+
+        ProductImage::create([
+            'product_id' => 1,
+            'images' => 'product-images/image-1.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 2,
+            'images' => 'product-images/image-1.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 3,
+            'images' => 'product-images/image-1.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 1,
+            'images' => 'product-images/image-2.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 2,
+            'images' => 'product-images/image-2.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 3,
+            'images' => 'product-images/image-2.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 1,
+            'images' => 'product-images/image-3.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 2,
+            'images' => 'product-images/image-3.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 3,
+            'images' => 'product-images/image-3.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 1,
+            'images' => 'product-images/image-4.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 2,
+            'images' => 'product-images/image-4.jpg'
+        ]);
+
+        ProductImage::create([
+            'product_id' => 3,
+            'images' => 'product-images/image-4.jpg'
         ]);
     }
 }

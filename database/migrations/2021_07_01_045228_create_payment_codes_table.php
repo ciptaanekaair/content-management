@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKodeBayarsTable extends Migration
+class CreatePaymentCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateKodeBayarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('kode_bayars', function (Blueprint $table) {
+        Schema::create('payment_codes', function (Blueprint $table) {
             $table->id();
             $table->string('kode_pembayaran');
             $table->string('nama_pembayaran');
+            $table->string('nama_bank');
+            $table->string('atas_nama_rekening');
+            $table->string('nomor_rekening');
+            $table->string('cabang');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
@@ -29,6 +33,6 @@ class CreateKodeBayarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kode_bayars');
+        Schema::dropIfExists('payment_codes');
     }
 }
