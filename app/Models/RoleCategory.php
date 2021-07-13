@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Level extends Model
+class RoleCategory extends Model
 {
     use HasFactory;
 
-    public function aksesRole()
+    public function Role()
     {
         return $this->belongsToMany(Role::class);
     }

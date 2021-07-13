@@ -61,6 +61,16 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function Level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    public function hasAccess($role)
+    {
+        return $this->Level->aksesRole()->where('nama_role', $role)->first() ?: false;
+    }
+
     public function loadCartData()
     {
         return $this->hasMany(TransactionTemporary::class);

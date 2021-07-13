@@ -62,16 +62,9 @@ class CheckoutController extends Controller
 
         $response = [
             'success' => true,
-            'message' => 'Berhasil checout keranjang belanja anda. Segera lakukan pembayaran, dan lakukan konfirmasi pembayaran',
-            'data' => $transaksi
+            'message' => 'Berhasil checout keranjang belanja anda. Segera lakukan pembayaran, dan konfirmasi pembayaran.',
+            'data'    => $transaksi
         ];
-
-        // $response = [
-        //     'total_price'     => $total_price,
-        //     'pajak_ppn'       => $pajakPPN,
-        //     'total_item'      => Auth::user()->countQty().' item',
-        //     'sub_total_price' => $total_price + $pajakPPN
-        // ];
 
         return response($response, 200);
     }
