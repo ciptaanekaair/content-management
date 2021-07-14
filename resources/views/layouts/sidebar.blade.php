@@ -26,7 +26,7 @@
                             Products-Category
                         </a>
                     </li>
-                    <li class="{{ request()->routeIs('product-categories*') ? 'active' : '' }}">
+                    <li class="{{ request()->routeIs('products*') ? 'active' : '' }}">
                         <a href="{{ url('product') }}" class="nav-link">
                             Products
                         </a>

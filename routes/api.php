@@ -47,6 +47,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::put('update-cart', [CartController::class, 'updateCart'])->name('api_update_cart');
     Route::delete('cart/delete/{id}', [CartController::class, 'deleteCart'])->name('api_delete_from_cart');
 
+    // Route for validate voucher
+    Route::post('/check_voucher', [CheckoutController::class, 'validasiVoucher'])->name('api_validasi_voucher');
+
     // Route for checkout
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
     
