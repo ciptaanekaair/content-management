@@ -44,18 +44,15 @@
 @section('jq-script')
 <script type="text/javascript">
 var table, save_method, page, perpage, search;
+$(function() {
+  $('#perpage').on('change', function() {
+    perpage = $(this).val();
+    search  = $('#pencarian').val();
+    page    = $('#posisi_page').val();
 
-// $.(function() {
-//   $('#perpage').change(function() {
-//     perpage = $(this).val();
-//     search  = $('#pencarian').val();
-//     page    = $('#posisi_page').val();
-
-//     $('#list_perpage').val(perpage);
-
-//     fetch_table(page, perpage, search);
-//    });
-// });
+    fetch_table(page, perpage, search);
+  });
+});
 
 function fetch_table(page, perpage, search) {
   perpage = $(this).val();
@@ -63,7 +60,7 @@ function fetch_table(page, perpage, search) {
   page    = $('#posisi_page').val();
 
   $.ajax({
-    url: '{{ url("product-categories/data") }}/?page='+page+'&list_perpage='+perpage+'&search='+searh,
+    url: '{{ url("product-categories/data") }}/?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
     success: function(data) {
       $('.table-data').html(data);
@@ -76,6 +73,7 @@ function formReset() {
 }
 
 function editData(id) {
+  save_method = 'update';
   $.ajax({
     url: '{{ url("product-categories") }}/'+id+'/edit',
     type: 'GET',
