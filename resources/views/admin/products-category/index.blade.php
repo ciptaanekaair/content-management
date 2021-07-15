@@ -81,7 +81,10 @@ function editData(id) {
     success: function(data) {
       $('.modal-title').text('Edit: '+data.data.category_name);
       $('#category_name').val(data.data.category_name);
-      $('#category_description').text(data.data.category_description);
+      $('#category_description').val(data.data.category_description);
+      $('#keywords').val(data.data.keywords);
+      $('#description_seo').val(data.data.description_seo);
+      $('#category_image_link').attr('href', data.data.imageurl);
       $('#modal-form').modal('show');
     },
     error: function(message) {

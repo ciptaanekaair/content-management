@@ -15,10 +15,6 @@ class ProductController extends Controller
 
         if ($produk->count() > 0) {
 
-            foreach ($produk as $item) {
-                $item->getImageUrlAttribute();
-            }
-
             $response = [
                 'success' => true,
                 'message' => 'Data berhasil di load.',

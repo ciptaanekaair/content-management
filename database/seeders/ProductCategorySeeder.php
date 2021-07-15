@@ -19,7 +19,7 @@ class ProductCategorySeeder extends Seeder
             'category_description' => 'Semua produk Membrane Filter dari berbagai macam merk untuk filtrasi air.',
             'keywords'             => 'membrane filter air, membrane filter murah, membrane murah jabodetabek, membrane',
             'description_seo'      => 'Semua produk Membrane Filter dari berbagai macam merk untuk filtrasi air.',
-            'category_image'       => 'product_picture/7c0beccc00051977914e1814e12b816f.png',
+            'category_image'       => 'category-product-images/d88c49ea570c6cd785a45053347dd190.jpeg',
             'slug'                 => 'membrane-filter'
         ]);
 
@@ -28,7 +28,7 @@ class ProductCategorySeeder extends Seeder
                 'category_description' => 'Semua produk Cartridge Filter dari berbagai macam merk untuk filtrasi air.',
                 'keywords'             => 'cartridge filter air, cartridge filter murah, cartridge murah jabodetabek, cartridge',
                 'description_seo'      => 'Semua produk Cartridge Filter dari berbagai macam merk untuk filtrasi air',
-                'category_image'       => 'product_picture/9fb1d9d0e777ef433fba9ac034a48373.png',
+                'category_image'       => 'category-product-images/72ec24d04c4af8947b4e3d824e488c78.jpeg',
                 'slug'                 => 'cartridge-filter'
         ]);
 
@@ -37,7 +37,7 @@ class ProductCategorySeeder extends Seeder
                 'category_description' => 'Semua produk EDI ( Electro Deionization ) dari berbagai macam merk untuk filtrasi air.',
                 'keywords'             => 'EDI filter air, EDI filter murah, EDI murah jabodetabek, EDI',
                 'description_seo'      => 'Semua produk EDI ( Electro Deionization ) dari berbagai macam merk untuk filtrasi air.',
-                'category_image'       => 'product_picture/267a0c54f684bc5b3a88237a183c9371.png',
+                'category_image'       => 'category-product-images/142f332c687719c9e98a6581cbe14af4.jpeg',
                 'slug'                 => 'edi-electro-deionization'
         ]);
 
@@ -46,7 +46,7 @@ class ProductCategorySeeder extends Seeder
                 'category_description' => 'Untuk data dummy untuk category product.',
                 'keywords'             => 'Tester filter air, Tester filter murah, Tester murah jabodetabek, Tester',
                 'description_seo'      => 'Untuk data dummy untuk category product.',
-                'category_image'       => 'product_picture/267a0c54f684bc5b3a88237a183c9371.png',
+                'category_image'       => 'category-product-images/9725ecc278e931af29713f4581603764.jpeg',
                 'slug'                 => 'edi-electro-deionization'
         ]);
 

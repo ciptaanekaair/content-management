@@ -9,5 +9,13 @@ class ProductCategory extends Model
 {
     use HasFactory;
 
-    protected $table = 'product_categories';
+    protected $table   = 'product_categories';
+    protected $appends = ['imageurl'];
+
+    public function getImageurlAttribute()
+    {
+        $productpicurl = ENV('APP_URL').'/storage/'.$this->category_image;
+
+        return $productpicurl;
+    }
 }
