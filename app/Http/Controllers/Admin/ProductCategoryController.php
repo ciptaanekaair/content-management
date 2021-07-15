@@ -43,8 +43,8 @@ class ProductCategoryController extends Controller
                         ->paginate($paging);
 
             return view('admin.products-category.table-data', compact('pCategory'));
-
         }
+
     }
 
     /**
@@ -80,7 +80,8 @@ class ProductCategoryController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Berhasl menyimpan data '.$pCategory->category_name.' sebagai Product Category baru!'
+                'message' => 'Berhasl menyimpan data '.$pCategory->category_name.' sebagai Product Category baru!',
+                'data'    => $pCategory
             ], 200);
         }
     }
@@ -96,7 +97,7 @@ class ProductCategoryController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Berhasil load data product category yang di pilih.',
+                'message' => 'Berhasil load data: '.$pCategory->category_name.'.',
                 'data'    => $pCategory
             ], 200);
         }
@@ -109,7 +110,13 @@ class ProductCategoryController extends Controller
     public function edit($id)
     {
         if ($this->authorize('MOD1004-edit') || $this->authorize('spesial')) {
-            
+            $pCategory = ProductCategory::findOrFail($id);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil load data: '.$pCategory->category_name.'.',
+                'data'    => $pCategory
+            ], 200);
         }
     }
 
@@ -119,7 +126,36 @@ class ProductCategoryController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1004-update') || $this->authorize('spesial')) {
-            
+            $rules = [
+                'category_name'        => 'required',
+                'status'               => 'numeric'
+            ];
+
+            $pesan = [
+                'category_name.required' => 'Nama Kategori Produk wajib di isi!',
+                'status.numeric'         => 'Status wajib di pilih!'
+            ];
+
+            $validasi = Validator::make($request->all(), $rules, $pesan);
+
+            if ($validasi->fails()) {
+                return response()->json([
+                    'error' => true,
+                    'message' => $validasi->errors()
+                ], 403);
+            }
+
+            $pCategory = ProductCategory::findOrFail($id);
+            $pCategory->category_name        = $request->category_name;
+            $pCategory->category_description = $request->category_description;
+            $pCategory->status               = $request->status;
+            $pCategory->update(); 
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil merubah data: '.$request->category_name.'.',
+                'data' => $pCategory
+            ], 200);
         }
     }
 
@@ -129,7 +165,15 @@ class ProductCategoryController extends Controller
     public function destroy($id)
     {
         if ($this->authorize('MOD1004-delete') || $this->authorize('spesial')) {
-            
+
+            $pCategory = ProductCategory::findOrFail($id);
+            $pCategory->status = 9;
+            $pCategory->update();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil hapus data: '.$pCategory->category_name.'.'
+            ], 200);
         }
     }
 }

@@ -30,27 +30,37 @@
           <div class="table-data">
             @include('admin.products-category.table-data')
           </div>
-          <input type="hidden" name="perpage" id="posisipage">
+          <input type="hidden" name="perpage" id="posisi_page">
         </div>
       </div>
     </div>
   </div>
 @endsection
 
+@section('formodal')
+  @include('admin.products-category.form')
+@endsection
+
 @section('jq-script')
 <script type="text/javascript">
 var table, save_method, page, perpage, search;
 
-$.(function() {
-  $('#perpage').change(function(){
+// $.(function() {
+//   $('#perpage').change(function() {
+//     perpage = $(this).val();
+//     search  = $('#pencarian').val();
+//     page    = $('#posisi_page').val();
 
-  });
-});
+//     $('#list_perpage').val(perpage);
+
+//     fetch_table(page, perpage, search);
+//    });
+// });
 
 function fetch_table(page, perpage, search) {
   perpage = $(this).val();
   search  = $('#pencarian').val();
-  page    = $('#posisipage').val();
+  page    = $('#posisi_page').val();
 
   $.ajax({
     url: '{{ url("product-categories/data") }}/?page='+page+'&list_perpage='+perpage+'&search='+searh,
@@ -67,11 +77,14 @@ function formReset() {
 
 function editData(id) {
   $.ajax({
-    url: '{{ url("product-categories") }}/'+id,
+    url: '{{ url("product-categories") }}/'+id+'/edit',
     type: 'GET',
     dataType: 'JSON',
     success: function(data) {
-      alert(data.category_name);
+      $('.modal-title').text('Edit: '+data.data.category_name);
+      $('#category_name').val(data.data.category_name);
+      $('#category_description').text(data.data.category_description);
+      $('#modal-form').modal('show');
     },
     error: function(message) {
       alert('gagal load data');

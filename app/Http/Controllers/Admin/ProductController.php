@@ -14,17 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
+            
+        }
     }
 
     /**
@@ -35,7 +27,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($this->authorize('MOD1104-create') || $this->authorize('spesial')) {
+            
+        }
     }
 
     /**

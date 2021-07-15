@@ -36,4 +36,7 @@
       @endforeach
     </tbody>
   </table>
+  <div class="text-center">
+    {{ $pCategory->render() }}
+  </div>
 </div>

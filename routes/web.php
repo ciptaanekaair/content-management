@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\ProfileController;
 | contains the "web" middleware group. Now create something great!
 */
 
-Route::get('/', [DashboardController::class, 'welcome'])->name('welcome');
+Route::view('/', 'welcome')->name('welcome');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
