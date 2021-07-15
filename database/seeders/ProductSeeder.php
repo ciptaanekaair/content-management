@@ -15,8 +15,8 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::create([
-            'product_category_id' => '1',
+
+        Product::create(['product_category_id' => '1',
             'product_code'        => '01AA0001',
             'product_name'        => 'Produk Tester 1',
             'slug'                => 'produk-tester-1',
@@ -25,10 +25,9 @@ class ProductSeeder extends Seeder
             'product_price'       => '29000000',
             'product_commision'   => '10',
             'product_stock'       => 1000,
-            'status'              => 1
-        ]);
-        Product::create([
-            'product_category_id' => '1',
+            'status'              => 1]);
+
+        Product::create(['product_category_id' => '1',
             'product_code'        => '01AA0002',
             'product_name'        => 'Produk Tester 2',
             'slug'                => 'produk-tester-2',
@@ -37,10 +36,9 @@ class ProductSeeder extends Seeder
             'product_price'       => '360000',
             'product_commision'   => '10',
             'product_stock'       => 100,
-            'status'              => 1
-        ]);
-        Product::create([
-            'product_category_id' => '2',
+            'status'              => 1]);
+
+        Product::create(['product_category_id' => '2',
             'product_code'        => '01BB0001',
             'product_name'        => 'Produk Tester 10',
             'slug'                => 'produk-tester-10',
@@ -49,11 +47,9 @@ class ProductSeeder extends Seeder
             'product_price'       => '2600000',
             'product_commision'   => '10',
             'product_stock'       => 200,
-            'status'              => 1
-        ]);
+            'status'              => 1]);
 
-        Product::create([
-            'product_category_id' => '2',
+        Product::create(['product_category_id' => '2',
             'product_code'        => '01BB0002',
             'product_name'        => 'Produk Tester 11',
             'slug'                => 'produk-tester-11',
@@ -62,8 +58,7 @@ class ProductSeeder extends Seeder
             'product_price'       => '750000',
             'product_commision'   => '10',
             'product_stock'       => 1000,
-            'status'              => 1
-        ]);
+            'status'              => 1]);
 
         ProductImage::create([
             'product_id' => 1,
