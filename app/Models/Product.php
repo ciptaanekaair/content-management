@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $attributes = ['imageurl'];
+    // protected $attributes = ['imageurl'];
     protected $appends    = ['imageurl'];
 
     public function getImageurlAttribute()
