@@ -8,7 +8,9 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form enctype="multipart/form-data">
+				<form type="POST" enctype="multipart/form-data" id="category_form">
+					<input type="hidden" name="category_id" id="category_id">
+					<input type="hidden" name="_method" id="formMethod">
 					<div class="form-group">
 						<label for="category_name">Nama Kategori</label>
 						<input type="text" name="category_name" class="form-control" id="category_name">
@@ -34,12 +36,43 @@
 						<input type="file" name="category_image" class="form-control" id="category_image">
 						<div class="alert-message" id="category_imageError"></div>
 					</div>
-					<a href="" target="_blank" id="category_image_link">Image</a>
+					<a href="" target="_blank" id="category_image_link" class="btn btn-info" visible="false">
+						<i class="fa fa-eye"></i> &nbsp Lihat Picture</a>
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-primary" id="btnSave">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title-delete"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form type="POST" id="category_delete_form">
+					{{ csrf_field() }}
+					<input type="hidden" name="category_id_d" id="category_id_d">
+					<input type="hidden" name="_method" id="formMethodD" value="DELETE">
+				<form>
+				<p align="center">
+					Anda akan menghapus data:<br>
+					<code id="category_name_d"></code>.
+					<br>
+					<b>Apakah anda yakin? Anda tidak akan dapat mengembalikan data ini.</b>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<a class="btn btn-danger" id="btnDelete"><i class="fa fa-trash"></i> &nbsp Delete</a>
 			</div>
 		</div>
 	</div>

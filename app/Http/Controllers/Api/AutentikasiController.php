@@ -35,7 +35,7 @@ class AutentikasiController extends Controller
             'name'     => $request['name'],
             'email'    => $request['email'],
             'username' => $username,
-            'password' => $request['password'],
+            'password' => Hash::make($request['password']),
             'level_id' => 1
         ]);
 

@@ -106,48 +106,140 @@ class CartController extends Controller
         return response($response, 200);
     }
 
-    public function updateCart(Request $request)
+    // public function updateCart(Request $request)
+    // {
+    //     // mengubah data produk dalam cart
+    //     $rules = [
+    //         'user_id'    => 'required',
+    //         'product_id' => 'required',
+    //         'qty'        => 'required'
+    //     ];
+
+    //     $pesan = [
+    //         'user_id.required'    => 'Session anda telah berakhir, silahkan melakukan login kembali.',
+    //         'product_id.required' => 'Produk tidak berhasil di pilih. Silahkan menghubungi Admin.',
+    //         'qty.required'        => 'Jumlah produk tidak boleh kosong!'
+    //     ];
+
+    //     $validasi = Validator::make($request->all(), $rules, $pesan);
+
+    //     if ($validasi->fails()) {
+    //         return response([
+    //             'error'   => true,
+    //             'message' => $validasi->errors()
+    //         ], 403);
+    //     }
+
+    //     // load data produk
+    //     $produk      = Product::findOrFail($request->product_id);
+
+    //     // update cart sesuai dengan qty pada UI
+    //     $cart = TransactionTemporary::where('user_id', Auth::user()->id)
+    //             ->where('product_id', $request->product_id)
+    //             ->first();
+    //     $cart->qty         = $request->qty;
+    //     $cart->total_price = $produk->product_price * $request->qty;
+    //     $cart->update();
+
+    //     $response = [
+    //         'success' => true,
+    //         'message' => 'Berhasil update cart.',
+    //         'data'    => $cart
+    //     ];
+
+    //     return response($response, 200);
+    // }
+
+    public function handlePlus(Request $request)
     {
-        // mengubah data produk dalam cart
+        // Handle tambah qty produk pada keranjang.
         $rules = [
             'user_id'    => 'required',
-            'product_id' => 'required',
-            'qty'        => 'required'
+            'product_id' => 'required'
         ];
 
-        $pesan = [
-            'user_id.required'    => 'Session anda telah berakhir, silahkan melakukan login kembali.',
-            'product_id.required' => 'Produk tidak berhasil di pilih. Silahkan menghubungi Admin.',
-            'qty.required'        => 'Jumlah produk tidak boleh kosong!'
-        ];
+        $validator = Validator::make($request->all(), $rules);
 
-        $validasi = Validator::make($request->all(), $rules, $pesan);
-
-        if ($validasi->fails()) {
+        if ($validator->fails()) {
             return response([
                 'error'   => true,
-                'message' => $validasi->errors()
+                'message' => $validator->errors()
             ], 403);
         }
 
-        // load data produk
-        $produk      = Product::findOrFail($request->product_id);
+        $product_incart = TransactionTemporary::findOrFail($request->id);
 
-        // update cart sesuai dengan qty pada UI
-        $cart = TransactionTemporary::where('user_id', Auth::user()->id)
-                ->where('product_id', $request->product_id)
-                ->first();
-        $cart->qty         = $request->qty;
-        $cart->total_price = $produk->product_price * $request->qty;
-        $cart->update();
+        if ($product_incart->isEmpty()) {
+            return response([
+                'error'   => true,
+                'message' => 'Error! Data produk tidak ada dalam keranjang. Silahkan refresh browser Anda.'
+            ], 403);
+        }
 
-        $response = [
+        $produk = Product::findOrFail($request->product_id);
+
+        $product_incart->qty        += 1;
+        $product_incart->total_price = $produk->product_price * $product_incart->qty;
+        $product_incart->update();
+
+        return response([
             'success' => true,
-            'message' => 'Berhasil update cart.',
-            'data'    => $cart
+            'message' => 'Berhasil menambah quantity produk.',
+            'data' => $product_incart
+        ], 200);
+
+    }
+
+    public function handleMinus(Request $request)
+    {
+        // Handle pengurangan qty produk pada keranjang.
+        $rules = [
+            'user_id'    => 'required',
+            'product_id' => 'required'
         ];
 
-        return response($response, 200);
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response([
+                'error'   => true,
+                'message' => $validator->errors()
+            ], 403);
+        }
+
+        $product_incart = TransactionTemporary::findOrFail($request->id);
+
+        if ($product_incart->isEmpty()) {
+            return response([
+                'error'   => true,
+                'message' => 'Error! Data produk tidak ada dalam keranjang. Silahkan refresh browser Anda.'
+            ], 403);
+        }
+
+        $produk = Product::findOrFail($request->product_id);
+
+        // define variable untuk pengecekan qty setelah di kurangi 1.
+        $qty_minus_one = $product_incart->qty - 1;
+
+        // check hasil pengurangan qty. jika kurang dari 1, akan di hapus dari cart.
+        if ($qty_minus_one < 1) {
+            $product_incart->delete();
+
+            return response([
+                'success' => true,
+                'message' => 'Produk telah di hapus dari cart karena jumlah quantity produk kurang dari 1.'
+            ], 200);
+        }
+
+        $product_incart->qty        -= 1;
+        $product_incart->total_price = $produk->product_price * $product_incart->qty;
+        $product_incart->update();
+
+        return response([
+            'success' => true,
+            'message' => 'Berhasil menambah quantity produk.',
+            'data' => $product_incart
+        ], 200);
     }
 
     public function deleteCart($id)

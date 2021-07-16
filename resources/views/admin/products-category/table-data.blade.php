@@ -27,7 +27,7 @@
               <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-info">
                 <i class="fa fa-pencil"></i>
               </button>
-              <button onclick="deleteData({{ $item->id }})" class="btn btn-sm btn-danger">
+              <button onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger">
                 <i class="fa fa-trash"></i>
               </button>
             </div>

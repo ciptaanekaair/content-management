@@ -41,19 +41,20 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::put('user/{username}', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');
 
     // Route for Cart
-    // https://documenter.getpostman.com/view/5639352/Tzm8EF9u
-    Route::get('cart', [CartController::class, 'index'])->name('api_cart_data');
-    Route::post('add-to-cart', [CartController::class, 'store'])->name('api_add_to_cart');
-    Route::put('update-cart', [CartController::class, 'updateCart'])->name('api_update_cart');
-    Route::delete('cart/delete/{id}', [CartController::class, 'deleteCart'])->name('api_delete_from_cart');
+    Route::get('cart', [CartController::class, 'index'])->name('api_cart_data'); // mengambil seluruh data cart.
+    Route::post('add-to-cart', [CartController::class, 'store'])->name('api_add_to_cart'); // memasukan produk pada keranjang.
+    // Route::put('update-cart', [CartController::class, 'updateCart'])->name('api_update_cart');
+    Route::post('plus_one', [CartController::class, 'handlePlus'])->name('api_cart_plus_one'); // menambah quantity 1.
+    Route::post('minus_one', [CartController::class, 'handleMinus'])->name('api_cart_minus_one'); // mengurangi quantity 1.
+    Route::delete('cart/delete/{id}', [CartController::class, 'deleteCart'])->name('api_delete_from_cart'); // delete produk pada cart.
 
     // Route for validate voucher
-    Route::post('/check_voucher', [CheckoutController::class, 'validasiVoucher'])->name('api_validasi_voucher');
+    Route::post('check_voucher', [CheckoutController::class, 'validasiVoucher'])->name('api_validasi_voucher');
 
     // Route for checkout
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
     
     // Logout route
-    Route::get('/logout', [AutentikasiController::class, 'logout'])->name('api_logout');
+    Route::get('logout', [AutentikasiController::class, 'logout'])->name('api_logout');
 
 });
