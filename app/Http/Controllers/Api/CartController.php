@@ -169,7 +169,7 @@ class CartController extends Controller
 
         $product_incart = TransactionTemporary::findOrFail($request->cart_id);
 
-        if (empty($product_incart)) {
+        if (!$product_incart) {
             return response([
                 'error'   => true,
                 'message' => 'Error! Data produk tidak ada dalam keranjang. Silahkan refresh browser Anda.'
@@ -237,7 +237,7 @@ class CartController extends Controller
 
         return response([
             'success' => true,
-            'message' => 'Berhasil menambah quantity produk.',
+            'message' => 'Berhasil mengurangi quantity produk.',
             'data' => $product_incart
         ], 200);
     }
