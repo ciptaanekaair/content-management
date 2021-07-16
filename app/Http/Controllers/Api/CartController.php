@@ -154,8 +154,8 @@ class CartController extends Controller
     {
         // Handle tambah qty produk pada keranjang.
         $rules = [
-            'user_id'    => 'required',
-            'product_id' => 'required'
+            'user_id' => 'required',
+            'cart_id' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -167,7 +167,7 @@ class CartController extends Controller
             ], 403);
         }
 
-        $product_incart = TransactionTemporary::findOrFail($request->id);
+        $product_incart = TransactionTemporary::findOrFail($request->cart_id);
 
         if ($product_incart->isEmpty()) {
             return response([
@@ -194,8 +194,8 @@ class CartController extends Controller
     {
         // Handle pengurangan qty produk pada keranjang.
         $rules = [
-            'user_id'    => 'required',
-            'product_id' => 'required'
+            'user_id' => 'required',
+            'cart_id' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -207,7 +207,7 @@ class CartController extends Controller
             ], 403);
         }
 
-        $product_incart = TransactionTemporary::findOrFail($request->id);
+        $product_incart = TransactionTemporary::findOrFail($request->cart_id);
 
         if ($product_incart->isEmpty()) {
             return response([
