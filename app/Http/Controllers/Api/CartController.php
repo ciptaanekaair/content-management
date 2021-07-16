@@ -167,7 +167,7 @@ class CartController extends Controller
             ], 403);
         }
 
-        $product_incart = TransactionTemporary::findOrFail($request->cart_id);
+        $product_incart = TransactionTemporary::find($request->cart_id);
 
         if (!$product_incart) {
             return response([
@@ -176,7 +176,7 @@ class CartController extends Controller
             ], 403);
         }
 
-        $produk = Product::findOrFail($product_incart->product_id);
+        $produk = Product::find($product_incart->product_id);
 
         $product_incart->qty        += 1;
         $product_incart->total_price = $produk->product_price * $product_incart->qty;
@@ -207,16 +207,16 @@ class CartController extends Controller
             ], 403);
         }
 
-        $product_incart = TransactionTemporary::findOrFail($request->cart_id);
+        $product_incart = TransactionTemporary::find($request->cart_id);
 
-        if (empty($product_incart)) {
+        if (!$product_incart) {
             return response([
                 'error'   => true,
                 'message' => 'Error! Data produk tidak ada dalam keranjang. Silahkan refresh browser Anda.'
             ], 403);
         }
 
-        $produk = Product::findOrFail($product_incart->product_id);
+        $produk = Product::find($product_incart->product_id);
 
         // define variable untuk pengecekan qty setelah di kurangi 1.
         $qty_minus_one = $product_incart->qty - 1;
