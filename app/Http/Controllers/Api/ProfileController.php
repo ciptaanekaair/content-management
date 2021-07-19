@@ -41,8 +41,8 @@ class ProfileController extends Controller
         $user->name = $request->name;
 
         if ($request->hasFile('profile_photo')) {
-            if (Storage::exists('storage/'.$user->profile_photo_path)) {
-                Storage::delete('storage/'.$user->profile_photo_path);
+            if (Storage::exists('/public/'.$user->profile_photo_path)) {
+                Storage::delete('/public/'.$user->profile_photo_path);
             }
 
             // $photo  = $request->file('profile_photo');

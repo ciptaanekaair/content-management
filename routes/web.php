@@ -19,21 +19,22 @@ use App\Http\Controllers\Admin\ProfileController;
 Route::view('/', 'welcome')->name('welcome');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Product Category Route
-    Route::resource('/product-categories', ProductCategoryController::class);
-    Route::get('/product-category/data', [ProductCategoryController::class, 'getData'])->name('product-catetgories.data');
+    Route::resource('product-categories', ProductCategoryController::class);
+    Route::get('product-category/data', [ProductCategoryController::class, 'getData'])->name('product-catetgories.data');
+    Route::get('products-categories/data-export', [ProductCategoryController::class, 'exportData'])->name('product-categories.export');
 
     // Product Route
-    Route::resource('/products', ProductController::class);
-    Route::get('/products/data', [ProductController::class, 'getData'])->name('product.data');
+    Route::resource('products', ProductController::class);
+    Route::get('products/data', [ProductController::class, 'getData'])->name('product.data');
 
     // Profile Route
-    Route::get('/profile/{username}', [ProfileController::class, 'getProfile'])->name('profile.show');
-    Route::patch('/profile/{username}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile/{username}', [ProfileController::class, 'getProfile'])->name('profile.show');
+    Route::patch('profile/{username}', [ProfileController::class, 'update'])->name('profile.update');
 
     // Product Route
-    Route::resource('/users', ProductController::class);
-    Route::get('/users/data', [ProductController::class, 'getData'])->name('users.data');
+    Route::resource('users', ProductController::class);
+    Route::get('users/data', [ProductController::class, 'getData'])->name('users.data');
 });

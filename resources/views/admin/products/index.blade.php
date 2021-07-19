@@ -1,14 +1,14 @@
 @extends('layouts.dashboard-layout')
 
 @section('header')
-  <h1>Product Categories</h1>
+  <h1>Products</h1>
 @endsection
 
 @section('content')
   <div class="row mb-3">
     <div class="col-12">
-      <button onclick="newData()" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</button> &nbsp&nbsp
-      <a href="{{ url('products-categories/data-export') }}" target="_blank" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
+      <a href="" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</a> &nbsp&nbsp
+      <a href="" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
     </div>
   </div>
   <div class="row">
@@ -34,17 +34,13 @@
         </div>
         <div class="card-body p-0">
           <div class="table-data">
-            @include('admin.products-category.table-data')
+            @include('admin.products.table-data')
           </div>
           <input type="hidden" name="perpage" id="posisi_page">
         </div>
       </div>
     </div>
   </div>
-@endsection
-
-@section('formodal')
-  @include('admin.products-category.form')
 @endsection
 
 @section('jq-script')
@@ -76,10 +72,10 @@ $(function() {
     });
 
     if (save_method == "update") {
-      url  = "{{ url('product-categories') }}/"+id;
+      url  = "{{ url('product') }}/"+id;
     }
     else {
-      url = "{{ url('product-categories') }}";
+      url = "{{ url('product') }}";
     }
 
     $.ajax({
@@ -91,11 +87,6 @@ $(function() {
       success: function(data) {
         formReset();
         $('#modal-form').modal('hide');
-        Swal.fire(
-          'Success!',
-          data.message,
-          'success'
-        );
         fetch_table(page, perpage, search);
       }, error: function(response) {
         console.log(response);
@@ -110,7 +101,7 @@ $(function() {
   }); // end submit save or update
 
   // start script pencarian
-  $('input[name="pencarian"]').bind('change paste', function(){
+  $('input[name="pencarian"]').bind('change paste keyup', function(){
     search = $(this).val();
     perpage = $('#perpage').val();
     page    = 1;
@@ -123,7 +114,7 @@ $(function() {
     e.preventDefault();
 
     var id         = $('#category_id_d').val();
-    var total_data = "{{ $pCategory->total() }}";
+    var total_data = "{{ $products->total() }}";
 
       perpage = $('#perpage').val();
       search  = $('#pencarian').val();
@@ -221,17 +212,11 @@ function editData(id) {
       $('#modal-form').modal('show');
     },
     error: function(message) {
-      // var error = jQuery.parseJSON(xhr.responseText);
-      // for(var k in error.message){
-      //   if (error.massage.hasOwnProperty(k)) {
-      //     error.message[k].forEach(function(pesan) {
-
-      //     });
-      //   }
-      // }
-      // $('#category_nameError').text(e.data.category_name);
-      // $('#statusError').text(e.data.status);
-      // $('#nameError').text(response.responseJSON.errors.name);
+      Swal.fire(
+        'Error!',
+        'Gagal load data dari database. Silahkan hubungi developer.',
+        'error'
+      );
     }
   });
 }

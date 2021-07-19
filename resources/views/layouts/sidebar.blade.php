@@ -47,6 +47,11 @@
                         <a class="nav-link" href="#">Create User</a>
                     </li>
                 </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
+                        <a class="nav-link" href="#">User History</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </aside>

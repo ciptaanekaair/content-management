@@ -15,7 +15,7 @@ class CreateRekamJejaksTable extends Migration
         Schema::create('rekam_jejaks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->integer('modul_code');
+            $table->string('modul_code');
             $table->string('action');
             $table->longText('description');
             $table->timestamps();

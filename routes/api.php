@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\Api\SocialLoginController;
 
 /**
  * Route API untuk modul register dan login
@@ -16,7 +17,9 @@ use App\Http\Controllers\Api\CheckoutController;
 Route::post('/register', [AutentikasiController::class, 'registrasi'])->name('api_registrasi');
 // route login
 Route::post('/login', [AutentikasiController::class, 'login'])->name('api_login');
-// route logout
+// route socialite
+Route::get('/login/{service}', [SocialLoginController::class, 'redirect']);
+Route::get('/login/{service}/callback', [SocialLoginController::class, 'callback']);
 
 /**
  * Route API untuk product & kategori produk
@@ -53,6 +56,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     // Route for checkout
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
+    Route::post('checkout/confirm', [CheckoutController::class, 'confirmCheckout'])->name('api_confirm_checkout');
     
     // Logout route
     Route::get('logout', [AutentikasiController::class, 'logout'])->name('api_logout');

@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Storage;
+use Validator;
+
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -48,7 +52,7 @@ class ProductController extends Controller
                 return response()->json([
                     'error' => true,
                     'message' => $validasi->errors()
-                ], 403)
+                ], 403);
             }
 
 
@@ -66,7 +70,7 @@ class ProductController extends Controller
             $product->product_code        = $request->product_code;
             $product->product_name        = $request->product_name;
             $product->product_description = $request->product_description;
-            $product->product_images      = url('storage').'/'.$simpan;
+            $product->product_images      = $simpan == '' ? 'product-images/products.png' : $simpan;
             $product->product_price       = $request->product_price;
             $product->product_commision   = $request->product_commision;
             $product->product_stock       = $request->product_stock;

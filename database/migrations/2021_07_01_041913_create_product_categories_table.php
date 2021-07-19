@@ -19,7 +19,7 @@ class CreateProductCategoriesTable extends Migration
             $table->longText('category_description');
             $table->text('keywords')->nullable();
             $table->text('description_seo')->nullable();
-            $table->string('category_image');
+            $table->string('category_image')->default('category-product-images/blank_product.png');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

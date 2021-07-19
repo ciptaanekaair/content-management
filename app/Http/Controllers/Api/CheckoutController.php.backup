@@ -15,41 +15,9 @@ use App\Models\Voucher;
 
 class CheckoutController extends Controller
 {
-    public function vcrValidasi($kode)
-    {
-        $vcr = Voucher::where('voucher_code', $kode)->where('status', '!=', 0)->first();
-
-        if (!$vcr) {
-            return false;
-        }
-
-        $dateNow = Carbon::today();
-        $dateEnd = Carbon::createFromFormat('Y-m-d H:i:s', $vcr->voucher_end);
-        $check   = $dateEnd->gt($dateNow);
-
-        $response = ['voucher_id' => $vcr->id, 'voucher_price' => $vcr->voucher_price];
-
-        return $response;
-    }
-
-    // validasi berdasarkan ID
-    public function vcrValidasiID($id)
-    {
-        $vcr = Voucher::where('id', $id)->first();
-
-        if (!$vcr) {
-            return false;
-        }
-
-        $dateNow = Carbon::today();
-        $dateEnd = Carbon::createFromFormat('Y-m-d H:i:s', $vcr->voucher_end);
-        $check   = $dateEnd->gt($dateNow);
-
-        $response = ['voucher_id' => $vcr->id, 'voucher_price' => $vcr->voucher_price];
-
-        return $response;
-    }
-
+    /**
+     * Checkout seluruh barang di keranjang
+     */ 
     public function checkout(Request $request)
     {
         $rules = [
@@ -60,7 +28,7 @@ class CheckoutController extends Controller
 
         if ($validasi->fails()) {
             return response([
-                'error'   => true,
+                'error' => true,
                 'message' => $validasi->errors()
             ], 401);
         }
@@ -71,7 +39,7 @@ class CheckoutController extends Controller
 
         if ($lProduct->isEmpty()) {
             $response = [
-                'error'   => true,
+                'error' => true,
                 'message' => 'Anda belum memilih product. Silahkan pilih product di halaman product.'
             ];
 
@@ -80,16 +48,16 @@ class CheckoutController extends Controller
 
         // devine variable baru
         $total_price = Auth::user()->countTotalPrice();
-        $code_vcr    = $request->voucher_code;
+        $code_vcr    = $request->voucher_id;
         $discount    = 0;
 
         // buat transaksi baru
         $transaksi          = new Transaction;
         $transaksi->user_id = Auth::user()->id;
 
-        if (!empty($request->voucher_code)) {
+        if (!empty($request->voucher_id)) {
 
-            $voucher  = $this->vcrValidasi($code_vcr); // check validasi voucher.
+            $voucher  = $this->vcrValidasiID($code_vcr); // check validasi voucher.
 
             // jika voucer ditemukan berdasarkan kode
             if ($voucher != false) {
@@ -142,51 +110,4 @@ class CheckoutController extends Controller
         return response($response, 200);
     }
 
-    /**
-     * Confirmation checkout sekaligus mengubah user profile. untuk alamat pengiriman (table: user_details).
-     */ 
-    public function confirmCheckout(Request $request)
-    {
-        $rules = [
-            'nama_pt'     => 'required',
-            'alamat'      => 'required',
-            'provinsi_id' => 'required',
-            'kode_pos'    => 'required|alphanumeric',
-            'telepon'     => 'numeric',
-            'handphone'   => 'numeric'
-        ];
-
-        $validasi = Validator::make($request->all(), $rules);
-
-
-    }
-
-    /**
-     * Validasikan voucher secara real time setelah kode di masukan. => reference see: Shopee.co.id
-     */ 
-    public function validasiVoucher(Request $request)
-    {
-        $vcr = Voucher::where('voucher_code', $request->voucher_code)->first();
-
-        if (!$vcr) {
-            return response(['error' => true, 'message' => 'Code voucher yang anda masukan tidak ada.'], 200);
-        }
-
-        $dateNow = Carbon::today();
-        $dateEnd = Carbon::createFromFormat('Y-m-d H:i:s', $vcr->voucher_end);
-        $check   = $dateEnd->gt($dateNow);
-
-        if ($check == false) {
-            return response([
-                'error'   => true, 
-                'message' => 'Perhatikan tanggal berlaku voucher yang anda masukan.'
-            ], 403);
-        }
-
-        return response([
-            'success' => true,
-            'message' => 'Selamat, voucher dapat digunakan pada transaksi ini.',
-            'data'    => $vcr
-        ]);
-    }
 }
