@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ProductImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Product Route
     Route::resource('products', ProductController::class);
     Route::get('products/data', [ProductController::class, 'getData'])->name('product.data');
+    Route::get('products/data-export', [ProductCategoryController::class, 'exportData'])->name('product.export');
+
+    // product images
+    Route::post('products/images', [ProductImageController::class, 'store'])->name('product-images.store');
+    Route::get('products/images/{id}', [ProductImageController::class, 'edit'])->name('product-images.edit');
+    Route::put('products/images', [ProductImageController::class, 'update'])->name('product-images.update');
+    Route::get('products/{id}/images', [ProductImageController::class, 'getData'])->name('product-images.data');
 
     // Profile Route
     Route::get('profile/{username}', [ProfileController::class, 'getProfile'])->name('profile.show');

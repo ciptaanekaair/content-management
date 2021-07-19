@@ -56,6 +56,13 @@ class ProductCategoryController extends Controller
 
     }
 
+    public function exportData()
+    {
+        if ($this->authorize('MOD1004-read') || $this->authorize('spesial')) {
+            return Excel::download(new ProductCategoryExport, 'product_category_'.date('Y-m-d').'.xlsx');
+        }
+    }
+
     /**
      * Penyimpanan data Product Categories baru.
      */
@@ -231,10 +238,5 @@ class ProductCategoryController extends Controller
                 'message' => 'Berhasil hapus data: '.$pCategory->category_name.'.'
             ], 200);
         }
-    }
-
-    public function exportData()
-    {
-        return Excel::download(new ProductCategoryExport, 'product_category_'.date('Y-m-d').'.xlsx');
     }
 }

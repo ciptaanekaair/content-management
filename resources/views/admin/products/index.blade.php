@@ -7,8 +7,8 @@
 @section('content')
   <div class="row mb-3">
     <div class="col-12">
-      <a href="" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</a> &nbsp&nbsp
-      <a href="" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
+      <a href="{{ url('products/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</a> &nbsp&nbsp
+      <a href="{{ url('products/data-export') }}" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
     </div>
   </div>
   <div class="row">
@@ -56,50 +56,6 @@ $(function() {
     fetch_table(page, perpage, search);
   });
 
-  $('#category_form').on('submit', function(e){
-    e.preventDefault();
-
-    var id = $('#category_id').val();
-
-    perpage = $('#perpage').val();
-    search  = $('#pencarian').val();
-    page    = $('#posisi_page').val();
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    if (save_method == "update") {
-      url  = "{{ url('product') }}/"+id;
-    }
-    else {
-      url = "{{ url('product') }}";
-    }
-
-    $.ajax({
-      url: url,
-      type: 'POST',
-      data: new FormData($('#modal-form form')[0]),
-      contentType: false,
-      processData: false,
-      success: function(data) {
-        formReset();
-        $('#modal-form').modal('hide');
-        fetch_table(page, perpage, search);
-      }, error: function(response) {
-        console.log(response);
-        $('#category_nameError').text(response.responseJSON.errors.category_name);
-        $('#category_descriptionError').text(response.responseJSON.errors.category_description);
-        $('#category_imageError').text(response.responseJSON.errors.category_image);
-        $('#keywordsError').text(response.responseJSON.errors.keywords);
-        $('#description_seoError').text(response.responseJSON.errors.description_seo);
-        $('#statusError').text(response.responseJSON.errors.status);
-      }
-    });
-  }); // end submit save or update
-
   // start script pencarian
   $('input[name="pencarian"]').bind('change paste keyup', function(){
     search = $(this).val();
@@ -139,9 +95,9 @@ $(function() {
         );
       }
     });
-
   }); // end script delete
 
+  // paginate start
   $('body').on('click', '.flex a', function(e) {
     e.preventDefault();
 
@@ -152,11 +108,7 @@ $(function() {
     $('#posisi_page').val(page);
 
     fetch_table(page, perpage, search);
-   });
-
-  $('body').on('click', '#btnDelete', function() {
-
-  });
+   }); // end script paginate
 });
 
 function cariData(data) {
@@ -176,7 +128,7 @@ function newData() {
 
 function fetch_table(page, perpage, search) {
   $.ajax({
-    url: '{{ url("product-category/data?page=") }}'+page+'&list_perpage='+perpage+'&search='+search,
+    url: '{{ url("products/data?page=") }}'+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
     success: function(data) {
       $('.table-data').html(data);
@@ -184,47 +136,10 @@ function fetch_table(page, perpage, search) {
   });
 }
 
-function formDeleteReset() {
-  $('#modal-delete form')[0].reset();
-}
-
-function formReset() {
-  $('#modal-form form')[0].reset();
-}
-
-function editData(id) {
-  save_method = 'update';
-  $.ajax({
-    url: '{{ url("product-categories") }}/'+id+'/edit',
-    type: 'GET',
-    dataType: 'JSON',
-    success: function(data) {
-      $('.modal-title').text('Edit: '+data.data.category_name);
-      $('#category_id').val(data.data.id);
-      $('#formMethod').val('PUT');
-      $('#category_name').val(data.data.category_name);
-      $('#category_description').val(data.data.category_description);
-      $('#keywords').val(data.data.keywords);
-      $('#description_seo').val(data.data.description_seo);
-      $('#category_image_link').attr('href', data.data.imageurl);
-      $('#btnSave').text('Update Data');
-      $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
-      $('#modal-form').modal('show');
-    },
-    error: function(message) {
-      Swal.fire(
-        'Error!',
-        'Gagal load data dari database. Silahkan hubungi developer.',
-        'error'
-      );
-    }
-  });
-}
-
 function confirmDelete(id) {
   save_method = 'delete';
   $.ajax({
-    url: '{{ url("product-categories") }}/'+id,
+    url: '{{ url("products") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
     success: function(data) {

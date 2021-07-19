@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('stisla/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('stisla/css/components.css') }}">
-        <link rel="stylesheet" href="{{ asset('vendor/notyf/notyf.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
@@ -49,10 +48,10 @@
         <script defer src="{{ asset('stisla/js/modules/jquery.nicescroll.min.js') }}"></script>
         <script defer src="{{ asset('stisla/js/modules/moment.min.js') }}"></script>
         <script defer src="{{ asset('stisla/js/modules/marked.min.js') }}"></script>
-        <script defer src="{{ asset('vendor/notyf/notyf.min.js') }}"></script>
         <script defer src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
         <script defer src="{{ asset('stisla/js/modules/chart.min.js') }}"></script>
         <script defer src="{{ asset('vendor/select2/select2.min.js') }}"></script>
+        <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 
         <script src="{{ asset('stisla/js/stisla.js') }}"></script>
         <script src="{{ asset('stisla/js/scripts.js') }}"></script>

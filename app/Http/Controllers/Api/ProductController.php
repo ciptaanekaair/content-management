@@ -48,10 +48,14 @@ class ProductController extends Controller
 
     public function search(Request $request, $keyword)
     {
-        $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 'products.product_name', 'products.slug', 'products.product_description', 'products.product_images', 'products.product_price', 'products.product_stock', 'products.status')
-                    ->where('product_name', 'LIKE', '%'.$keyword.'%')
-                    ->where('status', 1)
-                    ->get();
+        $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
+                'products.product_name', 'products.slug', 'products.product_description', 
+                'products.product_images', 'products.product_price', 'products.product_stock', 
+                'products.status')
+                ->where('product_name', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('product_code', 'LIKE', '%'.$keyword.'%')
+                ->where('status', 1)
+                ->get();
 
         if ($produk->count() > 0) {
             $response = [

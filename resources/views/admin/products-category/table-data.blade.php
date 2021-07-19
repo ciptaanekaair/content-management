@@ -4,34 +4,28 @@
       <tr>
         <th width="100">No</th>
         <th width="100">#</th>
-        <th>Part Code</th>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Stock</th>
+        <th>Category Name</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-    @if($products->isEmpty())
+    @if($pCategory->isEmpty())
       <tr>
         <td colspan="5">
           <b><i>
-            Belum ada data products, silahkan hubungi admin.
+            Belum ada data categories, silahkan hubungi admin.
           </i></b>
         </td>
       </tr>
     @else
-      @foreach($products as $index => $item)
+      @foreach($pCategory as $index => $item)
         <tr>
           <td>
-            {{ $products->firstItem() + $index }}
+            {{ $pCategory->firstItem() + $index }}
           </td>
           <td>{{ $item->id }}</td>
-          <td>{{ $item->product_code }}</td>
-          <td>{{ $item->product_name }}</td>
-          <td>{{ $item->product_price }}</td>
-          <td>{{ $item->product_stock }}</td>
+          <td>{{ $item->category_name }}</td>
           <td>
             @if ($item->status == 1)
               <div class="badge badge-success">active</div>
@@ -54,7 +48,7 @@
       <tr>
         <td colspan="5">
           <div class="text-center">
-            {{ $products->links() }}
+            {{ $pCategory->links() }}
           </div>
         </td>
       </tr>

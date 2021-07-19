@@ -22,8 +22,8 @@ class CreateProductsTable extends Migration
             $table->text('keywords')->nullable();
             $table->text('description_seo')->nullable();
             $table->string('product_images')->default('product-images/blank_product.png');
-            $table->decimal('product_price', 16,2);
-            $table->decimal('product_commision', 12,2);
+            $table->decimal('product_price', 16,0);
+            $table->decimal('product_commision', 16,0)->nullable();
             $table->integer('product_stock');
             $table->integer('status')->default(1); // publish: 1, draft: 0
             $table->timestamps();
