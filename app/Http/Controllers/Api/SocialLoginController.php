@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Http\Request;
 
 class SocialLoginController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('social');
+    }
+
     public function redirect($service)
     {
-        service Socialite::driver($service)->stateless()->redirect();
+        return Socialite::driver($service)->stateless()->redirect();
     }
 
     public function callback($service)

@@ -16,8 +16,8 @@ class SocialiteMidware
      */
     public function handle(Request $request, Closure $next)
     {
-        $services       = ['google', 'facebook'];
-        $socialServices = [];
+        $services        = ['google', 'facebook'];
+        $enabledServices = [];
 
         foreach($services as $service) {
             if (config('services'.$service)) {
