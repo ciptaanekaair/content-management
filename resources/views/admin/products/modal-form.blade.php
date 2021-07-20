@@ -9,9 +9,10 @@
 			</div>
 			<form method="POST" id="formImage" name="formImage" enctype="multipart/form-data">
 				<div class="modal-body">
+					<code align="center" style="text-align: center;" id="productImagesTextID"></code>
 					<input type="hidden" name="product_id_i" id="product_id_i" value="{{ old('product_id_i', $product->id) }}">
 					<input type="hidden" name="images_id" id="images_id">
-					<input type="hidden" name="_method" id="formMethod" value="POST">
+					<input type="hidden" name="_method" id="formMethod" value="PUT">
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="alert-message">
@@ -48,14 +49,12 @@
 			</div>
 			<form type="POST" id="form_images_delete">
 			<div class="modal-body">
-					{{ csrf_field() }}
-					<input type="hidden" name="category_id_d" id="category_id_d">
+					<input type="hidden" name="images_id_d" id="images_id_d">
 					<input type="hidden" name="_method" id="formMethodD" value="DELETE">
 				<p align="center">
-					Anda akan menghapus data:<br>
-					<code id="category_name_d"></code>.
+					Anda akan menghapus gambar produk dengan id: <span id="produk_id_d"></span>
 					<br>
-					<b>Apakah anda yakin? Anda tidak akan dapat mengembalikan data ini.</b>
+					<code>Note: Gambar akan terhapus secara permanen.</code>
 				</p>
 			</div>
 			<div class="modal-footer">

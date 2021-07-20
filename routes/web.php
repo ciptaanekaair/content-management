@@ -35,7 +35,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // product images
     Route::post('products/images', [ProductImageController::class, 'store'])->name('product-images.store');
     Route::get('products/images/{id}', [ProductImageController::class, 'edit'])->name('product-images.edit');
-    Route::put('products/images', [ProductImageController::class, 'update'])->name('product-images.update');
+    Route::put('products/images/{id}', [ProductImageController::class, 'update'])->name('product-images.update');
+    Route::delete('products/images/{id}/hapus', [ProductImageController::class, 'delete'])->name('product-images.delete');
     Route::get('products/{id}/images', [ProductImageController::class, 'getData'])->name('product-images.data');
 
     // Profile Route

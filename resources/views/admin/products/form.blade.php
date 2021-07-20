@@ -25,13 +25,16 @@
 						<div class="row">
 							<div class="col-12 pt-4">
 								<div class="form-group">
-									<label for="category_product_id">Kategory Product</label>
-									<select name="category_product_id" id="category_product_id" class="form-control">
+									<label for="product_category_id">Kategory Product</label>
+									<select name="product_category_id" id="product_category_id" class="form-control">
 										<option value="kategori" selected>Pilih Kategori Product</option>
 										@foreach($pCategory as $item)
-											<option value="{{ $item->id }}" {{ $item->id == $product->category_product_id ? 'selected' : '' }}>{{ $item->category_name }}</option>
+											<option value="{{ $item->id }}" {{ $item->id == $product->product_category_id ? 'selected' : '' }}>{{ $item->category_name }}</option>
 										@endforeach
 									</select>
+									<div class="alert-message">
+										<code id="product_category_idError"></code>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-12 col-lg-6">
@@ -120,10 +123,10 @@
 							</div>
 							<div class="col-md-12 col-lg-6">
 								<div class="form-group">
-									<label for="product_image">Gambar Utama Product</label>
-									<input type="file" name="product_image" id="product_image" class="form-control" value="{{ old('product_image', $product->product_image) }}" placeholder="Komisi. (Tidak wajib di isi)">
+									<label for="product_images">Gambar Utama Product</label>
+									<input type="file" name="product_images" id="product_images" class="form-control" value="{{ old('product_images', $product->product_images) }}" placeholder="Komisi. (Tidak wajib di isi)">
 									<div class="alert-massage">
-										<code id="product_commisionError"></code>
+										<code id="product_imagesError"></code>
 									</div>
 								</div>
 							</div>
@@ -140,7 +143,10 @@
 						<a onclick="newData()" class="btn btn-success">
 							<i class="fa fa-plus"></i> Upload Image
 						</a>
-						<div class="table-image">
+						<a onclick="refresh()" class="btn btn-success">
+							<i class="fa fa-refresh"></i> Refresh
+						</a>
+						<div class="table-data" id="tableData">
 							@include('admin.products.table-image')
 						</div>
 					</div>
@@ -160,21 +166,56 @@
 <script type="text/javascript">
 var save_method, url;
 
-$(document).ready(function() {
+CKEDITOR.replace('product_description');
+
+$(function() {
 	$.ajaxSetup({
     headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
+  })
+
+  $('#product-form').on('submit', function(e) {
+  	e.preventDefault();
+
+		var productID = $('#product_id').val();
+
+		if (productID === null) url = '{{ url("products") }}/'+productID;
+		else url = '{{ url("products") }}';
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: new FormData($('#tabContent form')[0]),
+			contentType: false,
+			processData: false,
+			success: function(data) {
+				window.location.href = '{{ url("products") }}/'+data.data.id+'/edit';
+			},
+			error: function(response) {
+				$('#product_category_idError').text(response.responseJSON.errors.product_category_id);
+				$('#product_codeError').text(response.responseJSON.errors.product_code);
+				$('#product_nameError').text(response.responseJSON.errors.product_name);
+				$('#product_descriptionError').text(response.responseJSON.errors.product_description);
+				$('#product_priceError').text(response.responseJSON.errors.product_price);
+				$('#product_stockError').text(response.responseJSON.errors.product_stock);
+				$('#keywordsError').text(response.responseJSON.errors.keywords);
+				$('#description_seoError').text(response.responseJSON.errors.description_seo);
+				$('#product_commisionError').text(response.responseJSON.errors.product_commision);
+				$('#statusError').text(response.responseJSON.errors.status);
+				$('#product_imageError').text(response.responseJSON.errors.product_image);
+			}
+		});
   });
-	CKEDITOR.replace('product_description');
 
 	$('#formImage').on('submit', function(e){
     e.preventDefault();
 
-		var id = $('#product_images_id').val();
+		var id        = $('#images_id').val();
+		var productID = $('#product_id').val();
 
 		if (save_method == 'update') url = '{{ url("products/images") }}/'+id;
-		else url = '{{ url("products/images") }}';
+		else url = '{{ route("product-images.store") }}';
 
 		$.ajax({
 			url: url,
@@ -183,17 +224,44 @@ $(document).ready(function() {
       contentType: false,
       processData: false,
       success: function(data) {
+      	fetch_image(productID);
       	$('#images').val('');
-      	Swal.fire(
-      		'Success!',
-      		'Berhasil upload data baru',
-      	);
+      	$('#modal-form').modal('hide');
+      	Swal.fire('Success!', 'Berhasil upload image baru', 'success');
       }, error: function(response) {
       	Swal.fire('Error!', response.message, 'error');
       	$('#product_id_iError').text(response.responseJSON.errors.product_id_i);
       	$('#images_id').text(response.responseJSON.errors.images_id);
       	$('#imagesError').text(response.responseJSON.errors.images);
       }
+		});
+	});
+
+	$('#form_images_delete').on('submit', function(e) {
+		e.preventDefault();
+
+		var id        = $('#images_id_d').val();
+		var productID = $('#product_id').val();
+
+		$.ajax({
+			url: '{{ url("products/images") }}/'+id+'/hapus',
+			type: 'POST',
+			data: $(this).serialize(),
+			success: function(data) {
+				$('#modal-delete').modal('hide');
+				Swal.fire(
+					'Success',
+					data.message,
+					'success'
+				);
+				fetch_image(productID);
+			}, error: function(data) {
+				Swal.fire(
+					'Error!',
+					'Gagal menghapus data gambar. Silahkan ulangi atau apabila error ini lebih dari 2 kali, mohon hubungi Developer',
+					'error'
+				);
+			}
 		});
 	});
 });
@@ -208,23 +276,58 @@ function newData() {
 	}
 	else {
 		save_method = 'add';
+		$('.modal-title').text('Upload Image Baru.');
 		$('#formMethod').val('POST');
 		$('#modal-form').modal('show');
+		$('#productImagesTextID').text('');
 	}
+}
+
+function refresh() {
+	var productID = $('#product_id').val();
+
+	fetch_image(productID);
+}
+
+function fetch_image(id) {
+	$.ajax({
+		url: '{{ url("products") }}/'+id+'/images',
+		type: 'GET',
+		success: function(data) {
+			$('.table-data').html(data);
+		}
+	});
 }
 
 function simpanGambar() {
 	alert('simpan gambar');
 }
 
-function fetch_image() {
+function editImage(id) {
+	save_method = 'update';
 	$.ajax({
-		url: '{{ url("products/") }}/'+id+'/get-image',
+		url: '{{ url("products/images") }}/'+id,
 		type: 'GET',
 		success: function(data) {
-			// 
-		}, error: function(data) {
-			// 
+			$('.modal-title').text('Ubah image ID: '+data.data.id);
+			$('#formMethod').val('PUT');
+			$('#images_id').val(data.data.id);
+			$('#modal-form').modal('show');
+		}
+	});
+}
+
+function deleteImage(id) {
+	$.ajax({
+		url: '{{ url("products/images") }}/'+id,
+		type: 'GET',
+		success: function(data) {
+			$('#images_id_d').val(data.data.id);
+			$('#produk_id_d').text(data.data.id);
+			$('#modal-delete').modal('show');
+		},
+		error: function(response) {
+			Swal.fire('error', 'Gagal load data image.', 'error');
 		}
 	});
 }

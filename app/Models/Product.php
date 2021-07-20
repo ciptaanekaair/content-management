@@ -19,4 +19,9 @@ class Product extends Model
         return $productpicurl;
     }
 
+    public function productImages()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
 }

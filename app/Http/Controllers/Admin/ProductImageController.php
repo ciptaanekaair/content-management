@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use Storage;
+use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\RekamJejak;
 
@@ -13,9 +14,11 @@ class ProductImageController extends Controller
 {
     public function getData($id)
     {
-        $images = ProductImage::where('product_id', $id)->orderBy('id', 'DESC')->get();
+        $product = Product::with('productImages')
+                    ->where('id', $id)
+                    ->first();
 
-        return view('admin.products.table-image', compact('images'));
+        return view('admin.products.table-image', compact('product'));
     }
 
     public function store(Request $request)
@@ -74,7 +77,7 @@ class ProductImageController extends Controller
     {
         $rules = [
             'product_id_i' => 'required|numeric',
-            'images'       => 'required|image|mimes: jpg,jpeg,png,bmp:2048'
+            'images'       => 'required|image|mimes: jpg,jpeg,png,bmp|max:2048'
         ];
 
         $validasi = $this->validate($request, $rules);

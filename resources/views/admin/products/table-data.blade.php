@@ -41,12 +41,12 @@
           </td>
           <td>
             <div class="btn-group">
-              <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-info">
+              <a href="{{ url('products/'.$item->id.'/edit') }}" class="btn btn-sm btn-info">
                 <i class="fa fa-pencil"></i>
-              </button>
-              <button onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger">
+              </a>
+              <a onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger">
                 <i class="fa fa-trash"></i>
-              </button>
+              </a>
             </div>
           </td>
         </tr>

@@ -77,25 +77,18 @@ class ProductController extends Controller
     {
         if ($this->authorize('MOD1104-create') || $this->authorize('spesial')) {
             $rules = [
-                'category_product_id' => 'required',
+                'product_category_id' => 'required',
                 'product_code'        => 'required|unique:products',
                 'product_name'        => 'required',
                 'product_description' => 'required',
-                'product_images'      => 'images|mimes:jpg, jpeg, png, gif, bmp',
+                'product_images'      => 'image|mimes:jpg, jpeg, png, gif, bmp',
                 'product_price'       => 'required|numeric',
                 'product_commision'   => 'required|numeric',
-                'product_stock'       => 'required',
+                'product_stock'       => 'required|numeric',
                 'status'              => 'numeric'
             ];
 
-            $validasi = Validator::make($request->all(), $rules);
-
-            if ($validasi->fails()) {
-                return response()->json([
-                    'error' => true,
-                    'message' => $validasi->errors()
-                ], 403);
-            }
+            $validasi = $this->validate($request, $rules);
 
             $simpan = '';
 
@@ -104,12 +97,12 @@ class ProductController extends Controller
             }
 
             $product = new Product;
-            $product->category_product_id = $request->category_product_id;
+            $product->product_category_id = $request->product_category_id;
             $product->product_code        = $request->product_code;
             $product->product_name        = $request->product_name;
             $product->slug                = Str::slug($request->product_name);
             $product->product_description = $request->product_description;
-            $product->product_images      = $simpan == '' ? 'product-images/products.png' : $simpan;
+            $product->product_images      = $simpan == '' ? 'product-images/blank_product.png' : $simpan;
             $product->keywords            = $request->keywords;
             $product->description_seo     = $request->description_seo;
             $product->product_price       = $request->product_price;
@@ -152,11 +145,15 @@ class ProductController extends Controller
     public function edit($id)
     {
         if ($this->authorize('MOD1104-edit') || $this->authorize('spesial')) {
-            $pCategory = ProductCategory::where('status', '!=', 9)->orderBy('category_name', 'ASC')->get();
-            $product   = Product::findOrFail($id);
-            $images    = ProductImage::where('product_id', $id)->paginate();
+            $pCategory = ProductCategory::where('status', '!=', 9)
+                        ->orderBy('category_name', 'ASC')
+                        ->get();
+            $product   = Product::with('productImages')
+                        ->where('id', $id)
+                        ->first();
+            // $images    = ProductImage::where('product_id', $id)->paginate();
 
-            return view('admin.products.form', compact('pCategory', 'product', 'images'));
+            return view('admin.products.form', compact('pCategory', 'product'));
         }
     }
 
@@ -166,7 +163,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1104-update') || $this->authorize('spesial')) {
-            // code...
+            
         }
     }
 
