@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->default('profile-photos/user.php');
-            $table->foreignId('level_id')->constrained('levels')->default(1);
+            $table->string('profile_photo_path', 2048)->nullable();
+            $table->foreignId('level_id')->constrained('levels');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

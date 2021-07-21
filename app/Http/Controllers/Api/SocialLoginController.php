@@ -21,36 +21,25 @@ class SocialLoginController extends Controller
 
     public function callback($service)
     {
-        $serviceUser = Socialite::driver($service)->stateless()->user();
-
-        $cek_user = User::where('email', $serviceUser->email)->first();
-
-        if (!empty($cek_user)) {
-            $simpan = $serviceUser->getAvatar->storeAs('profile-photos', 'public');
-            
-            $token = $cek_user->createToken('usertoken')->plainTextToken;
-
-            return response([
-                'success' => true,
-                'message' => 'Berhasil melakukan autentikasi.',
-                'data'    => $cek_user
-            ]);
+        try {
+            $serviceUser = Socialite::driver($service)->stateless()->user();        
+        } catch (InvalidStateException $e) {
+            return response(['error' => true, 'message' => 'Gagal']);
         }
 
-        $user = User::create([
-                'name'               => $serviceUser->getName,
-                'email'              => $serviceUser->getEmail,
-                'email_verified_at'  => date('Y-m-d H:i:s'),
-                'password'           => Hash::make(rand('111111', '999999')),
-                'profile_photo_path' => $simpan
-            ]);
+        $user = User::firstOrNew(['email' => $serviceUser->email]);
+        $user->name              = $serviceUser->name;
+        $user->username          = md5($serviceUser->email);
+        $user->email_verified_at = date('Y-m-d H:i:s');
+        $user->save();
 
         $token = $user->createToken('usertoken')->plainTextToken;
 
         return response([
             'success' => true,
             'message' => 'Berhasil melakukan autentikasi.',
-            'data'    => $user
-        ]);
+            'data'    => $user,
+            'token'   => $token
+        ], 200);
     }
 }
