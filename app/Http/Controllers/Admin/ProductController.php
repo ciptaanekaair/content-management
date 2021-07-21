@@ -32,8 +32,8 @@ class ProductController extends Controller
     public function getData(Request $request)
     {
         if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
-            $perpage = $request->get['list_perpage'] == '' ? 10 : $request->list_perpage;
-            $search  = $request->get['search'];
+            $perpage = $request->get('list_perpage');
+            $search  = $request->get('search');
 
             // jika search terisi
             if (!empty($search)) {
