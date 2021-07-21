@@ -45,7 +45,7 @@ class SocialLoginController extends Controller
             ]);
         }
 
-        $token = $user->createToken('usertoken')->plainTextToken;
+        $token = $cek_user->createToken('usertoken')->plainTextToken;
 
         return response([
             'success' => true,
