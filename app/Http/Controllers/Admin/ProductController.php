@@ -32,7 +32,7 @@ class ProductController extends Controller
     public function getData(Request $request)
     {
         if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
-            $perpage = $request->get['list_perpage'];
+            $perpage = $request->get['list_perpage'] == '' ? 10 : $request->list_perpage;
             $search  = $request->get['search'];
 
             // jika search terisi
@@ -136,7 +136,13 @@ class ProductController extends Controller
     public function show($id)
     {
         if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
-            
+            $product = Product::find($id);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil mengambil data product dari database.',
+                'data' => $product
+            ]);
         }
     }
 
@@ -226,7 +232,23 @@ class ProductController extends Controller
     public function destroy($id)
     {
         if ($this->authorize('MOD1104-delete') || $this->authorize('spesial')) {
-            // code...
-        }
+            $product = Product::find($id);
+            $product->status = 9;
+            $product->update();
+
+            $rekam = new RekamJejak;
+            $rekam->user_id     = auth()->user()->id;
+            $rekam->modul_code  = '[MOD1104] products';
+            $rekam->action      = 'Hapus';
+            $rekam->description = 'User: '.auth()->user()->email.' menghapus data: '.
+                                    $product->product_name.', dengan ID: '.$product->id.
+                                    '. Pada: '.date('Y-m-d H:i:s').'.';
+            $rekam->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data: '.$product->product_name.'.',
+            ], 200);
+         }
     }
 }

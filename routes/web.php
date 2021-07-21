@@ -28,8 +28,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('products-categories/data-export', [ProductCategoryController::class, 'exportData'])->name('product-categories.export');
 
     // Product Route
-    Route::resource('products', ProductController::class);
     Route::get('products/data', [ProductController::class, 'getData'])->name('product.data');
+    Route::resource('products', ProductController::class);
     Route::get('products/data-export', [ProductCategoryController::class, 'exportData'])->name('product.export');
 
     // product images

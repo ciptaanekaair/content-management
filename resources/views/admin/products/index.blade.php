@@ -43,11 +43,48 @@
   </div>
 @endsection
 
+@section('formodal')
+
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title-delete"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form type="POST" id="form_product_delete">
+      <div class="modal-body">
+          <input type="hidden" name="product_id" id="product_id">
+          <input type="hidden" name="_method" id="formMethodD" value="DELETE">
+        <p align="center">
+          Anda akan menghapus product: <span id="modalProductName"></span>
+          <br>
+          <code>Note: Gambar akan terhapus secara permanen.</code>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger" id="btnDelete"><i class="fa fa-trash"></i> &nbsp Delete</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection
+
 @section('jq-script')
 <script type="text/javascript">
 var table, save_method, page, perpage, search, url, data;
 
 $(function() {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  })
+
   $('#perpage').on('change', function() {
     perpage = $(this).val();
     search  = $('#pencarian').val();
@@ -57,7 +94,7 @@ $(function() {
   });
 
   // start script pencarian
-  $('input[name="pencarian"]').bind('change paste keyup', function(){
+  $('input[name="pencarian"]').bind('change paste', function(){
     search = $(this).val();
     perpage = $('#perpage').val();
     page    = 1;
@@ -66,22 +103,20 @@ $(function() {
   }); // end pencarian
 
   // start script delete
-  $('#category_delete_form').on('submit', function(e) {
+  $('#form_product_delete').on('submit', function(e) {
     e.preventDefault();
 
-    var id         = $('#category_id_d').val();
+    var id         = $('#product_id').val();
     var total_data = "{{ $products->total() }}";
 
-      perpage = $('#perpage').val();
-      search  = $('#pencarian').val();
-    if (total_data <= 10) {
-      page    = $('#posisi_page').val(1);
-    } else {
-      page = $('#posisi_page').val();
-    }
+    perpage = $('#perpage').val();
+    search  = $('#pencarian').val();
+
+    if (total_data <= 10) page = 1;
+    else page = $('#posisi_page').val();
 
     $.ajax({
-      url: '{{ url("product-categories") }}/'+id,
+      url: '{{ url("products") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
       success: function(data) {
@@ -90,7 +125,7 @@ $(function() {
         formDeleteReset();
         Swal.fire(
           'Success!',
-          'Berhasil menghapus data tersebut.',
+          'Berhasil menghapus data tersebut.'+total_data,
           'success'
         );
       }
@@ -136,6 +171,12 @@ function fetch_table(page, perpage, search) {
   });
 }
 
+function formDeleteReset() {
+  $('.modal-title-delete').text('');
+  $('#product_id').val('');
+  $('#modalProductName').text('');
+}
+
 function confirmDelete(id) {
   save_method = 'delete';
   $.ajax({
@@ -143,10 +184,10 @@ function confirmDelete(id) {
     type: 'GET',
     dataType: 'JSON',
     success: function(data) {
-      $('.modal-title-delete').text('Delete data: '+data.data.category_name);
-      $('#category_id_d').val(data.data.id);
+      $('.modal-title-delete').text('Delete data: '+data.data.product_name);
+      $('#product_id').val(data.data.id);
       $('#formMethodD').val('DELETE');
-      $('#category_name_d').text(data.data.category_name);
+      $('#modalProductName').text(data.data.product_name);
       $('#modal-delete').modal('show');
     },
   });
