@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 use Str;
 use Validator;
 use Storage;
 use App\Exports\ProductDataExport;
 use App\Models\ProductCategory;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\RekamJejak;
 
 class ProductController extends Controller

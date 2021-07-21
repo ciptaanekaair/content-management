@@ -52,7 +52,7 @@
         </tr>
       @endforeach
       <tr>
-        <td colspan="5">
+        <td colspan="8">
           <div class="text-center">
             {{ $products->links() }}
           </div>

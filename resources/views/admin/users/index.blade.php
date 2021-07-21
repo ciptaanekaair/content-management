@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('header')
-  <h1>Product Categories</h1>
+  <h1>User Management</h1>
 @endsection
 
 @section('content')
@@ -216,17 +216,7 @@ function editData(id) {
       $('#modal-form').modal('show');
     },
     error: function(message) {
-      // var error = jQuery.parseJSON(xhr.responseText);
-      // for(var k in error.message){
-      //   if (error.massage.hasOwnProperty(k)) {
-      //     error.message[k].forEach(function(pesan) {
-
-      //     });
-      //   }
-      // }
-      // $('#category_nameError').text(e.data.category_name);
-      // $('#statusError').text(e.data.status);
-      // $('#nameError').text(response.responseJSON.errors.name);
+      Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
     }
   });
 }

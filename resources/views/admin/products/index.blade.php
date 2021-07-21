@@ -7,8 +7,9 @@
 @section('content')
   <div class="row mb-3">
     <div class="col-12">
-      <a href="{{ url('products/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</a> &nbsp&nbsp
-      <a href="{{ url('products/data-export') }}" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
+      <a href="{{ url('products/create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</a> &nbsp&nbsp
+      <a onclick="refresh()" class="btn btn-sm btn-success"><i class="fa fa-refresh"></i> &nbsp Refresh</a> &nbsp&nbsp
+      <a href="{{ route('product.data.export') }}" target="_blank" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
     </div>
   </div>
   <div class="row">
@@ -36,7 +37,7 @@
           <div class="table-data">
             @include('admin.products.table-data')
           </div>
-          <input type="hidden" name="perpage" id="posisi_page">
+          <input type="hidden" name="posisi_page" id="posisi_page" value="1">
         </div>
       </div>
     </div>
@@ -133,7 +134,7 @@ $(function() {
   }); // end script delete
 
   // paginate start
-  $('body').on('click', '.flex a', function(e) {
+  $('body').on('click', '.inline-flex a', function(e) {
     e.preventDefault();
 
     page    = $(this).attr('href').split('page=')[1];
@@ -150,6 +151,14 @@ function cariData(data) {
   perpage = $('#perpage').val();
   
   fetch_table(1, perpage, data);
+}
+
+function refresh() {
+  perpage = $('#perpage').val();
+  search  = $('#pencarian').val();
+  page    = $('#posisi_page').val();
+
+  fetch_table(page, perpage, search);
 }
 
 function newData() {

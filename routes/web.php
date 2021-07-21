@@ -25,12 +25,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Product Category Route
     Route::resource('product-categories', ProductCategoryController::class);
     Route::get('product-category/data', [ProductCategoryController::class, 'getData'])->name('product-catetgories.data');
-    Route::get('products-categories/data-export', [ProductCategoryController::class, 'exportData'])->name('product-categories.export');
+    Route::get('data/products-categories/export', [ProductCategoryController::class, 'exportData'])->name('product-categories.data.export');
 
     // Product Route
-    Route::get('products/data', [ProductController::class, 'getData'])->name('product.data');
     Route::resource('products', ProductController::class);
-    Route::get('products/data-export', [ProductCategoryController::class, 'exportData'])->name('product.export');
+    Route::get('products/data', [ProductController::class, 'getData'])->name('product.data');
+    Route::get('data/products/export', [ProductController::class, 'exportData'])->name('product.data.export');
 
     // product images
     Route::post('products/images', [ProductImageController::class, 'store'])->name('product-images.store');
@@ -44,6 +44,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::patch('profile/{username}', [ProfileController::class, 'update'])->name('profile.update');
 
     // Product Route
-    Route::resource('users', ProductController::class);
-    Route::get('users/data', [ProductController::class, 'getData'])->name('users.data');
+    Route::resource('pengguna', PenggunaController::class);
+    Route::get('users/data', [PenggunaController::class, 'getData'])->name('users.data');
+    Route::get('data/users/export', [PenggunaController::class, 'exportData'])->name('users.data.export');
+
+    // Rout::get('history');
 });

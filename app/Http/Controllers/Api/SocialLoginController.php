@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
+use Hash;
 
 class SocialLoginController extends Controller
 {
@@ -21,6 +22,34 @@ class SocialLoginController extends Controller
     {
         $serviceUser = Socialite::driver($service)->stateless()->user();
 
-        dd($serviceUser);
+        $cek_user = User::where('email', $serviceUser->email)->first();
+
+        if (!empty($cek_user)) {
+            $simpan = $serviceUser->getAvatar->storeAs('profile-photos', 'public');
+
+            $user = User::create([
+                'name'               => $serviceUser->getName,
+                'email'              => $serviceUser->getEmail,
+                'email_verified_at'  => date('Y-m-d H:i:s'),
+                'password'           => Hash::make(rand('111111', '999999')),
+                'profile_photo_path' => $simpan
+            ]);
+            
+            $token = $user->createToken('usertoken')->plainTextToken;
+
+            return response([
+                'success' => true,
+                'message' => 'Berhasil melakukan autentikasi.',
+                'data'    => $user
+            ]);
+        }
+
+        $token = $user->createToken('usertoken')->plainTextToken;
+
+        return response([
+            'success' => true,
+            'message' => 'Berhasil melakukan autentikasi.',
+            'data'    => $cek_user
+        ]);
     }
 }
