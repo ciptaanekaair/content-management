@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use Hash;
+use App\Models\User;
 
 class SocialLoginController extends Controller
 {
