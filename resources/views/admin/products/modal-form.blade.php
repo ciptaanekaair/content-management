@@ -12,7 +12,7 @@
 					<code align="center" style="text-align: center;" id="productImagesTextID"></code>
 					<input type="hidden" name="product_id_i" id="product_id_i" value="{{ old('product_id_i', $product->id) }}">
 					<input type="hidden" name="images_id" id="images_id">
-					<input type="hidden" name="_method" id="formMethod" value="PUT">
+					<input type="hidden" name="_method" id="modalFormMethod" value="PUT">
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="alert-message">

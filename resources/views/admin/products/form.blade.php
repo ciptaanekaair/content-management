@@ -21,7 +21,7 @@
 					<div class="tab-pane fade show active" id="formTab" role="tabpanel" aria-labelledby="form-tab">
 					<form method="POST" id="product-form" enctype="multipart/form-data">
 						<input type="hidden" name="product_id" id="product_id" value="{{ old('product_id', $product->id) }}">
-						<input type="hidden" name="_method" id="formMethod">
+						<input type="hidden" name="_method" id="formMethod" value="{{ $product->id == '' ? 'POST' : 'PUT' }}">
 						<div class="row">
 							<div class="col-12 pt-4">
 								<div class="form-group">
@@ -61,6 +61,9 @@
 									<textarea name="product_description" cols="30" rows="10" id="product_description" id="summernote" placeholder="Deskripsi Product">
 										{{ old('product_description', $product->product_description) }}
 									</textarea>
+									<div class="alert-message">
+										<code id="product_descriptionError"></code>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-12 col-lg-6">
@@ -130,6 +133,9 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-12 col-lg-6">
+								<a href="{{ old('imageurl', $product->imageurl) }}" target="_blank">{{ old('imageurl', $product->imageurl) }}</a>
+							</div>
 							<div class="col-12">
 								<a href="{{ url('products') }}" class="btn btn-secondary"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
 								<div class="float-right">
@@ -180,8 +186,8 @@ $(function() {
 
 		var productID = $('#product_id').val();
 
-		if (productID === null) url = '{{ url("products") }}/'+productID;
-		else url = '{{ url("products") }}';
+		if (productID === '') url = '{{ url("products") }}';
+		else url = '{{ url("products") }}/'+productID;
 
 		$.ajax({
 			url: url,
@@ -215,7 +221,7 @@ $(function() {
 		var productID = $('#product_id').val();
 
 		if (save_method == 'update') url = '{{ url("products/images") }}/'+id;
-		else url = '{{ route("product-images.store") }}';
+		else url = '{{ url("products/images") }}';
 
 		$.ajax({
 			url: url,
@@ -277,7 +283,7 @@ function newData() {
 	else {
 		save_method = 'add';
 		$('.modal-title').text('Upload Image Baru.');
-		$('#formMethod').val('POST');
+		$('#modalFormMethod').val('POST');
 		$('#modal-form').modal('show');
 		$('#productImagesTextID').text('');
 	}
@@ -310,7 +316,7 @@ function editImage(id) {
 		type: 'GET',
 		success: function(data) {
 			$('.modal-title').text('Ubah image ID: '+data.data.id);
-			$('#formMethod').val('PUT');
+			$('#modalFormMethod').val('PUT');
 			$('#images_id').val(data.data.id);
 			$('#modal-form').modal('show');
 		}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Str;
 use Validator;
 use Storage;
@@ -163,7 +164,59 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1104-update') || $this->authorize('spesial')) {
-            
+            $rules = [
+                'product_category_id' => 'required',
+                'product_code'        => ['required', Rule::unique('products')->ignore($id)],
+                'product_name'        => 'required',
+                'product_description' => 'required',
+                'product_images'      => 'image|mimes:jpg, jpeg, png, gif, bmp',
+                'product_price'       => 'required|numeric',
+                'product_commision'   => 'required|numeric',
+                'product_stock'       => 'required|numeric',
+                'status'              => 'numeric'
+            ];
+
+            $validasi = $this->validate($request, $rules);
+
+            $product = Product::find($id);
+            $simpan  = '';
+
+            if ($request->hasFile('product_images')) {
+                if (Storage::exists('/public/'.$product->product_images)) {
+                    Storage::delete('/public/'.$product->product_images);
+                }
+
+                $simpan = $request->product_images->store('product-images', 'public');
+                $product->product_images = $simpan;
+            }
+
+            $product->product_category_id = $request->product_category_id;
+            $product->product_code        = $request->product_code;
+            $product->product_name        = $request->product_name;
+            $product->slug                = Str::slug($request->product_name);
+            $product->product_description = $request->product_description;
+            $product->keywords            = $request->keywords;
+            $product->description_seo     = $request->description_seo;
+            $product->product_price       = $request->product_price;
+            $product->product_commision   = $request->product_commision;
+            $product->product_stock       = $request->product_stock;
+            $product->status              = $request->status;
+            $product->update();
+
+            $rekam = new RekamJejak;
+            $rekam->user_id     = auth()->user()->id;
+            $rekam->modul_code  = '[MOD1104] products';
+            $rekam->action      = 'Update';
+            $rekam->description = 'User: '.auth()->user()->email.' merubah data: '.
+                                    $product->product_name.', dengan ID: '.$product->id.
+                                    '. Pada: '.date('Y-m-d H:i:s').'.';
+            $rekam->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil merubah data product!',
+                'data'    => $product
+            ], 200);
         }
     }
 
