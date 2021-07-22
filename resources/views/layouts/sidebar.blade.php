@@ -5,7 +5,8 @@
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ route('dashboard') }}">
-                <img class="d-inline-block" width="32px" height="30.61px" src="" alt="">
+                FT
+                <!-- <img class="d-inline-block" width="32px" height="30.61px" src="" alt=""> -->
             </a>
         </div>
         <ul class="sidebar-menu">
@@ -44,23 +45,23 @@
                 </ul>
                 @if(auth()->user()->hasAccess('spesial'))
                 <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
-                        <a class="nav-link" href="#">User History</a>
+                    <li class="{{ request()->routeIs('user-histories*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('user-histories.index') }}">User History</a>
                     </li>
                 </ul>
                 @endif
             </li>
-            <li class="dropdown ">
+            <li class="dropdown {{ request()->routeIs('transactions*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-cart-arrow-down"></i> <span>Transaksi</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ request()->routeIs('transactions.index') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('transactions.index') }}">List Transaksi</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ request()->routeIs('transactions.create') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('transactions.create') }}">New Transaksi</a>
                     </li>
                 </ul>

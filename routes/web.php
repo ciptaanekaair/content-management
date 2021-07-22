@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\PenggunaDetailController;
 use App\Http\Controllers\Admin\TransaksiController;
+use App\Http\Controllers\Admin\RekamJejakController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +58,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::resource('transactions', TransaksiController::class);
     Route::get('data/transactions', [TransaksiController::class, 'getData'])->name('transactions.data');
 
-    // Rout::get('history');
+    Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
+    Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');
+    Route::get('user-histories/{id}', [RekamJejakController::class, 'getUser'])->name('user-histories.user');
 });

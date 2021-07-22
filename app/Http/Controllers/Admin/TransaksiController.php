@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 class TransaksiController extends Controller
 {
@@ -14,7 +15,17 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::where('status', '!=', 9)
+                        ->orderBy('id', 'DESC')
+                        ->paginate(10);
+
+        return view('admin.transaksi.index', compact('transactions'));
+    }
+
+    public function getData(Request $request)
+    {
+        $search  = $request->get('search');
+        $perpage = $request->get('list_perpage');
     }
 
     /**

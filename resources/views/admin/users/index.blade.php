@@ -50,7 +50,7 @@
 
 @section('jq-script')
 <script type="text/javascript">
-var table, save_method, page, perpage, search, url, data;
+var save_method, page, perpage, search, url, data;
 
 $(function() {
 
