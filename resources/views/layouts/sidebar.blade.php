@@ -39,7 +39,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
-                        <a class="nav-link" href="#">List User</a>
+                        <a class="nav-link" href="{{ route('pengguna.index') }}">List User</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">

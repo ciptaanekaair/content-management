@@ -36,18 +36,18 @@ class ProductCategoryController extends Controller
     {
         if ($this->authorize('MOD1004-read') || $this->authorize('special')) {
 
-            $c_perpage = $request->get('list_perpage');
-            $search    = $request->get('search');
+            $perpage = $request->get('list_perpage');
+            $search  = $request->get('search');
 
             if (!empty($search)) {
                 $pCategory = ProductCategory::where('status', '!=', 9)
                             ->where('category_name', 'LIKE', '%'.$search.'%')
-                            ->orderBy('id', 'DESC')
-                            ->paginate($c_perpage);
+                            ->orderBy('category_name', 'ASC')
+                            ->paginate($perpage);
             } else {
                 $pCategory = ProductCategory::where('status', '!=', 9)
                             ->orderBy('id', 'DESC')
-                            ->paginate($c_perpage);
+                            ->paginate($perpage);
             }
 
 

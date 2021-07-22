@@ -172,7 +172,7 @@ function newData() {
 
 function fetch_table(page, perpage, search) {
   $.ajax({
-    url: '{{ url("products/data?page=") }}'+page+'&list_perpage='+perpage+'&search='+search,
+    url: '{{ route("product.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
     success: function(data) {
       $('.table-data').html(data);

@@ -7,8 +7,9 @@
 @section('content')
   <div class="row mb-3">
     <div class="col-12">
-      <button onclick="newData()" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</button> &nbsp&nbsp
-      <a href="{{ route('product-categories.data.export') }}" target="_blank" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
+      <button onclick="newUserData()" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</button> &nbsp&nbsp
+      <button onclick="refresh()" class="btn btn-success"><i class="fa fa-refresh"></i> &nbsp Refresh</button> &nbsp&nbsp
+      <a href="{{ route('pengguna.data.export') }}" target="_blank" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> &nbsp Export Data</a>
     </div>
   </div>
   <div class="row">
@@ -32,9 +33,9 @@
             </div>
           </div>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body pb-0">
           <div class="table-data">
-            @include('admin.products-category.table-data')
+            @include('admin.users.table-data')
           </div>
           <input type="hidden" name="perpage" id="posisi_page">
         </div>
@@ -44,7 +45,7 @@
 @endsection
 
 @section('formodal')
-  @include('admin.products-category.form')
+  @include('admin.users.form')
 @endsection
 
 @section('jq-script')
@@ -52,6 +53,13 @@
 var table, save_method, page, perpage, search, url, data;
 
 $(function() {
+
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  })
+
   $('#perpage').on('change', function() {
     perpage = $(this).val();
     search  = $('#pencarian').val();
@@ -60,27 +68,61 @@ $(function() {
     fetch_table(page, perpage, search);
   });
 
-  $('#category_form').on('submit', function(e){
+  $('#user_form').on('submit', function(e){
     e.preventDefault();
 
-    var id = $('#category_id').val();
+    resetErrorUserForm();
+
+    var id = $('#user_id').val();
 
     perpage = $('#perpage').val();
     search  = $('#pencarian').val();
     page    = $('#posisi_page').val();
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    if (save_method == "update") url = "{{ url('pengguna') }}/"+id;
+    else url = "{{ route('pengguna.store') }}";
 
-    if (save_method == "update") {
-      url  = "{{ url('product-categories') }}/"+id;
-    }
-    else {
-      url = "{{ url('product-categories') }}";
-    }
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: new FormData($('#modal-new form')[0]),
+      contentType: false,
+      processData: false,
+      success: function(data) {
+        formReset();
+        $('#modal-new').modal('hide');
+        Swal.fire(
+          'Success!',
+          data.message,
+          'success'
+        );
+        fetch_table(page, perpage, search);
+      }, error: function(response) {
+        Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
+        $('#nameError').text(response.responseJSON.errors.name);
+        $('#emailError').text(response.responseJSON.errors.email);
+        $('#profile_photo_pathError').text(response.responseJSON.errors.profile_photo_path);
+        $('#statusError').text(response.responseJSON.errors.status);
+        $('#passwordError').text(response.responseJSON.errors.password);
+        $('#password_confirmationError').text(response.responseJSON.errors.password_confirmation);
+        $('#level_idError').text(response.responseJSON.errors.level_id);
+        $('#statusError').text(response.responseJSON.errors.status);
+      }
+    });
+  }); // end submit save or update
+
+  $('#detail_form').on('submit', function(e){
+    e.preventDefault();
+
+    resetErrorShippingForm();
+
+    var id = $('#detail_id').val();
+
+    perpage = $('#perpage').val();
+    search  = $('#pencarian').val();
+    page    = $('#posisi_page').val();
+
+    url = "{{ url('pengguna-detail') }}/"+id;
 
     $.ajax({
       url: url,
@@ -98,13 +140,13 @@ $(function() {
         );
         fetch_table(page, perpage, search);
       }, error: function(response) {
-        console.log(response);
-        $('#category_nameError').text(response.responseJSON.errors.category_name);
-        $('#category_descriptionError').text(response.responseJSON.errors.category_description);
-        $('#category_imageError').text(response.responseJSON.errors.category_image);
-        $('#keywordsError').text(response.responseJSON.errors.keywords);
-        $('#description_seoError').text(response.responseJSON.errors.description_seo);
-        $('#statusError').text(response.responseJSON.errors.status);
+        Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
+        $('#nama_ptError').text(response.responseJSON.errors.nama_pt);
+        $('#teleponError').text(response.responseJSON.errors.telepon);
+        $('#handphoneError').text(response.responseJSON.errors.handphone);
+        $('#alamatError').text(response.responseJSON.errors.alamat);
+        $('#provinsi_idError').text(response.responseJSON.errors.provinsi_id);
+        $('#kode_posError').text(response.responseJSON.errors.kode_pos);
       }
     });
   }); // end submit save or update
@@ -119,11 +161,11 @@ $(function() {
   }); // end pencarian
 
   // start script delete
-  $('#category_delete_form').on('submit', function(e) {
+  $('#user_delete_form').on('submit', function(e) {
     e.preventDefault();
 
-    var id         = $('#category_id_d').val();
-    var total_data = "{{ $pCategory->total() }}";
+    var id         = $('#userid_delete').val();
+    var total_data = "{{ $users->total() }}";
 
       perpage = $('#perpage').val();
       search  = $('#pencarian').val();
@@ -134,7 +176,7 @@ $(function() {
     }
 
     $.ajax({
-      url: '{{ url("product-categories") }}/'+id,
+      url: '{{ url("pengguna") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
       success: function(data) {
@@ -163,24 +205,54 @@ $(function() {
    });
 });
 
+function resetErrorUserForm() {
+  $('#nameError').text('');
+  $('#emailError').text('');
+  $('#passwordError').text('');
+  $('#password_confirmationError').text('');
+  $('#profile_photo_pathError').text('');
+  $('#level_idError').text('');
+  $('#statusError').text('');
+}
+
+function resetErrorShippingForm() {
+  $('#nama_ptError').text('');
+  $('#teleponError').text('');
+  $('#handphoneError').text('');
+  $('#alamatError').text('');
+  $('#provinsi_idError').text('');
+  $('#kode_posError').text('');
+}
+
+function refresh() {
+  $('#pencarian').val('');
+  perpage = $('#perpage').val();
+  search  = '';
+  page    = 1;
+
+  fetch_table(page, perpage, search);
+}
+
 function cariData(data) {
   perpage = $('#perpage').val();
   
   fetch_table(1, perpage, data);
 }
 
-function newData() {
-  save_method = 'create';
+function newUserData() {
+  save_method = 'add';
   formReset();
+  resetErrorUserForm();
   $('.modal-title').text('Tambah data baru');
-  $('#formMethod').val('POST');
+  $('#formUserMethod').val('POST');
   $('#category_image_link').removeAttr('href');
-  $('#modal-form').modal('show');
+  $('#email').removeAttr('readonly');
+  $('#modal-new').modal('show');
 }
 
 function fetch_table(page, perpage, search) {
   $.ajax({
-    url: '{{ url("product-category/data?page=") }}'+page+'&list_perpage='+perpage+'&search='+search,
+    url: '{{ route("pengguna.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
     success: function(data) {
       $('.table-data').html(data);
@@ -193,27 +265,57 @@ function formDeleteReset() {
 }
 
 function formReset() {
+  $('#modal-new form')[0].reset();
   $('#modal-form form')[0].reset();
 }
 
 function editData(id) {
   save_method = 'update';
   $.ajax({
-    url: '{{ url("product-categories") }}/'+id+'/edit',
+    url: '{{ url("pengguna") }}/'+id+'/edit',
     type: 'GET',
     dataType: 'JSON',
     success: function(data) {
-      $('.modal-title').text('Edit: '+data.data.category_name);
-      $('#category_id').val(data.data.id);
-      $('#formMethod').val('PUT');
-      $('#category_name').val(data.data.category_name);
-      $('#category_description').val(data.data.category_description);
-      $('#keywords').val(data.data.keywords);
-      $('#description_seo').val(data.data.description_seo);
-      $('#category_image_link').attr('href', data.data.imageurl);
-      $('#btnSave').text('Update Data');
+      resetErrorUserForm();
+      $('#formUserMethod').val('PUT');
+      $('#email').attr('readonly', true);
+      $('.modal-title').text('Edit: '+data.data.email);
+      $('#user_id').val(data.data.id);
+      $('#name').val(data.data.name);
+      $('#email').val(data.data.email);
+      $('#profile_photo_url').attr('href', data.data.profile_photo_url);
+      $('#btnUserSave').text('Update Data');
+      $('#level_id [value="'+data.data.level_id+'"]').attr('selected', 'selected');
       $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
-      $('#modal-form').modal('show');
+      $('#modal-new').modal('show'); 
+    },
+    error: function(message) {
+      Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
+    }
+  });
+}
+
+function editShipping(id) {
+  save_method = 'update';
+  $.ajax({
+    url: '{{ url("pengguna-detail") }}/'+id+'/edit',
+    type: 'GET',
+    dataType: 'JSON',
+    success: function(data) {
+      resetErrorUserForm();
+      formReset();
+      $('#formShippingMethod').val('PUT');
+      $('#email').attr('readonly', true);
+      $('.shipping-title').text('Edit alamat user id: '+data.data.user_id);
+      $('#detail_id').val(data.data.id)
+      $('#user_id_detail').val(data.data.user_id);
+      $('#nama_pt').val(data.data.nama_pt);
+      $('#telepon').val(data.data.telepon);
+      $('#handphone').val(data.data.handphone);
+      $('#alamat').val(data.data.alamat);
+      $('#kode_pos').val(data.data.kode_pos);
+      $('#provinsi_id [value="'+data.data.provinsi_id+'"]').attr('selected', 'selected');
+      $('#modal-form').modal('show'); 
     },
     error: function(message) {
       Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
@@ -224,14 +326,14 @@ function editData(id) {
 function confirmDelete(id) {
   save_method = 'delete';
   $.ajax({
-    url: '{{ url("product-categories") }}/'+id,
+    url: '{{ url("pengguna") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
     success: function(data) {
-      $('.modal-title-delete').text('Delete data: '+data.data.category_name);
-      $('#category_id_d').val(data.data.id);
+      $('.modal-title-delete').text('Delete data: '+data.data.name);
       $('#formMethodD').val('DELETE');
-      $('#category_name_d').text(data.data.category_name);
+      $('#userid_delete').val(data.data.id);
+      $('#user_name_d').text(data.data.name);
       $('#modal-delete').modal('show');
     },
   });

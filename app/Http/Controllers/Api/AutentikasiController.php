@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Validator;
 use App\Models\User;
+use App\Models\UserDetail;
 
 class AutentikasiController extends Controller
 {
@@ -38,6 +39,8 @@ class AutentikasiController extends Controller
             'password' => Hash::make($request['password']),
             'level_id' => 1
         ]);
+
+        UserDetail::create(['user_id' => $user->id]);
 
         // Generate token untuk API (sanctum)
         $token = $user->createToken('usertoken')->plainTextToken;

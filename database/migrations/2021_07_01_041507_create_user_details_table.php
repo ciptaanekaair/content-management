@@ -14,13 +14,13 @@ class CreateUserDetailsTable extends Migration
     {
         Schema::create('user_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('nama_pt');
-            $table->text('alamat');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('nama_pt')->nullable();
+            $table->text('alamat')->nullable();
             $table->foreignId('provinsi_id')->nullable()->constrained('provinsis');
-            $table->string('kode_pos');
-            $table->string('telepon');
-            $table->string('handphone');
+            $table->string('kode_pos')->nullable();
+            $table->string('telepon')->nullable();
+            $table->string('handphone')->nullable();
             $table->timestamps();
         });
     }

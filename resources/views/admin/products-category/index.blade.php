@@ -180,7 +180,7 @@ function newData() {
 
 function fetch_table(page, perpage, search) {
   $.ajax({
-    url: '{{ url("product-category/data?page=") }}'+page+'&list_perpage='+perpage+'&search='+search,
+    url: '{{ route("product-catetgories.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
     success: function(data) {
       $('.table-data').html(data);

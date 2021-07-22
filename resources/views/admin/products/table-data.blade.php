@@ -40,13 +40,14 @@
             @endif
           </td>
           <td>
-            <div class="btn-group">
-              <a href="{{ url('products/'.$item->id.'/edit') }}" class="btn btn-sm btn-info">
-                <i class="fa fa-pencil"></i>
-              </a>
-              <a onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger">
-                <i class="fa fa-trash"></i>
-              </a>
+            <div class="dropdown">
+              <botton class="btn btn-primary" type="button" id="actionMenu{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Aksi &nbsp&nbsp<i class="fa fa-arrow-down"></i> 
+              </botton>
+              <div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
+                <a href="{{ url('products/'.$item->id.'/edit') }}" class="dropdown-item" type="button"><i class="fa fa-pencil"></i>&nbspEdit</a>
+                <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbspView</a>
+              </div>
             </div>
           </td>
         </tr>

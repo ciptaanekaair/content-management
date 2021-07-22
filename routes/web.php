@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ProductImageController;
+use App\Http\Controllers\Admin\PenggunaController;
+use App\Http\Controllers\Admin\PenggunaDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +26,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // Product Category Route
     Route::resource('product-categories', ProductCategoryController::class);
-    Route::get('product-category/data', [ProductCategoryController::class, 'getData'])->name('product-catetgories.data');
+    Route::get('data/product-categories', [ProductCategoryController::class, 'getData'])->name('product-catetgories.data');
     Route::get('data/products-categories/export', [ProductCategoryController::class, 'exportData'])->name('product-categories.data.export');
 
     // Product Route
     Route::resource('products', ProductController::class);
-    Route::get('products/data', [ProductController::class, 'getData'])->name('product.data');
+    Route::get('data/products', [ProductController::class, 'getData'])->name('product.data');
     Route::get('data/products/export', [ProductController::class, 'exportData'])->name('product.data.export');
 
     // product images
@@ -45,8 +47,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // Product Route
     Route::resource('pengguna', PenggunaController::class);
-    Route::get('users/data', [PenggunaController::class, 'getData'])->name('users.data');
-    Route::get('data/users/export', [PenggunaController::class, 'exportData'])->name('users.data.export');
+    Route::get('data/pengguna', [PenggunaController::class, 'getData'])->name('pengguna.data');
+    Route::get('data/pengguna/export', [PenggunaController::class, 'exportData'])->name('pengguna.data.export');
+
+    Route::get('pengguna-detail/{id}/edit', [PenggunaDetailController::class, 'edit']);
+    Route::put('pengguna-detail/{id}', [PenggunaDetailController::class, 'update']);
 
     // Rout::get('history');
 });

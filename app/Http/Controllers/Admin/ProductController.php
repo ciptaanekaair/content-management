@@ -44,7 +44,7 @@ class ProductController extends Controller
                             ->paginate(10);
             } else {
                 $products = Product::where('status', '!=', 9)
-                            ->orderBy('product_name', 'ASC')
+                            ->orderBy('id', 'DESC')
                             ->paginate(10);
             }
 

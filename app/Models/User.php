@@ -66,6 +66,11 @@ class User extends Authenticatable
         return $this->belongsTo(Level::class);
     }
 
+    public function getUserDetail()
+    {
+        return $this->hasOne(UserDetail::class);
+    }
+
     public function hasAccess($role)
     {
         return $this->Level->aksesRole()->where('nama_role', $role)->first() ?: false;
