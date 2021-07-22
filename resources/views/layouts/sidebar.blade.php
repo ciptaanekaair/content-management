@@ -42,14 +42,61 @@
                         <a class="nav-link" href="{{ route('pengguna.index') }}">List User</a>
                     </li>
                 </ul>
-                <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
-                        <a class="nav-link" href="#">Create User</a>
-                    </li>
-                </ul>
+                @if(auth()->user()->hasAccess('spesial'))
                 <ul class="dropdown-menu">
                     <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
                         <a class="nav-link" href="#">User History</a>
+                    </li>
+                </ul>
+                @endif
+            </li>
+            <li class="dropdown ">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-cart-arrow-down"></i> <span>Transaksi</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('transactions.index') }}">List Transaksi</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('transactions.create') }}">New Transaksi</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown ">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-file"></i> <span>Laporan Transaksi</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('transactions.index') }}">Transaksi Harian</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('transactions.index') }}">Transaksi Bulanan</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('transactions.index') }}">Transaksi Tahunan</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown ">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-cart-arrow-down"></i> <span>Transaksi</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('transactions.index') }}">List Transaksi</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">New Transaksi</a>
                     </li>
                 </ul>
             </li>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\PenggunaDetailController;
+use App\Http\Controllers\Admin\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::get('pengguna-detail/{id}/edit', [PenggunaDetailController::class, 'edit']);
     Route::put('pengguna-detail/{id}', [PenggunaDetailController::class, 'update']);
+
+    Route::resource('transactions', TransaksiController::class);
+    Route::get('data/transactions', [TransaksiController::class, 'getData'])->name('transactions.data');
 
     // Rout::get('history');
 });

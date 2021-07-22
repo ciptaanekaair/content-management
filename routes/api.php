@@ -38,10 +38,8 @@ Route::get('product-category/search/{keywords}', [ProductCategoryController::cla
  */
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
-    // User profile for editing.
-    Route::get('user/{username}', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');
-    // Update profile
-    Route::put('user/{username}', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');
+    Route::get('user/{username}', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');// User profile for editing.
+    Route::put('user/{username}', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
 
     // Route for Cart
     Route::get('cart', [CartController::class, 'index'])->name('api_cart_data'); // mengambil seluruh data cart.
@@ -53,10 +51,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     // Route for validate voucher
     Route::post('check_voucher', [CheckoutController::class, 'validasiVoucher'])->name('api_validasi_voucher');
-
     // Route for checkout
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
     Route::post('checkout/confirm', [CheckoutController::class, 'confirmCheckout'])->name('api_confirm_checkout');
+
+    Route::get('metode-pembayaran', [CheckoutController::class, 'getMetodeBayar'])->name('api_get_metodebayar');// load metode pembayaran
     
     // Logout route
     Route::get('logout', [AutentikasiController::class, 'logout'])->name('api_logout');

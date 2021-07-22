@@ -9,7 +9,7 @@
     <ul class="navbar-nav navbar-right">
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}" class="rounded-circle mr-1 d-lg-inline-block">
+                    <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="rounded-circle mr-1 d-lg-inline-block">
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title text-center">{{ Auth::user()->name }}</div>
@@ -17,9 +17,12 @@
                     <i class="far fa-user"></i> Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item has-icon text-danger">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
             </div>
         </li>
     </ul>
