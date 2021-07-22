@@ -10,10 +10,14 @@ use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\PenggunaDetailController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\RekamJejakController;
+use App\Http\Controllers\Admin\LevelController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\AttachingLevelController;
+
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| FilterPedia.co.id Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -61,4 +65,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
     Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');
     Route::get('user-histories/{id}', [RekamJejakController::class, 'getUser'])->name('user-histories.user');
+
+    Route::resource('levels', LevelController::class);
+    Route::get('data/levels', [LevelController::class, 'getData'])->name('levels.data');
+    Route::resource('roles', RoleController::class);
+    Route::get('data/roles', [RoleController::class, 'getData'])->name('roles.data');
+
+    // attaching level
+    Route::post('roles/attach', [AttachingLevelController::class, 'attachLevel'])->name('roles.attach');
 });

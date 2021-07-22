@@ -35,7 +35,7 @@ class PenggunaController extends Controller
 
     public function getData(Request $request)
     {
-        // if ($this->authorize('MOD1001-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-read') || $this->authorize('spesial')) {
 
             $list_perpage = $request->get('list_perpage');
             $search       = $request->get('search');
@@ -58,7 +58,7 @@ class PenggunaController extends Controller
             }
 
             return view('admin.users.table-data', compact('users'));
-        // }
+        }
     }
 
     public function exportData()

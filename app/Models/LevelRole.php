@@ -9,7 +9,8 @@ class LevelRole extends Model
 {
     use HasFactory;
 
-    protected $table = 'level_role';
+    protected $table    = 'level_role';
+    protected $fillable = ['level_id', 'role_id'];
 
     public function Role()
     {

@@ -86,18 +86,19 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown ">
+            <li class="dropdown {{ request()->routeIs('levels*') ? 'active' : '' }}
+                {{ request()->routeIs('roles*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fas fa-cart-arrow-down"></i> <span>Transaksi</span>
+                    <i class="fa fa-gears"></i> <span>Website Modul</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="{{ route('transactions.index') }}">List Transaksi</a>
+                    <li class="{{ request()->routeIs('levels*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('levels.index') }}">Levels Manager</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="#">New Transaksi</a>
+                    <li class="{{ request()->routeIs('roles*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('roles.index') }}">Roles Manager</a>
                     </li>
                 </ul>
             </li>

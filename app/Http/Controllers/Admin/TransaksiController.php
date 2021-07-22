@@ -8,11 +8,6 @@ use App\Models\Transaction;
 
 class TransaksiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $transactions = Transaction::where('status', '!=', 9)
@@ -26,6 +21,22 @@ class TransaksiController extends Controller
     {
         $search  = $request->get('search');
         $perpage = $request->get('list_perpage');
+
+        if (!epmty($search)) {
+            $transactions = Transaction::where([
+                            ['status', '!=', 9],
+                            ['transaction_code', 'LIKE', '%'.$search.'%']
+                        ])->paginate(10);
+        } else {
+            $transactions = Transaction::where('status', '!=', 9)
+                            ->paginate(10);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil mengambil data dari database.',
+            'data'    => $transactions
+        ]);
     }
 
     /**
