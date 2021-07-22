@@ -13,6 +13,8 @@ MOD1005 = Vouchers.
 MOD1007 = Payment Codes.
 MOD1008 = Transaction.
 
+MOD2001 = Laporan Transaksi.
+
 MOD1009 = Product Reviews.
 
 Note:

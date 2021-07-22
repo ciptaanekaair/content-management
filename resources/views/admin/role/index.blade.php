@@ -261,7 +261,9 @@ function attachingRole() {
     type: 'POST',
     data: $('#form-attachment').serialize(),
     success: function(data) {
-      Swal.fire('Berhasil!', 'Berhasil attach level dengan role yang dipilih.', 'success')
+      Swal.fire('Berhasil!', 'Berhasil attach level dengan role yang dipilih.', 'success');
+      $('.modal-body form')[0].reset();
+      $('#levels [value=""]').attr('selected', 'selected');
     }, error: function(response) {
       Swal.fire('Error!', 'gagal attach level dengan role yang di pilih.', 'error');
     }
