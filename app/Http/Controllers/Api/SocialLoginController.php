@@ -31,6 +31,7 @@ class SocialLoginController extends Controller
         $user->name              = $serviceUser->name;
         $user->username          = md5($serviceUser->email);
         $user->email_verified_at = date('Y-m-d H:i:s');
+        $user->level_id          = 1;
         $user->password          = Hash::make(rand(111111, 999999));
         $user->save();
 
