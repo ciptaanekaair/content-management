@@ -129,7 +129,7 @@ class PenggunaController extends Controller
     public function edit($id)
     {
         if ($this->authorize('MOD1001-edit') || $this->authorize('spesial')) {
-            $user = User::with('getUserDetail')->where('id', $id)->first();
+            $user = User::with('userDetail')->where('id', $id)->first();
 
             return response()->json([
                 'success' => true,

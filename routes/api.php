@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\SocialLoginController;
+use App\Http\Controllers\Api\WilayahIndonesiaController;
 
 /**
  * Route API untuk modul register dan login
@@ -33,6 +34,7 @@ Route::get('product-category', [ProductCategoryController::class, 'index'])->nam
 Route::get('product-category/{slug}', [ProductCategoryController::class, 'show'])->name('api_product_cat_detail');
 Route::get('product-category/search/{keywords}', [ProductCategoryController::class, 'search'])->name('api_product_cat_search');
 
+
 /**
  * Route Group yang harus melalui autentikasi
  */
@@ -41,6 +43,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('profile', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');// User profile for editing.
     // update profile di maintenance sementara
     // Route::put('profile', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
+    Route::get('provinsi', [WilayahIndonesiaController::class, 'index'])->name('api_data_provinsi'); // get all provinsi
+    Route::get('provinsi/{id}', [WilayahIndonesiaController::class, 'show'])->name('api_detail_provinsi'); // get all kota in provinsi by id provinsi
 
     // Route for Cart
     Route::get('cart', [CartController::class, 'index'])->name('api_cart_data'); // mengambil seluruh data cart.

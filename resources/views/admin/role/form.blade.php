@@ -78,17 +78,11 @@
 			<form name="form-delete" id="form-delete">
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="levels">Attach dengan Level</label>
-						<select name="levels" id="levels" class="form-control">
-							<option value="" selected>Pilih Level</option>
-							@foreach($levels as $item)
-							<option value="{{ $item->id }}">{{ $item->nama_level }}</option>
-							@endforeach
-						</select>
+						
 					</div>
 				</div>
 				<div class="modal-footer">
-					
+
 				</div>
 			</form>
 		</div>

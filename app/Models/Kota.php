@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Provinsi extends Model
+class Kota extends Model
 {
     use HasFactory;
 
-    public function kota()
+
+    public function provinsi()
     {
-        return $this->hasMany(Kota::class);
+        return $this->belongsTo(Provinsi::class);
     }
 }

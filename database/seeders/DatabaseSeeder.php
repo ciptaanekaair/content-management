@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             AccessSeeder::class,
             VoucherSeeder::class,
+            ProvinsiSeeder::class,
+            // KotaSeeder::class,
         ]);
     }
 }

@@ -17,6 +17,7 @@ class CreateUserDetailsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nama_pt')->nullable();
             $table->text('alamat')->nullable();
+            $table->foreignId('kota_id')->nullable()->constrained('kotas');
             $table->foreignId('provinsi_id')->nullable()->constrained('provinsis');
             $table->string('kode_pos')->nullable();
             $table->string('telepon')->nullable();
