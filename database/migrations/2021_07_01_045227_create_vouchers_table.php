@@ -17,7 +17,7 @@ class CreateVouchersTable extends Migration
             $table->string('voucher_code');
             $table->string('voucher_name');
             $table->string('voucher_detail');
-            $table->string('voucher_price');
+            $table->bigInteger('voucher_price');
             $table->dateTime('voucher_end');
             $table->integer('status')->default(1); // active 1, not-active 0
             $table->timestamps();

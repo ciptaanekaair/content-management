@@ -17,7 +17,7 @@ class CreateTransactionDetailsTable extends Migration
             $table->foreignId('transactions_id')->constrained('transactions');
             $table->foreignId('product_id')->constrained('products');
             $table->integer('qty');
-            $table->float('total_price', 16, 2);
+            $table->bigInteger('total_price');
             $table->integer('status')->default(1); // active 1, deleted 9
             $table->timestamps();
         });

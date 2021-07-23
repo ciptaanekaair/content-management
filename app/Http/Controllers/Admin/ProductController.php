@@ -24,6 +24,9 @@ class ProductController extends Controller
         if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
             $products = Product::where('status', '!=', 9)->
                         orderBy('id', 'DESC')->paginate(10);
+            foreach($products as $product) {
+                $products->product_price = intval($product->product_price);
+            }
 
             return view('admin.products.index', compact('products'));
         }

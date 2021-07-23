@@ -17,7 +17,7 @@ class CreateTransactionTemporariesTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->integer('qty');
-            $table->float('total_price', 16, 2);
+            $table->bigInteger('total_price');
             $table->integer('status')->default(1); // active: 1, not-active: 0
             $table->timestamps();
         });
