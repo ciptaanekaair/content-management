@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
 
     protected $appends    = ['imageurl'];
-    protected $attributes = ['product_price'];
+    // protected $attributes = ['product_price'];
 
     public function getImageurlAttribute()
     {
@@ -19,10 +19,10 @@ class Product extends Model
         return $productpicurl;
     }
 
-    public function setProductPriceAttribute()
-    {
-        return (int)$this->product_price;
-    }
+    // public function setProductPriceAttribute()
+    // {
+    //     return (int)$this->product_price;
+    // }
 
     public function productImages()
     {
