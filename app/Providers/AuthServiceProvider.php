@@ -25,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function($user, $bisa_ngapain) {
+            if ($user->hasAccess($bisa_ngapain)) {
+                return true;
+            }
+        });
     }
 }

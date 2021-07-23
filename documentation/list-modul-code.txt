@@ -1,0 +1,27 @@
+MOD1001 = Users Modul.
+
+MOD1002 = Levels Modul.
+MOD1102 = Roles Modul.
+
+MOD1003 = Provinces Modul.
+
+MOD1004 = Product Categories Modul.
+MOD1104 = Product Modul.
+MOD1204 = Product Images Modul.
+
+MOD1005 = Vouchers.
+MOD1007 = Payment Codes.
+MOD1008 = Transaction.
+
+MOD2001 = Laporan Transaksi.
+
+MOD1009 = Product Reviews.
+
+Note:
+untuk setiap table, apabila data memiliki status 9 maka artinya data tersebut dalam status terhapus.
+dan hanya akan dapat di baca oleh pemilik role access: 'spesial'. Berikut ini adalah arti dari status code:
+
+0 = Draft / Unactive / Need Confirmation.
+1 = active.
+5 = Banned.
+9 = sudah terhapus (softdelete).
