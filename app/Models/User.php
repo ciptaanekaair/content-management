@@ -66,7 +66,7 @@ class User extends Authenticatable
         return $this->belongsTo(Level::class);
     }
 
-    public function getUserDetail()
+    public function userDetail()
     {
         return $this->hasOne(UserDetail::class);
     }
