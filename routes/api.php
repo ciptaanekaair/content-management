@@ -38,8 +38,9 @@ Route::get('product-category/search/{keywords}', [ProductCategoryController::cla
  */
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
-    Route::get('user/{username}', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');// User profile for editing.
-    Route::put('user/{username}', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
+    Route::get('profile', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');// User profile for editing.
+    // update profile di maintenance sementara
+    // Route::put('profile', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
 
     // Route for Cart
     Route::get('cart', [CartController::class, 'index'])->name('api_cart_data'); // mengambil seluruh data cart.

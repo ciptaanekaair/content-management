@@ -12,11 +12,18 @@ use App\Models\User;
 class ProfileController extends Controller
 {
     // get user data.
-    public function getProfile($username)
+    public function getProfile()
     {
-        $profile  = User::select('users.name', 'users.email', 'users.username', 'users.level_id')->where('username', $username)->first();
+        $profile  = User::select('users.name', 'users.email', 'users.username', 'users.level_id')
+                    ->with('getUserDetail')
+                    ->where('id', auth()->user()->id)
+                    ->first();
 
-        $response = ['message' => 'Berhasil load data.', 'data' => $profile];
+        $response = [
+            'success' => true,
+            'message' => 'Berhasil load data.', 
+            'data'    => $profile
+        ];
 
         return response($response, 200);
     }
