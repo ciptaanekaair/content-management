@@ -25,11 +25,10 @@ class PenggunaController extends Controller
                     ['level_id', '!=', 4]
                 ])->paginate(10);
 
-            $levels = Level::orderBy('id', 'ASC')->get();
+            $levels    = Level::orderBy('id', 'ASC')->get();
+            $provinsis = Provinsi::where('status', '!=', 9)->orderBy('provinsi_name', 'ASC')->get();
 
-            $provinsis = Provinsi::where('status', 1)->orderBy('provinsi_name', 'ASC');
-
-            return view('admin.users.index', compact('users', 'provinsis', 'levels'));
+            return view('admin.users.index', compact('users', 'levels', 'provinsis'));
         }
     }
 

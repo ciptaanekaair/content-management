@@ -46,8 +46,10 @@ class ProductController extends Controller
         }
     }
 
-    public function search(Request $request, $keyword)
+    public function search(Request $request)
     {
+        $keywords = $request->search;
+
         $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
                 'products.product_name', 'products.slug', 'products.product_description', 
                 'products.product_images', 'products.product_price', 'products.product_stock', 

@@ -144,7 +144,6 @@
 							<div class="form-group">
 								<label for="provinsi_id">Provinsi</label>
 								<select name="provinsi_id" id="provinsi_id" class="form-control">
-									<option value="" selected>Pilih Provinsi</option>
 									@foreach($provinsis as $item)
 									<option value="{{ $item->id }}">{{ $item->provinsi_name }}</option>
 									@endforeach

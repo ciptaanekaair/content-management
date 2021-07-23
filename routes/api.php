@@ -27,7 +27,7 @@ Route::get('/login/{service}/callback', [SocialLoginController::class, 'callback
  */
 Route::get('/products', [ProductController::class, 'index'])->name('api_products_data');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('api_product_detail');
-Route::get('/products/search/{keywords}', [ProductController::class, 'search'])->name('api_product_search');
+Route::post('/products/search', [ProductController::class, 'search'])->name('api_product_search');
 
 // Product Categories
 Route::get('product-category', [ProductCategoryController::class, 'index'])->name('api_product_cat_data');

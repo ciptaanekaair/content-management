@@ -9,6 +9,8 @@ class Provinsi extends Model
 {
     use HasFactory;
 
+    protected $table = 'provinsis';
+
     public function kota()
     {
         return $this->hasMany(Kota::class);

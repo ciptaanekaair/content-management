@@ -70,21 +70,28 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<div class="modal-title" id="title-delete"></div>
+				<div class="modal-title title-delete"></div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form name="form-delete" id="form-delete">
-				<div class="modal-body">
-					<div class="form-group">
-						
-					</div>
-				</div>
-				<div class="modal-footer">
-
-				</div>
+			<form type="POST" id="form-delete">
+			<div class="modal-body">
+					{{ csrf_field() }}
+					<input type="hidden" name="role_id_delete" id="role_id_delete">
+					<input type="hidden" name="_method" id="formMethodDelete" value="DELETE">
+				<p align="center">
+					Anda akan menghapus data:<br>
+					<code id="role_name_delete"></code>.
+					<br>
+					<b>Apakah anda yakin? Anda tidak akan dapat mengembalikan data ini.</b>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-danger" id="btnDelete"><i class="fa fa-trash"></i> &nbsp Delete</button>
 			</form>
+			</div>
 		</div>
 	</div>
 </div>
