@@ -22,7 +22,7 @@ class TransaksiController extends Controller
         $search  = $request->get('search');
         $perpage = $request->get('list_perpage');
 
-        if (!epmty($search)) {
+        if (!empty($search)) {
             $transactions = Transaction::where([
                             ['status', '!=', 9],
                             ['transaction_code', 'LIKE', '%'.$search.'%']
@@ -39,67 +39,37 @@ class TransaksiController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $transaction = Transaction::with('transactionDetail')
+                    ->where('id', $id)
+                    ->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil mengambil data: '.$transaction->transaction_code' dari database.',
+            'data'    => $transaction
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $transaction = Transaction::with('transactionDetail')
+                    ->where('id', $id)
+                    ->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil mengambil data: '.$transaction->transaction_code' dari database.',
+            'data'    => $transaction
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

@@ -18,4 +18,9 @@ class Transaction extends Model
     {
         return $this->getVoucher()->where('id', $id)->first();
     }
+
+    public function transactionDetail()
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
 }

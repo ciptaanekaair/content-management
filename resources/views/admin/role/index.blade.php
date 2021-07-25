@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        <div class="card-body pb-0">
+        <div class="card-body pb-0" id="card-attachment">
           <form name="form-attachment" id="form-attachment" >
             <div class="table-data">
               @include('admin.role.table-data')
@@ -261,7 +261,7 @@ function attachingRole() {
     type: 'POST',
     data: $('#form-attachment').serialize(),
     success: function(data) {
-      $('.modal-body form')[0].reset();
+      $('#form-attachment').reset();
       $('#levels [value=""]').attr('selected', 'selected');
       Swal.fire('Berhasil!', 'Berhasil attach level dengan role yang dipilih.', 'success');
     }, error: function(response) {

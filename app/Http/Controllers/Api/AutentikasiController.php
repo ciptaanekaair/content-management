@@ -21,6 +21,13 @@ class AutentikasiController extends Controller
             'password' => 'required|confirmed',
         ];
 
+        $pesan = [
+            'name.required' => 'Field Nama wajib di isi.',
+            'name.required' => 'Field Nama harus berupa huruf, tak boleh memasukan simbol ataupun angka.',
+            'email.required' => 'Silahkan masukan email yang benar.',
+            'email.required' => 'Email telah digunakan. Siahkan menggunakan email baru',
+        ];
+
         $validasi = Validator::make($request->all(), $rules);
 
         if ($validasi->fails()) {

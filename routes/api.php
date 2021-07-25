@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('profile', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');// User profile for editing.
     // update profile di maintenance sementara
-    // Route::put('profile', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
+    Route::put('profile', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
     Route::get('provinsi', [WilayahIndonesiaController::class, 'index'])->name('api_data_provinsi'); // get all provinsi
     Route::get('provinsi/{id}', [WilayahIndonesiaController::class, 'show'])->name('api_detail_provinsi'); // get all kota in provinsi by id provinsi
 
