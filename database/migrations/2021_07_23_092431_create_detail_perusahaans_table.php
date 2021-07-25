@@ -24,6 +24,7 @@ class CreateDetailPerusahaansTable extends Migration
             $table->string('fax')->nullable();
             $table->string('handphone')->nullable();
             $table->string('npwp')->nullable();
+            $table->string('npwp_image')->nullable();
             $table->timestamps();
         });
     }

@@ -143,7 +143,7 @@ class PenggunaController extends Controller
         if ($this->authorize('MOD1001-update') || $this->authorize('spesial')) {
             $rules = [
                 'name'               => 'required',
-                'password'           => 'sometimes|nullable|string|min:6',
+                'password'           => 'string|min:6|confirmed',
                 'status'             => 'required|numeric',
                 'level_id'           => 'required|numeric',
                 'profile_photo_path' => 'image|mimes:jpg, jpeg, png, bmp|max: 2048',
@@ -158,7 +158,7 @@ class PenggunaController extends Controller
                 $user->profile_photo_path = $simpan;
             }
 
-            if (empty($request->password)) {
+            if (!empty($request->password)) {
                 $user->password = Hash::make($request->password);
             }
 

@@ -76,10 +76,15 @@ class User extends Authenticatable
         return $this->Level->aksesRole()->where('nama_role', $role)->first() ?: false;
     }
 
-    public function loadCartData()
+    public function carts()
     {
         return $this->hasMany(TransactionTemporary::class);
     }
+
+    // public function loadCartData()
+    // {
+    //     return $this->hasMany(TransactionTemporary::class);
+    // }
 
     public function countQty()
     {
@@ -89,5 +94,10 @@ class User extends Authenticatable
     public function countTotalPrice()
     {
         return $this->loadCartData()->sum('total_price');
+    }
+
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class);
     }
 }
