@@ -185,6 +185,8 @@ $(function() {
   	e.preventDefault();
 
 		var productID = $('#product_id').val();
+		for ( instance in CKEDITOR.instances )
+        CKEDITOR.instances[instance].updateElement();
 
 		if (productID === '') url = '{{ url("products") }}';
 		else url = '{{ url("products") }}/'+productID;

@@ -170,6 +170,14 @@ class CheckoutController extends Controller
 
         $transaksi = Transaction::where('id', $request->transaction_id)
                     ->first();
+
+        if (!$transaksi) {
+            return response([
+                'error'   => true,
+                'message' => 'Data checkout tidak di temukan.'
+            ]);
+        }
+
         $transaksi->payment_code_id = $request->payment_code_id;
         $transaksi->update();
 
