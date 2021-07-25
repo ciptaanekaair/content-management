@@ -101,10 +101,15 @@ class CheckoutController extends Controller
             $item->delete();
         }
 
+        $transaction = Transaction::where('id', $transaksi->id)
+                        ->with('transactionDetail')
+                        ->with('products')
+                        ->first();
+
         $response = [
             'success' => true,
             'message' => 'Berhasil checkout! Silahkan lakukan pembayaran dan konfirmasikan pembayaran anda.',
-            'data'    => $transaksi
+            'data'    => $transaction
         ];
 
         return response($response, 200);

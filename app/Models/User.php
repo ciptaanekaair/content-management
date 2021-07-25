@@ -88,12 +88,12 @@ class User extends Authenticatable
 
     public function countQty()
     {
-        return $this->loadCartData()->sum('qty');
+        return $this->carts()->sum('qty');
     }
 
     public function countTotalPrice()
     {
-        return $this->loadCartData()->sum('total_price');
+        return $this->carts()->sum('total_price');
     }
 
     public function provinsi()
