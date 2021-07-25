@@ -13,7 +13,9 @@ class CartController extends Controller
 {
     public function index()
     {
-        $items = TransactionTemporary::where('user_id', Auth::user()->id)->get();
+        $items = TransactionTemporary::where('user_id', Auth::user()->id)
+                ->with('products')
+                ->get();
 
         $harga_total = 0;
 
