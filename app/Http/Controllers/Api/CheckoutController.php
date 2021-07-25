@@ -12,6 +12,7 @@ use App\Models\TransactionTemporary;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\Voucher;
+use App\Models\User;
 
 class CheckoutController extends Controller
 {
@@ -148,17 +149,48 @@ class CheckoutController extends Controller
     public function confirmCheckout(Request $request)
     {
         $rules = [
-            'nama_pt'     => 'required',
-            'alamat'      => 'required',
-            'provinsi_id' => 'required',
-            'kode_pos'    => 'required|alphanumeric',
-            'telepon'     => 'numeric',
-            'handphone'   => 'numeric'
+            'user_id'         => 'required',
+            'payment_code_id' => 'required|numeric',
+            'alamat'          => 'required',
+            'kota_id'         => 'required',
+            'provinsi_id'     => 'required|numeric',
+            'kode_pos'        => 'required|numeric',
+            'telepon'         => 'numeric',
+            'handphone'       => 'numeric'
         ];
 
         $validasi = Validator::make($request->all(), $rules);
 
+        if ($validasi->fails()) {
+            return response([
+                'error'   => true,
+                'message' => $valdasi->errors()
+            ]);
+        }
 
+        $transaksi = Transaction::where('id', $request->transaction_id)
+                    ->first();
+        $transaksi->payment_code_id = $request->payment_code_id;
+        $transaksi->update();
+
+        $user = User::with('userDetail')
+                ->where('id', auth()->user()->id)
+                ->first();
+
+        $user->userDetail->update([
+            'alamat'      => $request->alamat,
+            'kota_id'     => $request->kota_id,
+            'provinsi_id' => $request->provinsi_id,
+            'kode_pos'    => $request->kode_pos,
+            'telepon'     => $request->telepon,
+            'handphone'   => $request->handphone,
+        ]);
+
+        return response([
+            'success' => true,
+            'message' => 'Berhasil melakukan checkout, silahkan lakukan pembayaran dan segera konfirmasikan pembayaran anda.',
+            'data'    => $transaksi
+        ]);
     }
 
     /**

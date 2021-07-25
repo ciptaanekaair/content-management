@@ -9,6 +9,11 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getVoucher()
     {
         return $this->belongsToMany(Voucher::class);

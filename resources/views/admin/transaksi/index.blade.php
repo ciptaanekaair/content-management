@@ -74,6 +74,13 @@ function refresh() {
 	fetch_table(page, perpage, search);
 }
 
+function cariData(search) {
+	page    = 1;
+	perpage = $('#perpage').val();
+
+	fetch_table(page, perpage, search);
+}
+
 function fetch_table(page, perpage, search) {
 	$.ajax({
 		url: '{{ route("transactions.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,

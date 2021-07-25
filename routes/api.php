@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\SocialLoginController;
 use App\Http\Controllers\Api\WilayahIndonesiaController;
+use App\Http\Controllers\Api\PaymentMethodController;
 
 /**
  * Route API untuk modul register dan login
@@ -59,6 +60,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     // Route for checkout
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
     Route::post('checkout/confirm', [CheckoutController::class, 'confirmCheckout'])->name('api_confirm_checkout');
+
+    Route::get('payment-method', [PaymentMethodController::class, 'index'])->name('api_payment_method'); // get payment method
 
     Route::get('metode-pembayaran', [CheckoutController::class, 'getMetodeBayar'])->name('api_get_metodebayar');// load metode pembayaran
     

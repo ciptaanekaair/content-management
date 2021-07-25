@@ -23,44 +23,39 @@ class TransaksiController extends Controller
         $perpage = $request->get('list_perpage');
 
         if (!empty($search)) {
-            $transactions = Transaction::where([
-                            ['status', '!=', 9],
-                            ['transaction_code', 'LIKE', '%'.$search.'%']
-                        ])->paginate(10);
+            $transactions = Transaction::where('status', '!=', 9)
+                            ->where('transaction_code', 'LIKE', '%'.$search.'%')
+                            ->paginate(10);
         } else {
             $transactions = Transaction::where('status', '!=', 9)
                             ->paginate(10);
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Berhasil mengambil data dari database.',
-            'data'    => $transactions
-        ]);
+        return view('admin.transaksi.table-data', compact('transactions'));
     }
 
     public function show($id)
     {
-        $transaction = Transaction::with('transactionDetail')
-                    ->where('id', $id)
+        $transaction = Transaction::where('id', $id)
+                    ->with('transactionDetail')
                     ->first();
 
         return response()->json([
             'success' => true,
-            'message' => 'Berhasil mengambil data: '.$transaction->transaction_code' dari database.',
+            'message' => 'Berhasil mengambil data: '.$transaction->transaction_code.' dari database.',
             'data'    => $transaction
         ]);
     }
 
     public function edit($id)
     {
-        $transaction = Transaction::with('transactionDetail')
-                    ->where('id', $id)
+        $transaction = Transaction::where('id', $id)
+                    ->with('transactionDetail')
                     ->first();
 
         return response()->json([
             'success' => true,
-            'message' => 'Berhasil mengambil data: '.$transaction->transaction_code' dari database.',
+            'message' => 'Berhasil mengambil data: '.$transaction->transaction_code.' dari database.',
             'data'    => $transaction
         ]);
     }
