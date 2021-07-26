@@ -179,6 +179,7 @@ class CheckoutController extends Controller
         }
 
         $transaksi->payment_code_id = $request->payment_code_id;
+        $transaksi->status          = 0;
         $transaksi->update();
 
         $user = User::with('userDetail')
