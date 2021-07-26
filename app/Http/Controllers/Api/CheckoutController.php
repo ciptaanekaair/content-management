@@ -197,7 +197,7 @@ class CheckoutController extends Controller
         return response([
             'success' => true,
             'message' => 'Berhasil melakukan checkout, silahkan lakukan pembayaran dan segera konfirmasikan pembayaran anda.',
-            'data'    => $transaksi
+            'data'    => [$transaksi, $user]
         ]);
     }
 

@@ -21,6 +21,20 @@
 				<td>{{ number_format($item->discount) }}</td>
 				<td>{{ number_format($item->sub_total_price) }}</td>
 				<td>
+					@if($item->status == 0)
+					<div class="badge badge-warning">Unpaid</div>
+					@elseif($item->status == 1)
+					<div class="badge badge-info">Complete</div>
+					@elseif($item->status == 2)
+					<div class="badge badge-success">paid</div>
+					@elseif($item->status == 3)
+					<div class="badge badge-success">paid</div>
+					@elseif($item->status == 5)
+					<div class="badge badge-danger">Terminated</div>
+					@endif
+
+				</td>
+				<td>
 					<div class="dropdown">
 						<botton class="btn btn-primary" type="button" id="actionMenu{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Aksi &nbsp&nbsp<i class="fa fa-arrow-down"></i> 
