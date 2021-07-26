@@ -35,6 +35,16 @@ Route::get('product-category', [ProductCategoryController::class, 'index'])->nam
 Route::get('product-category/{slug}', [ProductCategoryController::class, 'show'])->name('api_product_cat_detail');
 Route::get('product-category/search/{keywords}', [ProductCategoryController::class, 'search'])->name('api_product_cat_search');
 
+// Wilayah
+Route::get('provinsi', [WilayahIndonesiaController::class, 'provinsiIndex'])->name('api_data_provinsi'); // all provinsi
+Route::get('provinsi/{id}', [WilayahIndonesiaController::class, 'provinsiShow'])->name('api_detail_provinsi'); // all kota in provinsi by id provinsi
+Route::get('kota', [WilayahIndonesiaController::class, 'kotaIndex'])->name('api_data_kota'); // all kota
+Route::get('kota/{id}', [WilayahIndonesiaController::class, 'kotaShow'])->name('api_detail_kota'); // all kota in kecamatan by id kota
+Route::get('kecamatan', [WilayahIndonesiaController::class, 'kecamatanIndex'])->name('api_data_kecamatan'); // all kecamatan
+Route::get('kecamatan/{id}', [WilayahIndonesiaController::class, 'kecamatanShow'])->name('api_detail_kecamatan'); // all kelurahan in kota by id kecamatan
+Route::get('kelurahan', [WilayahIndonesiaController::class, 'kelurahanIndex'])->name('api_data_kelurahan'); // all kelurahan
+Route::get('kelurahan/{id}', [WilayahIndonesiaController::class, 'kelurahanShow'])->name('api_detail_kelurahan'); // detail kelurahan
+
 
 /**
  * Route Group yang harus melalui autentikasi
@@ -44,8 +54,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('profile', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');// User profile for editing.
     // update profile di maintenance sementara
     Route::put('profile', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
-    Route::get('provinsi', [WilayahIndonesiaController::class, 'index'])->name('api_data_provinsi'); // get all provinsi
-    Route::get('provinsi/{id}', [WilayahIndonesiaController::class, 'show'])->name('api_detail_provinsi'); // get all kota in provinsi by id provinsi
 
     // Route for Cart
     Route::get('cart', [CartController::class, 'index'])->name('api_cart_data'); // mengambil seluruh data cart.

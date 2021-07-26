@@ -15,4 +15,9 @@ class Kota extends Model
     {
         return $this->belongsTo(Provinsi::class);
     }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
+    }
 }
