@@ -90,7 +90,7 @@ class KotaController extends Controller
             $pesan = [
                 'provinsi_id.numeric' => 'Mohon pilih provinsi dari kota yang akan di input',
                 'status.numeric'      => 'Mohon pilih status dari kota yang akan di input'
-            ]
+            ];
 
             $validasi = $this->validate($request, $rules, $pesan);
 
@@ -130,7 +130,13 @@ class KotaController extends Controller
     public function edit($id)
     {
         if ($this->authorize('MOD1301-edit') || $this->authorize('spesial')) {
-            
+            $kota = Kota::find($id);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berasi mengambil data kota dari database.',
+                'data'    => $kota
+            ]);
         }
     }
 
