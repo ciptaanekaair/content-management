@@ -15,7 +15,9 @@ class KotasImport implements ToModel
     public function model(array $row)
     {
         return new Kota([
-            //
+            'provinsi_id' => $row[0],
+            'nama_kota'   => $row[1],
+            'status'      => 1
         ]);
     }
 }

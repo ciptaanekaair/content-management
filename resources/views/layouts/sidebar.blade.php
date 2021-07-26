@@ -86,6 +86,22 @@
                     </li>
                 </ul>
             </li>
+            <li class="dropdown {{ request()->routeIs('kotas*') ? 'active' : '' }}
+                {{ request()->routeIs('provinsis*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fa fa-map-marker"></i> <span>Master Wilayah</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('kotas*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('kotas.index') }}">Kota Management</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('provinsis*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('provinsis.index') }}">Provinsi Management</a>
+                    </li>
+                </ul>
+            </li>
             <li class="dropdown {{ request()->routeIs('levels*') ? 'active' : '' }}
                 {{ request()->routeIs('roles*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">

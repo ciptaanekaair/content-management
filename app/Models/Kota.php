@@ -9,6 +9,7 @@ class Kota extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['provinsi_id', 'nama_kota'];
 
     public function provinsi()
     {
