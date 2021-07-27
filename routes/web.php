@@ -79,6 +79,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::resource('kotas', KotaController::class);
     Route::get('data/kotas', [KotaController::class, 'getData'])->name('kotas.data');
     Route::post('data/kotas/import', [KotaController::class, 'importData'])->name('kotas.import');
+    // Modul Kota
+    Route::resource('kecamatans', App\Http\Controllers\Admin\KecamatanController::class);
+    Route::get('data/kecamatans', [App\Http\Controllers\Admin\KecamatanController::class, 'getData'])->name('kecamatans.data');
+    Route::post('data/kecamatans/import', [App\Http\Controllers\Admin\KecamatanController::class, 'importData'])->name('kecamatans.import');
 
     // attaching level
     Route::post('roles/attach', [AttachingLevelController::class, 'attachLevel'])->name('roles.attach');

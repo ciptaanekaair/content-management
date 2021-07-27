@@ -18,11 +18,6 @@ class AddColumnToUserDetails extends Migration
                 ->after('kota_id')
                 ->nullable()
                 ->constrained('kecamatans');
-
-            $table->foreignId('kelurahan_id')
-                ->after('kecamatan_id')
-                ->nullable()
-                ->constrained('kelurahans');
         });
     }
 

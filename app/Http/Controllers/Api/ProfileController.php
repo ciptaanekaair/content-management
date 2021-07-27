@@ -18,9 +18,11 @@ class ProfileController extends Controller
     // get user data.
     public function getProfile()
     {
-        $profile  = User::with('userDetail', 'carts')
+        $profile  = User::with('userDetail')
                     ->where('id', auth()->user()->id)
                     ->first();
+
+        $profile->cart_count = $profile->countQty();
 
         // $provinsis = Provinsi::orderBy('provinsi_name', 'ASC')->get();
         // $kotas     = Kota::orderBy('nama_kota', 'ASC')->get();
@@ -121,5 +123,10 @@ class ProfileController extends Controller
         }
 
         return false;
+    }
+
+    public function checkKecamatan($kota_id, $kecamatan_id)
+    {
+        // $kota = Kecamatan::where($)
     }
 }

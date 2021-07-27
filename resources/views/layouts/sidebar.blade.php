@@ -92,6 +92,11 @@
                     <i class="fa fa-map-marker"></i> <span>Master Wilayah</span>
                 </a>
                 <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('kecamatans*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('kecamatans.index') }}">Kecamatan Management</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
                     <li class="{{ request()->routeIs('kotas*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('kotas.index') }}">Kota Management</a>
                     </li>
