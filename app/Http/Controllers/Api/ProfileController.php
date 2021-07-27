@@ -53,6 +53,7 @@ class ProfileController extends Controller
         }
 
         $cek_provinsi = Provinsi::find($request->provinsi_id);
+        $cek_kota     = $this->checkKota($request->provinsi_id, $request->kota_id);
 
         if (!$cek_provinsi) {
             return response([
@@ -61,9 +62,7 @@ class ProfileController extends Controller
             ], 401);
         }
 
-        $cek_kota = Kota::find($request->kota_id);
-
-        if (!$cek_kota) {
+        if ($cek_kota == false) {
             return response([
                 'error' => true,
                 'message' => 'Data kota tidak di temukan, silahkan masukan data kota yang benar.'
@@ -107,5 +106,16 @@ class ProfileController extends Controller
         ];
 
         return response($response, 201);
+    }
+
+    public function checkKota($provinsi_id, $kota_id)
+    {
+        $kota = Kota::where('id', $kota_id)->first();
+
+        if ($kota->provinsi_id != $provinsi_id) {
+            return false;
+        }
+
+        return true;
     }
 }
