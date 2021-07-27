@@ -62,12 +62,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('plus_one', [CartController::class, 'handlePlus'])->name('api_cart_plus_one'); // menambah quantity 1.
     Route::post('minus_one', [CartController::class, 'handleMinus'])->name('api_cart_minus_one'); // mengurangi quantity 1.
     Route::delete('cart/delete/{id}', [CartController::class, 'deleteCart'])->name('api_delete_from_cart'); // delete produk pada cart.
-
+ 
     // Route for validate voucher
     Route::post('check_voucher', [CheckoutController::class, 'validasiVoucher'])->name('api_validasi_voucher');
     // Route for checkout
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
     Route::post('checkout/confirm', [CheckoutController::class, 'confirmCheckout'])->name('api_confirm_checkout');
+
+    Route::post('checkout', [BeliLangsungController::class, 'store'])->name('api_beli_langsung');
 
     Route::get('payment-method', [PaymentMethodController::class, 'index'])->name('api_payment_method'); // get payment method
 

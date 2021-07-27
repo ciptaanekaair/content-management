@@ -17,7 +17,7 @@ class CreatePaymentConfirmationsTable extends Migration
             $table->id();
             $table->foreignId('transactions_id')->constrained('transactions');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('judul')->nullable();
+            // $table->string('judul')->nullable();
             $table->string('deskripsi')->nullable();
             $table->string('images')->nullable();
             $table->integer('status')->default('0');

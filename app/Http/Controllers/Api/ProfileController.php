@@ -37,6 +37,8 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $rules = [
+            'provinsi_id'   => 'required',
+            'kota_id'       => 'required',
             'name'          => 'required|string',
             'profile_photo' => 'image|mimes:jpg,png,bmp,svg|max:3084'
         ];
@@ -47,6 +49,24 @@ class ProfileController extends Controller
             return response([
                 'success' => false,
                 'message' => $validasi->errors()
+            ], 401);
+        }
+
+        $cek_provinsi = Provinsi::find($request->provinsi_id);
+
+        if (!$cek_provinsi) {
+            return response([
+                'error' => true,
+                'message' => 'Data provinsi tidak di temukan, silahkan masukan data provinsi yang benar.'
+            ], 401);
+        }
+
+        $cek_kota = Kota::find($request->kota_id);
+
+        if (!$cek_kota) {
+            return response([
+                'error' => true,
+                'message' => 'Data kota tidak di temukan, silahkan masukan data kota yang benar.'
             ], 401);
         }
 
@@ -79,15 +99,6 @@ class ProfileController extends Controller
             'telepon'     => $request->telepon,
             'handphone'   => $request->handphone,
         ]);
-
-        // // $detail = UserDetail::where('user_id', auth()->user()->id)->first();
-        // $detail->alamat      = $request->alamat;
-        // $detail->kota_id     = $request->kota_id;
-        // $detail->provinsi_id = $request->provinsi_id;
-        // $detail->kode_pos    = $request->kode_pos;
-        // $detail->telepon     = $request->telepon;
-        // $detail->handphone   = $request->handphone;
-        // $detail->update();
 
         $response = [
             'success'     => true,

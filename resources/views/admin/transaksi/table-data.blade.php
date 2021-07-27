@@ -22,17 +22,20 @@
 				<td>{{ number_format($item->sub_total_price) }}</td>
 				<td>
 					@if($item->status == 0)
-					<div class="badge badge-warning">Unpaid</div>
+					<div class="badge badge-warning">{{ $item->status_transaksi }}</div>
 					@elseif($item->status == 1)
-					<div class="badge badge-info">Complete</div>
+					<div class="badge badge-info">{{ $item->status_transaksi }}</div>
 					@elseif($item->status == 2)
-					<div class="badge badge-success">paid</div>
+					<div class="badge badge-warning">{{ $item->status_transaksi }}</div>
 					@elseif($item->status == 3)
-					<div class="badge badge-success">paid</div>
+					<div class="badge badge-secondary">{{ $item->status_transaksi }}</div>
+					@elseif($item->status == 4)
+					<div class="badge badge-primary">{{ $item->status_transaksi }}</div>
 					@elseif($item->status == 5)
-					<div class="badge badge-danger">Terminated</div>
+					<div class="badge badge-success">{{ $item->status_transaksi }}</div>
+					@elseif($item->status == 6)
+					<div class="badge badge-danger">{{ $item->status_transaksi }}</div>
 					@endif
-
 				</td>
 				<td>
 					<div class="dropdown">
@@ -43,12 +46,14 @@
 							<a onclick="viewData({{ $item->id }})" class="dropdown-item" type="button">
 								<i class="fa fa-eye"></i>&nbsp View Data
 							</a>
-							<a onclick="editData({{ $item->id }})" class="dropdown-item" type="button">
+							<a href="{{ route('transactions.edit', $item->id) }}" class="dropdown-item" type="button">
 								<i class="fa fa-pencil"></i>&nbsp Ubah Data
 							</a>
+							@if(auth()->user()->hasAccess('spesial'))
 							<a onclick="deleteData({{ $item->id }})" class="dropdown-item" type="button">
 								<i class="fa fa-trash"></i>&nbsp Delete Data
 							</a>
+							@endif
 						</div>
 					</div>
 				</td>

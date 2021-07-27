@@ -28,8 +28,11 @@ class Transaction extends Model
         elseif ($this->status == 4) {
             $status_transaksi = 'Pengiriman';
         }
-        elseif ($this->status == 4) {
+        elseif ($this->status == 5) {
             $status_transaksi = 'Diterima';
+        }
+        elseif ($this->status == 5) {
+            $status_transaksi = 'Terminated';
         }
 
         return $status_transaksi;

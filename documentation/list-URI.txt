@@ -43,3 +43,14 @@ Carts:
 - Add to cart [POST]                 = api/add-to-cart [ product_id, user_id, qty ]
 - Update product qty on cart [PUT]   = api/update-qty-cart [ product_id, user_id, qty ]
 - Delete product from cart [DELETE]  = api/cart/delete [ product_id, user_id ]
+
+
+
+
+
+History Transaction
+- user_id
+- transaction_id
+- date
+- status
+- total_price
