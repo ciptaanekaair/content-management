@@ -110,12 +110,16 @@ class ProfileController extends Controller
 
     public function checkKota($provinsi_id, $kota_id)
     {
-        $kota = Kota::where('id', $kota_id)->first();
+        $kota = Kota::find($kota_id);
 
-        if ($kota->provinsi_id != $provinsi_id) {
-            return false;
+        if (!empty($kota)) {
+            if ($kota->provinsi_id != $provinsi_id) {
+                return false;
+            }
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
