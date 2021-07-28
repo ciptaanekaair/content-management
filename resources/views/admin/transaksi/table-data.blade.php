@@ -61,13 +61,13 @@
 			</tr>
 			@empty
 			<tr>
-				<td colspan="7" align="center">
+				<td colspan="8" align="center">
 					<code>Belum ada transaksi.</code>
 				</td>
 			</tr>
 			@endforelse
 			<tr>
-				<td colspan="7">
+				<td colspan="8">
 					{{ $transactions->links() }}
 				</td>
 			</tr>

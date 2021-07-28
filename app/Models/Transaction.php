@@ -32,7 +32,7 @@ class Transaction extends Model
             $status_transaksi = 'Diterima';
         }
         elseif ($this->status == 6) {
-            $status_transaksi = 'Cancel/Terminated';
+            $status_transaksi = 'Canceled';
         }
 
         return $status_transaksi;
