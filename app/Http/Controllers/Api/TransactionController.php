@@ -6,19 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use Auth;
 
 class TransactionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $transactions = Transaction::where('user_id', auth()->user()->id)
+                        ->where('status', '!=', 9)
+                        ->orderBy('id', 'DESC')
                         ->get();
 
-        if (!empty($transaction)) {
+        if (!empty($transactions)) {
             return response([
                 'success' => true,
                 'message' => 'Berhasil mengambil data transaksi dari database.',
-                'data'    => $transaction
+                'data'    => $transactions
             ], 200);
         }
 

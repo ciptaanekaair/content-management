@@ -53,10 +53,6 @@ class CheckoutController extends Controller
 
     public function checkout(Request $request)
     {
-        $rules = [
-            'user_id' => 'required',
-        ];
-
         $validasi = Validator::make($request->all(), $rules);
 
         if ($validasi->fails()) {

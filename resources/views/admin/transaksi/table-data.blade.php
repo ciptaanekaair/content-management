@@ -1,5 +1,5 @@
 <div class="table-responsive">
-	<table class="table table-stripped">
+	<table class="table table-stripped table-hover table-bordered">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($transactions as $index => $item)
+			@forelse($transactions as $index => $item)
 			<tr>
 				<td>{{ $transactions->firstItem() + $index }}</td>
 				<td>{{ $item->transaction_code }}</td>
@@ -43,7 +43,7 @@
 						Aksi &nbsp&nbsp<i class="fa fa-arrow-down"></i> 
 						</botton>
 						<div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
-							<a onclick="viewData({{ $item->id }})" class="dropdown-item" type="button">
+							<a href="{{ route('transactions.show', $item->id) }}" class="dropdown-item" type="button">
 								<i class="fa fa-eye"></i>&nbsp View Data
 							</a>
 							<a href="{{ route('transactions.edit', $item->id) }}" class="dropdown-item" type="button">
@@ -58,7 +58,13 @@
 					</div>
 				</td>
 			</tr>
-			@endforeach
+			@empty
+			<tr>
+				<td colspan="7" align="center">
+					<code>Belum ada transaksi.</code>
+				</td>
+			</tr>
+			@endforelse
 			<tr>
 				<td colspan="7">
 					{{ $transactions->links() }}

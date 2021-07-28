@@ -69,7 +69,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('checkout', [CheckoutController::class, 'checkout'])->name('api_checkout');
     Route::post('checkout/confirm', [CheckoutController::class, 'confirmCheckout'])->name('api_confirm_checkout');
 
-    Route::post('checkout', [BeliLangsungController::class, 'store'])->name('api_beli_langsung');
+    Route::get('transactions', [App\Http\Controllers\Api\TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('transactions/{kode}', [App\Http\Controllers\Api\TransactionController::class, 'show'])->name('transactions.show');
+    Route::post('transactions/{kode}', [App\Http\Controllers\Api\TransactionController::class, 'update'])->name('transactions.update');
+
+    Route::post('langsung-checkout', [BeliLangsungController::class, 'store'])->name('api_beli_langsung');
 
     Route::get('payment-method', [PaymentMethodController::class, 'index'])->name('api_payment_method'); // get payment method
 

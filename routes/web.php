@@ -60,8 +60,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('pengguna-detail/{id}/edit', [PenggunaDetailController::class, 'edit']);
     Route::put('pengguna-detail/{id}', [PenggunaDetailController::class, 'update']);
 
+    // Modul Transaksi
     Route::resource('transactions', TransaksiController::class);
     Route::get('data/transactions', [TransaksiController::class, 'getData'])->name('transactions.data');
+
+    // Modul Laporan: harian, mingguan, bulanan
+    Route::get('data/transaction-report/daily/{date}', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'harian'])->name('report.harian');
+    Route::get('data/transaction-report/weekly/{date}', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'mingguan'])->name('report.mingguan');
+    Route::get('data/transaction-report/monthly/{date}', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'bulanan'])->name('report.bulanan');
 
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
     Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');
