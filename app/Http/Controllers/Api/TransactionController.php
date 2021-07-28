@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Auth;
+use Validator;
 
 class TransactionController extends Controller
 {
@@ -54,7 +55,8 @@ class TransactionController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $transaction = Transaction::where('id', $id)
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+                        ->where('id', $id)
                         ->with('transactionDetail.products')
                         ->first();
 
@@ -75,13 +77,17 @@ class TransactionController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'payment_code_id' => 'requirement',
+            'payment_code_id' => 'required',
         ];
-        $transaction = Transaction::where('id', $id)
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+                        ->where('id', $id)
                         ->with('transactionDetail')
                         ->first();
 
         if (!empty($transaction)) {
+            $transaction->payment_code_id = $request->payment_code_id;
+            $transaction->update();
+
             return response([
                 'success' => true,
                 'message' => 'Berhasil mengambil detail transaksi yang di pilih.',
@@ -98,16 +104,36 @@ class TransactionController extends Controller
 
     public function cancel(Request $request)
     {
-        $transaction = Transaction::find($id);
+        $rule = [
+            'transaction_id' => 'required|numeric'
+        ];
+
+        $validasi = Validator::make($request->all(), $rule);
+
+        if ($validasi->fails()) {
+            return response([
+                'error'   => true,
+                'message' => 'Gagal! Data transaksi tidak di temukan. Silahkan refresh browser anda.'
+            ], 401);
+        }
+
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+                    ->where('id', $request->transaction_id)
+                    ->first();
 
         if (!empty($transaction)) {
             $transaction->status = 6;
             $transaction->update();
 
-            return reponse([
+            return response([
                 'success' => true,
                 'message' => 'Berhasil membatalkan transaksi.'
             ], 200);
         }
+
+        return response([
+            'error'   => true,
+            'message' => 'Gagal! Data transaksi tidak di temukan. Silahkan refresh browser anda.'
+        ], 401);
     }
 }

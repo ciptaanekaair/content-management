@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('transactions', [App\Http\Controllers\Api\TransactionController::class, 'index'])->name('transactions.index');
     Route::get('transactions/{kode}', [App\Http\Controllers\Api\TransactionController::class, 'show'])->name('transactions.show');
     Route::post('transactions/{kode}', [App\Http\Controllers\Api\TransactionController::class, 'update'])->name('transactions.update');
+    Route::post('cancel/transactions', [App\Http\Controllers\Api\TransactionController::class, 'cancel'])->name('transactions.cancel');
 
     Route::post('langsung-checkout', [BeliLangsungController::class, 'store'])->name('api_beli_langsung');
 
