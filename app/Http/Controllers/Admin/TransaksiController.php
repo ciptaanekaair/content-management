@@ -42,14 +42,11 @@ class TransaksiController extends Controller
     {
         if ($this->authorize('MOD1008-read') || $this->authorize('spesial')) {
             $transaction = Transaction::where('id', $id)
-                        ->with('transactionDetail')
+                        ->with('transactionDetail.products')
+                        ->with('user')
                         ->first();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Berhasil mengambil data: '.$transaction->transaction_code.' dari database.',
-                'data'    => $transaction
-            ]);
+            return view('admin.transaksi.detail', compact('transaction'));
         }
     }
 

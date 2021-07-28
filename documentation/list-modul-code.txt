@@ -18,6 +18,8 @@ MOD1301 = Kota Modul.
 MOD2001 = Laporan Transaksi.
 
 MOD1009 = Product Reviews.
+MOd1100 = Banner Position.
+MOD1101 = Banner.
 
 Note:
 untuk setiap table, apabila data memiliki status 9 maka artinya data tersebut dalam status terhapus.

@@ -114,13 +114,6 @@
 					<div class="row">
 						<div class="col-12">
 							<div class="form-group">
-								<label for="nama_pt">Nama PT</label>
-								<input type="text" name="nama_pt" class="form-control" id="nama_pt">
-								<div class="alert-message">
-									<code id="nama_ptError"></code>
-								</div>
-							</div>
-							<div class="form-group">
 								<label for="telepon">Telepon</label>
 								<input type="text" name="telepon" class="form-control" id="telepon">
 								<div class="alert-message">

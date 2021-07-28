@@ -46,7 +46,6 @@ class PenggunaDetailController extends Controller
             $validasi = $this->validate($request, $rules);
 
             $detail = UserDetail::find($id);
-            $detail->nama_pt     = $request->nama_pt;
             $detail->alamat      = $request->alamat;
             $detail->provinsi_id = $request->provinsi_id;
             $detail->kode_pos    = $request->kode_pos;
