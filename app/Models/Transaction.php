@@ -31,8 +31,8 @@ class Transaction extends Model
         elseif ($this->status == 5) {
             $status_transaksi = 'Diterima';
         }
-        elseif ($this->status == 5) {
-            $status_transaksi = 'Terminated';
+        elseif ($this->status == 6) {
+            $status_transaksi = 'Cancel/Terminated';
         }
 
         return $status_transaksi;
@@ -55,6 +55,6 @@ class Transaction extends Model
 
     public function transactionDetail()
     {
-        return $this->hasMany(TransactionDetail::class);
+        return $this->hasMany(TransactionDetail::class, 'transactions_id', 'id');
     }
 }

@@ -33,9 +33,9 @@ class TransactionController extends Controller
 
     public function show(Request $request, $id)
     {
-        $transaction = Transaction::where('id', $id)
-                        ->with('transactionDetail')
-                        ->with('product')
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+                        ->where('id', $id)
+                        ->with('transactionDetail.products')
                         ->first();
 
         if (!empty($transaction)) {
@@ -55,8 +55,7 @@ class TransactionController extends Controller
     public function edit(Request $request, $id)
     {
         $transaction = Transaction::where('id', $id)
-                        ->with('transactionDetail')
-                        ->with('product')
+                        ->with('transactionDetail.products')
                         ->first();
 
         if (!empty($transaction)) {
@@ -80,7 +79,6 @@ class TransactionController extends Controller
         ];
         $transaction = Transaction::where('id', $id)
                         ->with('transactionDetail')
-                        ->with('product')
                         ->first();
 
         if (!empty($transaction)) {
@@ -95,5 +93,21 @@ class TransactionController extends Controller
             'error'   => true,
             'message' => 'Data transaksi tidak ada, silahkan refresh browser Anda.'
         ], 401);
+    }
+
+
+    public function cancel(Request $request)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!empty($transaction)) {
+            $transaction->status = 6;
+            $transaction->update();
+
+            return reponse([
+                'success' => true,
+                'message' => 'Berhasil membatalkan transaksi.'
+            ], 200);
+        }
     }
 }
