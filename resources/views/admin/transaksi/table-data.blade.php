@@ -8,6 +8,7 @@
 				<th>Jumlah Item</th>
 				<th>Discount</th>
 				<th>Sub Total</th>
+				<th>Status</th>
 				<th></th>
 			</tr>
 		</thead>
