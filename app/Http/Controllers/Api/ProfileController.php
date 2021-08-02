@@ -73,34 +73,35 @@ class ProfileController extends Controller
 
         $user->update();
 
-        $cek_provinsi = Provinsi::find($request->provinsi_id);
-        $cek_kota     = $this->checkKota($request->provinsi_id, $request->kota_id);
+        $detail = UserDetail::where('user_id', $user->id)->first();
 
-        if (!$cek_provinsi) {
-            $provinsi = '';
-        } else {
-            $provinsi = $request->provinsi_id;
+        if ($request->provinsi_id) {
+            $cek_provinsi = Provinsi::find($request->provinsi_id);
+
+            if ($cek_provinsi) {
+                $detail->provinsi_id = $request->provinsi_id;
+            }
+
         }
 
-        if ($cek_kota == false) {
-            $kota = '';
-        } else {
-            $kota = $request->kota_id;
+        if ($request->kota_id) {
+            $cek_kota     = $this->checkKota($request->provinsi_id, $request->kota_id);
+
+            if ($cek_kota == true) {
+                $detail->kota_id = $request->kota_id;
+            }
+
         }
 
-        $user->userDetail->update([
-            'alamat'      => $request->alamat,
-            'provinsi_id' => $provinsi,
-            'kota_id'     => $kota,
-            'kode_pos'    => $request->kode_pos,
-            'telepon'     => $request->telepon,
-            'handphone'   => $request->handphone,
-        ]);
+        $detail->telepon   = $request->input('telepon');
+        $detail->handphone = $request->input('handphone');
+        $detail->kode_pos  = $request->input('kode_pos');
+        $detail->update();
 
         $response = [
             'success'     => true,
             'message'     => 'Anda berhasil update data profile.',
-            'data'        => $user
+            'data'        => [$user, $detail]
         ];
 
         return response($response, 201);
