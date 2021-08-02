@@ -39,8 +39,6 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $rules = [
-            'provinsi_id'   => 'numeric',
-            'kota_id'       => 'numeric',
             'name'          => 'required|string',
             'profile_photo' => 'image|mimes:jpg,png,bmp,svg|max:3084'
         ];
