@@ -39,8 +39,8 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $rules = [
-            'provinsi_id'   => 'required',
-            'kota_id'       => 'required',
+            'provinsi_id'   => 'numeric',
+            'kota_id'       => 'numeric',
             'name'          => 'required|string',
             'profile_photo' => 'image|mimes:jpg,png,bmp,svg|max:3084'
         ];
@@ -51,23 +51,6 @@ class ProfileController extends Controller
             return response([
                 'success' => false,
                 'message' => $validasi->errors()
-            ], 401);
-        }
-
-        $cek_provinsi = Provinsi::find($request->provinsi_id);
-        $cek_kota     = $this->checkKota($request->provinsi_id, $request->kota_id);
-
-        if (!$cek_provinsi) {
-            return response([
-                'error' => true,
-                'message' => 'Data provinsi tidak di temukan, silahkan masukan data provinsi yang benar.'
-            ], 401);
-        }
-
-        if ($cek_kota == false) {
-            return response([
-                'error' => true,
-                'message' => 'Data kota tidak di temukan, silahkan masukan data kota yang benar.'
             ], 401);
         }
 
@@ -92,10 +75,25 @@ class ProfileController extends Controller
 
         $user->update();
 
+        $cek_provinsi = Provinsi::find($request->provinsi_id);
+        $cek_kota     = $this->checkKota($request->provinsi_id, $request->kota_id);
+
+        if (!$cek_provinsi) {
+            $provinsi = '';
+        } else {
+            $provinsi = $request->provinsi_id;
+        }
+
+        if ($cek_kota == false) {
+            $kota = '';
+        } else {
+            $kota = $request->kota_id;
+        }
+
         $user->userDetail->update([
             'alamat'      => $request->alamat,
-            'kota_id'     => $request->kota_id,
-            'provinsi_id' => $request->provinsi_id,
+            'provinsi_id' => $provinsi,
+            'kota_id'     => $kota,
             'kode_pos'    => $request->kode_pos,
             'telepon'     => $request->telepon,
             'handphone'   => $request->handphone,
