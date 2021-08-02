@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\BannerPosition;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Validator;
 
 class BannerPositionController extends Controller
 {
@@ -64,7 +65,30 @@ class BannerPositionController extends Controller
     public function store(Request $request)
     {
         if ($this->authorize('MOD1100-create')) {
-            // code...
+            $rules = [
+                'position_name' => 'required',
+                'position_description' => 'required',
+            ];
+
+            $validasi = Validator::make($request->all(), $rules);
+
+            if($validasi->fails()) {
+                return response([
+                    'error' => true,
+                    'message' => $validasi->errors()
+                ], 403);
+            }
+
+            $position = BannerPosition::create([
+                'position_name' => $request->position_name,
+                'position_description' => $request->position_description
+            ]);
+
+            return response([
+                'success' => true,
+                'message' => 'Berhasil menambahkan Banner Position baru.',
+                'data' => $position
+            ], 200);
         }
     }
 
@@ -77,7 +101,20 @@ class BannerPositionController extends Controller
     public function show($id)
     {
         if ($this->authorize('MOD1100-create')) {
-            // code...
+            $position = BannerPosition::find($id);
+
+            if(!empty($position)) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil mengambil data dari database.',
+                    'data' => $position
+                ], 200);
+            }
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Gagal mengambil data dari database. Silahkan refresh table.'
+            ]);
         }
     }
 
@@ -90,7 +127,20 @@ class BannerPositionController extends Controller
     public function edit($id)
     {
         if ($this->authorize('MOD1100-create')) {
-            // code...
+            $position = BannerPosition::find($id);
+
+            if(!empty($position)) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil mengambil data dari database.',
+                    'data' => $position
+                ], 200);
+            }
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Gagal mengambil data dari database. Silahkan refresh table.'
+            ]);
         }
     }
 
@@ -104,7 +154,30 @@ class BannerPositionController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1100-create')) {
-            // code...
+            $rules = [
+                'position_name' => 'required',
+                'position_description' => 'required',
+            ];
+
+            $validasi = Validator::make($request->all(), $rules);
+
+            if($validasi->fails()) {
+                return response([
+                    'error' => true,
+                    'message' => $validasi->errors()
+                ], 403);
+            }
+
+            $position = BannerPosition::find($id)->update([
+                'position_name' => $request->position_name,
+                'position_description' => $request->position_description
+            ]);
+
+            return response([
+                'success' => true,
+                'message' => 'Berhasil menambahkan Banner Position baru.',
+                'data' => $position
+            ], 200);
         }
     }
 
@@ -117,7 +190,21 @@ class BannerPositionController extends Controller
     public function destroy($id)
     {
         if ($this->authorize('MOD1100-create')) {
-            // code...
+            $position = BannerPosition::find($id);
+
+            if(!empty($position)) {
+                $position->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil menghapus data Posisi Banner dari database.'
+                ], 200);
+            }
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Gagal mengambil data dari database. Silahkan refresh table.'
+            ]);
         }
     }
 }

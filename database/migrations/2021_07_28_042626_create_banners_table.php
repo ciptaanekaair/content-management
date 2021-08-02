@@ -15,6 +15,9 @@ class CreateBannersTable extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('banner_position_id')->constrained('banner_positions')->nullOnDelete();
+            $table->string('banner_name');
+            $table->string('banner_image');
             $table->timestamps();
         });
     }

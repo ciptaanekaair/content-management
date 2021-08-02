@@ -15,6 +15,8 @@ class CreateBannerPositionsTable extends Migration
     {
         Schema::create('banner_positions', function (Blueprint $table) {
             $table->id();
+            $table->string('position_name');
+            $table->string('position_description');
             $table->timestamps();
         });
     }

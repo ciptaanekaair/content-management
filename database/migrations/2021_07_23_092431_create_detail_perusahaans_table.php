@@ -18,13 +18,16 @@ class CreateDetailPerusahaansTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('nama_pt')->nullable();
             $table->text('alamat_pt')->nullable();
-            $table->foreignId('kota_id')->constrained('kotas');
             $table->foreignId('provinsi_id')->constrained('provinsis');
+            $table->foreignId('kota_id')->constrained('kotas');
+            $table->foreignId('kecamatan_id')->constrained('kecamatans');
+            $table->foreignId('kode_pos')->constrained('kecamatans');
             $table->string('telepon')->nullable();
             $table->string('fax')->nullable();
             $table->string('handphone')->nullable();
             $table->string('npwp')->nullable();
             $table->string('npwp_image')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
