@@ -17,7 +17,7 @@
           </td>
           <td width="50">{{ $item->id }}</td>
           <td width="150">{{ $item->position_name }}</td>
-          <td>{{ $item->position_desription }}</td>
+          <td>{{ $item->position_description }}</td>
           <td width="100">
             <div class="btn-group">
               <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-info">

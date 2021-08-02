@@ -42,10 +42,6 @@ class BannerController extends Controller
                         ->where('banners.banner_name', 'LIKE', '%'.$search.'%')
                         ->orderBy('banners.id', 'DESC')
                         ->paginate($list_perpage);
-                // $banners = Banner::where('banner_name', 'LIKE', '%'.$search.'%')
-                //         ->with('bannerPosition')
-                //         ->orderBy('id', 'DESC')
-                //         ->paginate($list_perpage);
             } else {
                 $banners = Banner::select('banners.*', 'banner_positions.position_name')
                         ->join('banner_positions', 'banners.banner_position_id', '=', 'banner_positions.id')
@@ -75,11 +71,11 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        if ($this->authorize('MOD1100-read')) {
+        if ($this->authorize('MOD1100-create')) {
             $rules = [
-                'banner_position_id'  => 'required|numeric',
-                'banner_name'  => 'required',
-                'banner_image' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+                'banner_position_id' => 'required|numeric',
+                'banner_name'        => 'required',
+                'banner_image'       => 'required|image|mimes:jpg,jpeg,png|max:2048'
             ];
 
             $pesan = [
@@ -153,7 +149,7 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        if ($this->authorize('MOD1100-read')) {
+        if ($this->authorize('MOD1100-edit')) {
             $banner = Banner::find($id);
 
             if (!empty($banner)) {
@@ -179,11 +175,12 @@ class BannerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {if ($this->authorize('MOD1100-read')) {
+    {
+        if ($this->authorize('MOD1100-update')) {
             $rules = [
                 'banner_position_id'  => 'required|numeric',
                 'banner_name'  => 'required',
-                'banner_image' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+                'banner_image' => 'image|mimes:jpg,jpeg,png|max:2048'
             ];
 
             $pesan = [

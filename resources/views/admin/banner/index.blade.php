@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('header')
-    <h1>Posisi Banner</h1>
+    <h1>Manage Banner</h1>
 @endsection
 
 @section('content')
@@ -28,7 +28,8 @@
                         <div class="card-header-form">
                             <div class="float-right">
                                 <form id="form-search">
-                                    <input type="text" name="pencarian" onchange="cariData($(this).val())" class="form-control" id="pencarian" placeholder="Search">
+                                    <input type="text" name="pencarian" onchange="cariData($(this).val())" 
+                                    class="form-control" id="pencarian" placeholder="Search">
                                 </form>
                             </div>
                         </div>
@@ -100,9 +101,8 @@
                         );
                         fetch_table(page, perpage, search);
                     }, error: function(response) {
-                        console.log(response);
                         $('#banner_nameError').text(response.responseJSON.errors.category_name);
-                        $('#position_descriptionError').text(response.responseJSON.errors.category_description);
+                        $('#banner_imageError').text(response.responseJSON.errors.banner_image);
                     }
                 });
             }); // end submit save or update
@@ -180,7 +180,7 @@
             formReset();
             $('.modal-title').text('Tambah data baru');
             $('#formMethod').val('POST');
-            $('#category_image_link').removeAttr('href');
+            $('#imagenya').remove();
             $('#modal-form').modal('show');
         }
 
@@ -199,6 +199,7 @@
         }
 
         function formReset() {
+            $('#banner_position_id').prop('selectedIndex',0);
             $('#modal-form form')[0].reset();
         }
 
@@ -213,9 +214,9 @@
                     $('#banner_id').val(data.data.id);
                     $('#formMethod').val('PUT');
                     $('#banner_name').val(data.data.banner_name);
-                    $('#position_description').val(data.data.position_description);
+                    $('#banner_position_id [value="'+data.data.banner_position_id+'"]').attr('selected', 'selected');
                     $('#btnSave').text('Update Data');
-                    $('#lihat-image').html('<a href="'+data.imageurl+'" data-fancybox><i class="fa fa-eye"></i> lihat gambar</a>');
+                    $('#lihat-image').html('<a href="'+data.data.imageurl+'" id="imagenya" data-fancybox><i class="fa fa-eye"></i> lihat gambar</a>');
                     $('#modal-form').modal('show');
                 },
                 error: function(response) {

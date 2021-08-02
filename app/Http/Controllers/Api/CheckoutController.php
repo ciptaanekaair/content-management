@@ -151,10 +151,10 @@ class CheckoutController extends Controller
         $rules = [
             'user_id'         => 'required',
             'payment_code_id' => 'required|numeric',
-            'alamat'          => 'required',
-            'kota_id'         => 'required',
-            'provinsi_id'     => 'required|numeric',
-            'kode_pos'        => 'required|numeric',
+            'provinsi_id'     => 'numeric',
+            'kota_id'         => 'numeric',
+            'kecamatan_id'    => 'numeric',
+            'kode_pos'        => 'numeric',
             'telepon'         => 'numeric',
             'handphone'       => 'numeric'
         ];
