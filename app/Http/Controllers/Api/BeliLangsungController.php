@@ -50,15 +50,15 @@ class BeliLangsungController extends Controller
             ]);
         }
 
-        $user_id    = $request->user_id;
+        $user_id    = auth()->user()->id;
         $product_id = $request->product_id;
         $code_vcr   = $request->voucher_code;
         $discount   = 0;
 
         $transaksi   = new Transaction;
-        $product     = Product::find($product_id);
+        $product     = Product::find($request->product_id);
 
-        if ($product->qty < 1) {
+        if ($product->product_stock < 1) {
             return response([
                 'error' => true,
                 'message' => 'Saya sekali, product yang anda pilih sudah habis. Silahkan hubungi admin.'
@@ -79,9 +79,10 @@ class BeliLangsungController extends Controller
         $p_after_discount = $total_price - $discount;
         $pajakPPN         = $p_after_discount * 0.1;
 
+        $transaksi->user_id              = $user_id;
         $transaksi->transaction_code     = 'TRN-'.date('ymd').rand('000', '999');
         $transaksi->transaction_date     = date('Y-m-d');
-        $transaksi->total_item           = Auth::user()->countQty();
+        $transaksi->total_item           = 1;
         $transaksi->total_price          = $total_price;
         $transaksi->discount             = $discount;
         $transaksi->price_after_discount = $p_after_discount;
@@ -93,9 +94,9 @@ class BeliLangsungController extends Controller
 
         TransactionDetail::create([
             'transactions_id' => $transaksi_id,
-            'product_id'      => $item->product_id,
-            'qty'             => $item->qty,
-            'total_price'     => $item->total_price,
+            'product_id'      => $product_id,
+            'qty'             => 1,
+            'total_price'     => $total_price,
         ]);
 
         return response([
