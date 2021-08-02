@@ -19,7 +19,7 @@ class PenggunaController extends Controller
 {
     public function index()
     {
-        if ($this->authorize('MOD1001-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-read')) {
             $users = User::where([
                     ['status', '!=', 9],
                     ['level_id', '!=', 4]
@@ -34,7 +34,7 @@ class PenggunaController extends Controller
 
     public function getData(Request $request)
     {
-        if ($this->authorize('MOD1001-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-read')) {
 
             $list_perpage = $request->get('list_perpage');
             $search       = $request->get('search');
@@ -67,7 +67,7 @@ class PenggunaController extends Controller
 
     public function store(Request $request)
     {
-        if ($this->authorize('MOD1001-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-create')) {
             $rules = [
                 'name'               => 'required',
                 'email'              => 'required|unique:users',
@@ -114,7 +114,7 @@ class PenggunaController extends Controller
 
     public function show($id)
     {
-        if ($this->authorize('MOD1001-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-read')) {
             $user = User::find($id);
 
             return response()->json([
@@ -127,7 +127,7 @@ class PenggunaController extends Controller
 
     public function edit($id)
     {
-        if ($this->authorize('MOD1001-edit') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-edit')) {
             $user = User::with('userDetail')->where('id', $id)->first();
 
             return response()->json([
@@ -140,7 +140,7 @@ class PenggunaController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($this->authorize('MOD1001-update') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-update')) {
             $rules = [
                 'name'               => 'required',
                 'password'           => 'string|min:6|confirmed',
@@ -191,7 +191,7 @@ class PenggunaController extends Controller
 
     public function destroy($id)
     {
-        if ($this->authorize('MOD1001-delete') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-delete')) {
             $user = User::find($id);
             $user->status = 9;
             $user->update();

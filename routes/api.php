@@ -23,6 +23,9 @@ Route::post('/login', [AutentikasiController::class, 'login'])->name('api_login'
 Route::get('/login/{service}', [SocialLoginController::class, 'redirect']);
 Route::get('/login/{service}/callback', [SocialLoginController::class, 'callback']);
 
+// Banner
+Route::get('banner-positions/{id}', [App\Http\Controllers\Api\BannerPositionController::class, 'getData'])->name('api_banner_position');
+
 /**
  * Route API untuk product & kategori produk
  */
@@ -74,7 +77,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('transactions/{kode}', [App\Http\Controllers\Api\TransactionController::class, 'update'])->name('transactions.update');
     Route::post('cancel/transactions', [App\Http\Controllers\Api\TransactionController::class, 'cancel'])->name('transactions.cancel');
 
-    Route::post('langsung-checkout', [BeliLangsungController::class, 'store'])->name('api_beli_langsung');
+    Route::post('beli-langsung', [App\Http\Controllers\Api\BeliLangsungController::class, 'store'])->name('api_beli_langsung');
 
     Route::get('payment-method', [PaymentMethodController::class, 'index'])->name('api_payment_method'); // get payment method
 

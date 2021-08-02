@@ -18,7 +18,7 @@ class KotaController extends Controller
      */
     public function index()
     { 
-        if ($this->authorize('MOD1301-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-read')) {
             $provinsis = Provinsi::where('status', '!=', 9)
                         ->orderBy('provinsi_name', 'ASC')
                         ->get();    
@@ -33,7 +33,7 @@ class KotaController extends Controller
 
     public function getData(Request $request)
     {
-        if ($this->authorize('MOD1301-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-read')) {
             $search       = $request->get('search');
             $list_perpage = $request->get('list_perpage');
 
@@ -55,7 +55,7 @@ class KotaController extends Controller
 
     public function importData(Request $request)
     {
-        if ($this->authorize('MOD1301-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-create')) {
             if ($request->hasFile('file_upload')) {
                 Excel::import(new KotasImport, $request->file_upload);
 
@@ -80,7 +80,7 @@ class KotaController extends Controller
      */
     public function store(Request $request)
     {
-        if ($this->authorize('MOD1301-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-create')) {
             $rules = [
                 'provinsi_id' => 'required|numeric',
                 'nama_kota'   => 'required',
@@ -116,7 +116,7 @@ class KotaController extends Controller
      */
     public function show($id)
     {
-        if ($this->authorize('MOD1301-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-read')) {
             
         }
     }
@@ -129,7 +129,7 @@ class KotaController extends Controller
      */
     public function edit($id)
     {
-        if ($this->authorize('MOD1301-edit') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-edit')) {
             $kota = Kota::find($id);
 
             return response()->json([
@@ -149,7 +149,7 @@ class KotaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($this->authorize('MOD1301-update') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-update')) {
             
         }
     }
@@ -162,7 +162,7 @@ class KotaController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->authorize('MOD1301-delete') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1301-delete')) {
             
         }
     }

@@ -5,6 +5,7 @@
         <th width="100">No</th>
         <th width="100">#</th>
         <th>Category Name</th>
+        <th>Image</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
@@ -26,6 +27,13 @@
           </td>
           <td>{{ $item->id }}</td>
           <td>{{ $item->category_name }}</td>
+          <td>
+            <a href="{{ $item->imageurl }}" data-fancybox>
+              <button class="btn btn-sm btn-primary">
+                <i class="fa fa-eye"></i>
+              </button>
+            </a>
+          </td>
           <td>
             @if ($item->status == 1)
               <div class="badge badge-success">active</div>

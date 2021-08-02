@@ -10,7 +10,7 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        if ($this->authorize('MOD1008-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1008-read')) {
             $transactions = Transaction::where('status', '!=', 9)
                             ->orderBy('id', 'DESC')
                             ->paginate(10);
@@ -21,7 +21,7 @@ class TransaksiController extends Controller
 
     public function getData(Request $request)
     {
-        if ($this->authorize('MOD1008-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1008-read')) {
             $search  = $request->get('search');
             $perpage = $request->get('list_perpage');
 
@@ -40,7 +40,7 @@ class TransaksiController extends Controller
 
     public function show($id)
     {
-        if ($this->authorize('MOD1008-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1008-read')) {
             $transaction = Transaction::where('id', $id)
                         ->with('transactionDetail.products')
                         ->with('user')
@@ -52,7 +52,7 @@ class TransaksiController extends Controller
 
     public function edit($id)
     {
-        if ($this->authorize('MOD1008-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1008-read')) {
             $transaction = Transaction::join('transaction_details', 
                         'transactions.id', '=', 'transaction_details.transactions_id')
                         ->where('transactions.id', $id)
@@ -68,7 +68,7 @@ class TransaksiController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($this->authorize('MOD1008-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1008-read')) {
             // code...
         }
     }

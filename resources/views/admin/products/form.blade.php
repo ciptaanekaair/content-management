@@ -134,7 +134,11 @@
 								</div>
 							</div>
 							<div class="col-md-12 col-lg-6">
-								<a href="{{ old('imageurl', $product->imageurl) }}" target="_blank">{{ old('imageurl', $product->imageurl) }}</a>
+								<a href="{{ old('imageurl', $product->imageurl) }}" data-fancybox target="_blank">
+									<button class="btn btn-primary">
+										<i class="fa fa-eye"></i> &nbsp Lihat Gambar
+									</button>
+								</a>
 							</div>
 							<div class="col-12">
 								<a href="{{ url('products') }}" class="btn btn-secondary"><i class="fa fa-arrow-circle-left"></i> Kembali</a>

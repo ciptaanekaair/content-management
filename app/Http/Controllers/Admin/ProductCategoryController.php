@@ -19,7 +19,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        if ($this->authorize('MOD1004-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1004-read')) {
             $pCategory = ProductCategory::where('status', '!=', 9)
                         ->orderBy('id', 'DESC')
                         ->paginate(10);
@@ -34,7 +34,7 @@ class ProductCategoryController extends Controller
      */
     public function getData(Request $request)
     {
-        if ($this->authorize('MOD1004-read') || $this->authorize('special')) {
+        if ($this->authorize('MOD1004-read') xor $this->authorize('special')) {
 
             $perpage = $request->get('list_perpage');
             $search  = $request->get('search');
@@ -58,7 +58,7 @@ class ProductCategoryController extends Controller
 
     public function exportData()
     {
-        if ($this->authorize('MOD1004-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1004-read')) {
             return Excel::download(new ProductCategoryExport, 'product_category_'.date('Y-m-d').'.xlsx');
         }
     }
@@ -68,7 +68,7 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if ($this->authorize('MOD1004-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1004-create')) {
 
             $rules = [
                 'category_name'  => 'required',
@@ -121,7 +121,7 @@ class ProductCategoryController extends Controller
      */
     public function show($id)
     {
-        if ($this->authorize('MOD1004-edit') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1004-edit')) {
             $pCategory = ProductCategory::findOrFail($id);
 
             return response()->json([
@@ -138,7 +138,7 @@ class ProductCategoryController extends Controller
      */
     public function edit($id)
     {
-        if ($this->authorize('MOD1004-edit') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1004-edit')) {
             $pCategory = ProductCategory::findOrFail($id);
 
             return response()->json([
@@ -154,7 +154,7 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($this->authorize('MOD1004-update') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1004-update')) {
             $rules = [
                 'category_name'        => 'required',
                 'status'               => 'numeric'
@@ -220,7 +220,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->authorize('MOD1004-delete') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1004-delete')) {
 
             $pCategory = ProductCategory::findOrFail($id);
             $pCategory->status = 9;

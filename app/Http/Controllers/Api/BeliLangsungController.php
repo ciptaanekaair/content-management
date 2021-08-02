@@ -57,6 +57,14 @@ class BeliLangsungController extends Controller
 
         $transaksi   = new Transaction;
         $product     = Product::find($product_id);
+
+        if ($product->qty < 1) {
+            return response([
+                'error' => true,
+                'message' => 'Saya sekali, product yang anda pilih sudah habis. Silahkan hubungi admin.'
+            ], 401);
+        }
+
         $total_price = $product->product_price;
 
         if (!empty($code_vcr)) {

@@ -21,7 +21,7 @@ class ProductController extends Controller
      */ 
     public function index()
     {
-        if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-read')) {
             $products = Product::where('status', '!=', 9)->
                         orderBy('id', 'DESC')->paginate(10);
             foreach($products as $product) {
@@ -34,7 +34,7 @@ class ProductController extends Controller
 
     public function getData(Request $request)
     {
-        if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-read')) {
             $perpage = $request->get('list_perpage');
             $search  = $request->get('search');
 
@@ -57,7 +57,7 @@ class ProductController extends Controller
 
     public function exportData()
     {
-        if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-read')) {
             return Excel::download(new ProductDataExport, 'products_'.date('Y-m-d').'.xlsx');
         }
     }
@@ -67,7 +67,7 @@ class ProductController extends Controller
      */ 
     public function create()
     {
-        if ($this->authorize('MOD1104-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-create')) {
             $pCategory = ProductCategory::where('status', '!=', 9)->orderBy('category_name', 'ASC')->get();
 
             return view('admin.products.form', ['product' => new Product(), 'pCategory' => $pCategory]);
@@ -79,7 +79,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if ($this->authorize('MOD1104-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-create')) {
             $rules = [
                 'product_category_id' => 'required',
                 'product_code'        => 'required|unique:products',
@@ -138,7 +138,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        if ($this->authorize('MOD1104-read') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-read')) {
             $product = Product::find($id);
 
             return response()->json([
@@ -154,7 +154,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        if ($this->authorize('MOD1104-edit') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-edit')) {
             $pCategory = ProductCategory::where('status', '!=', 9)
                         ->orderBy('category_name', 'ASC')
                         ->get();
@@ -172,7 +172,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($this->authorize('MOD1104-update') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-update')) {
             $rules = [
                 'product_category_id' => 'required',
                 'product_code'        => ['required', Rule::unique('products')->ignore($id)],
@@ -234,7 +234,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->authorize('MOD1104-delete') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1104-delete')) {
             $product = Product::find($id);
             $product->status = 9;
             $product->update();

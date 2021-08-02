@@ -12,7 +12,7 @@ class PenggunaDetailController extends Controller
 {
     public function edit($id)
     {
-        if ($this->authorize('MOD1001-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-create')) {
             $data = UserDetail::with('getUser')->where('user_id', $id)->first();
 
             if ($data == '') {
@@ -35,7 +35,7 @@ class PenggunaDetailController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($this->authorize('MOD1001-create') || $this->authorize('spesial')) {
+        if ($this->authorize('MOD1001-create')) {
             $rules = [
                 'telepon'        => 'nullable|numeric',
                 'handphone'      => 'nullable|numeric',

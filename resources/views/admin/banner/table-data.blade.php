@@ -5,19 +5,27 @@
         <th width="100">No</th>
         <th width="100">#</th>
         <th>Position Name</th>
-        <th>Position Description</th>
+        <th>Nama Banner</th>
+        <th>Gambar</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      @forelse($positions as $index => $item)
+      @forelse($banners as $index => $item)
         <tr>
           <td width="50">
-            {{ $positions->firstItem() + $index }}
+            {{ $banners->firstItem() + $index }}
           </td>
           <td width="50">{{ $item->id }}</td>
-          <td width="150">{{ $item->position_name }}</td>
-          <td>{{ $item->position_desription }}</td>
+          <td>{{ $item->position_name }}</td>
+          <td>{{ $item->banner_name }}</td>
+          <td>
+            <a href="{{ $item->imageurl }}" data-fancybox="images" >
+              <button class="btn btn-sm btn-primary">
+                <i class="fa fa-eye"></i>
+              </button>
+            </a>
+          </td>
           <td width="100">
             <div class="btn-group">
               <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-info">
@@ -33,7 +41,7 @@
         <tr>
           <td colspan="5" align="center">
             <b><i>
-              Belum ada data Posisi Banner, silahkan hubungi admin.
+              Belum ada data Banner, silahkan hubungi IT.
             </i></b>
           </td>
         </tr>
@@ -41,7 +49,7 @@
         <tr>
           <td colspan="5">
             <div class="text-center">
-              {{ $positions->links() }}
+              {{ $banners->links() }}
             </div>
           </td>
         </tr>

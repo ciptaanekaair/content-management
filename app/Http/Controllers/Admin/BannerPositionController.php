@@ -17,11 +17,10 @@ class BannerPositionController extends Controller
     public function index()
     {
         if ($this->authorize('MOd1100-read')) {
-            $b_positions = BannerPosition::where('status', '!=', 9)
-                        ->orderBy('id', 'DESC')
-                        ->get();
+            $positions = BannerPosition::orderBy('id', 'DESC')
+                        ->paginate(10);
 
-            return view('admin.banner-position.index', compact('b_positions'));
+            return view('admin.banner-position.index', compact('positions'));
         }
     }
 
@@ -31,17 +30,19 @@ class BannerPositionController extends Controller
             $search       = $request->get('search');
             $list_perpage = $request->get('list_perpage');
 
-            $b_positions = BannerPosition::where('status', '!=', 9)
-                        ->where('position_name', '%'.$search.'%')
-                        ->orderBy('id', 'DESC')
-                        ->get();
+            if (!empty($search)) {
+                $positions = BannerPosition::where('position_name', 'LIKE', '%'.$search.'%')
+                            ->orderBy('id', 'DESC')
+                            ->paginate($list_perpage);
+            } else {
+                $positions = BannerPosition::orderBy('id', 'DESC')
+                            ->paginate($list_perpage);
+            }
+            
+            return view('admin.banner-position.table-data', compact('positions'));
         } else {
-            $b_positions = BannerPosition::where('status', '!=', 9)
-                        ->where('position_name', '%'.$search.'%')
-                        ->orderBy('id', 'DESC')
-                        ->get();
+            return 'hello world';
         }
-        return view('admin.banner-position.table-data', compact('b_positions'));
     }
 
     /**
@@ -67,7 +68,7 @@ class BannerPositionController extends Controller
         if ($this->authorize('MOD1100-create')) {
             $rules = [
                 'position_name' => 'required',
-                'position_description' => 'required',
+                'position_description' => 'required'
             ];
 
             $validasi = Validator::make($request->all(), $rules);

@@ -118,6 +118,23 @@ class RoleSeeder extends Seeder
             'nama_role' => 'MOD1204-delete'
         ]);
 
+        // Transaction
+        Role::create([
+            'nama_role' => 'MOD1008-read'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1008-create'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1008-edit'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1008-update'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1008-delete'
+        ]);
+
         // Product Reviews
         Role::create([
             'nama_role' => 'MOD1009-read'
@@ -133,6 +150,91 @@ class RoleSeeder extends Seeder
         ]);
         Role::create([
             'nama_role' => 'MOD1009-delete'
+        ]);
+
+        // Provinsi Modul
+        Role::create([
+            'nama_role' => 'MOD1300-read'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1300-create'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1300-edit'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1300-update'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1300-delete'
+        ]);
+
+        // Kota Modul
+        Role::create([
+            'nama_role' => 'MOD1301-read'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1301-create'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1301-edit'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1301-update'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1301-delete'
+        ]);
+
+        // Laporan Transaction
+        Role::create([
+            'nama_role' => 'MOD2001-read'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD2001-create'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD2001-edit'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD2001-update'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD2001-delete'
+        ]);
+
+        // Banner Position
+        Role::create([
+            'nama_role' => 'MOD1100-read'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1100-create'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1100-edit'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1100-update'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1100-delete'
+        ]);
+
+        // Banners
+        Role::create([
+            'nama_role' => 'MOD1101-read'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1101-create'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1101-edit'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1101-update'
+        ]);
+        Role::create([
+            'nama_role' => 'MOD1101-delete'
         ]);
 
 

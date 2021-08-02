@@ -7,25 +7,40 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="POST" id="position_form" name="category_form" enctype="multipart/form-data">
+			<form method="POST" id="banner_form" name="banner_form" enctype="multipart/form-data">
 				<div class="modal-body">
-					<input type="hidden" name="position_id" id="position_id">
+					<input type="hidden" name="banner_id" id="banner_id">
 					<input type="hidden" name="_method" id="formMethod">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label for="position_name">Nama Posisi</label>
-								<input type="text" name="position_name" class="form-control" id="position_name">
+								<label for="banner_position_id">Posisi Banner</label>
+								<select name="banner_position_id" id="banner_position_id" class="form-control">
+									<option>Pilih Posisi Penempatan Banner</option>
+									@foreach($positions as $item)
+									<option value="{{ $item->id }}">{{ $item->position_name }}</option>
+									@endforeach
+								</select>
 								<div class="alert-message">
-									<code id="position_nameError"></code>
+									<code id="banner_position_idError"></code>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="position_description">Deskripsi Posisi</label>
-								<textarea name="position_description" rows="6" class="col-md-12" id="position_description"></textarea>
+								<label for="banner_name">Nama Banner</label>
+								<input type="text" name="banner_name" class="form-control" id="banner_name">
 								<div class="alert-message">
-									<code id="position_descriptionError"></code>
+									<code id="banner_nameError"></code>
 								</div>
+							</div>
+							<div class="form-group">
+								<label for="banner_image">Banner Image</label>
+								<input type="file" name="banner_image" id="banner_image" class="form-control">
+								<div class="alert-message">
+									<code id="banner_imageError"></code>
+								</div>
+							</div>
+							<div id="lihat-image">
+								
 							</div>
 						</div>
 					</div>
@@ -48,14 +63,14 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form type="POST" id="position_delete_form">
+			<form type="POST" id="banner_delete_form">
 			<div class="modal-body">
 					{{ csrf_field() }}
-					<input type="hidden" name="position_id_d" id="position_id_d">
+					<input type="hidden" name="banner_id_d" id="banner_id_d">
 					<input type="hidden" name="_method" id="formMethodD" value="DELETE">
 				<p align="center">
 					Anda akan menghapus data:<br>
-					<code id="position_name_d"></code>.
+					<code id="banner_name_d"></code>.
 					<br>
 					<b>Apakah anda yakin? Anda tidak akan dapat mengembalikan data ini.</b>
 				</p>

@@ -122,6 +122,16 @@
                         <a class="nav-link" href="{{ route('roles.index') }}">Roles Manager</a>
                     </li>
                 </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('banner-positions*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('banner-positions.index') }}">Banner Positions</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('banners*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('banners.index') }}">Banner</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </aside>

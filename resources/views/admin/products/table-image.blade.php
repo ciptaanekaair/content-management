@@ -18,7 +18,7 @@
 			@foreach($product->productImages as $item)
 			<tr>
 				<td>{{ $item->id }}</td>
-				<td><a href="{{ asset($item->imageurl) }}" target="_blank">{{ $item->images }}</a></td>
+				<td><a href="{{ asset($item->imageurl) }}" data-fancybox="gallery" target="_blank">{{ $item->images }}</a></td>
 				<td>
 					<a onclick="editImage({{ $item->id }})" class="btn btn-primary">edit</a>&nbsp
 					<a onclick="deleteImage({{ $item->id }})" class="btn btn-danger">delete</a>

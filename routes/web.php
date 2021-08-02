@@ -90,6 +90,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('data/kecamatans', [App\Http\Controllers\Admin\KecamatanController::class, 'getData'])->name('kecamatans.data');
     Route::post('data/kecamatans/import', [App\Http\Controllers\Admin\KecamatanController::class, 'importData'])->name('kecamatans.import');
 
+    // Product Banner Position
+    Route::resource('banner-positions', App\Http\Controllers\Admin\BannerPositionController::class);
+    Route::get('data/banner-positions', [App\Http\Controllers\Admin\BannerPositionController::class, 'getData'])->name('banner-positions.data');
+
+    // Product Banner
+    Route::resource('banners', App\Http\Controllers\Admin\BannerController::class);
+    Route::get('data/banners', [App\Http\Controllers\Admin\BannerController::class, 'getData'])->name('banners.data');
+
     // attaching level
     Route::post('roles/attach', [AttachingLevelController::class, 'attachLevel'])->name('roles.attach');
 });
