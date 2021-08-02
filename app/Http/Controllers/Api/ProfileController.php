@@ -24,9 +24,6 @@ class ProfileController extends Controller
 
         $profile->cart_count = $profile->countQty();
 
-        // $provinsis = Provinsi::orderBy('provinsi_name', 'ASC')->get();
-        // $kotas     = Kota::orderBy('nama_kota', 'ASC')->get();
-
         $response = [
             'success'     => true,
             'message'     => 'Berhasil load data.', 
@@ -93,6 +90,7 @@ class ProfileController extends Controller
 
         }
 
+        $detail->telepon   = $request->input('alamat');
         $detail->telepon   = $request->input('telepon');
         $detail->handphone = $request->input('handphone');
         $detail->kode_pos  = $request->input('kode_pos');
