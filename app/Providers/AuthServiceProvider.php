@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Redirect;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->hasAccess($bisa_ngapain)) {
                 return true;
             }
+
         });
     }
 }

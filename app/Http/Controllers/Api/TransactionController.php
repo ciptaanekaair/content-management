@@ -15,6 +15,7 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::where('user_id', auth()->user()->id)
                         ->where('status', '!=', 9)
+                        ->with('transactionDetail.products')
                         ->orderBy('id', 'DESC')
                         ->get();
 

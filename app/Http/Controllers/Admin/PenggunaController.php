@@ -79,6 +79,8 @@ class PenggunaController extends Controller
 
             $validasi = $this->validate($request, $rules);
 
+            $simpan = '';
+
             if ($request->hasFile('profile_photo_path')) {
                 $simpan = $request->profile_photo_path->store('profile-photos', 'public');
             }
@@ -88,7 +90,7 @@ class PenggunaController extends Controller
                 'email'              => $request->email,
                 'username'           => md5($request->email),
                 'password'           => Hash::make($request->password),
-                'profile_photo_path' => $simpan,
+                'profile_photo_path' => $simpan == '' ? null : $simpan,
                 'level_id'           => $request->level_id,
                 'status'             => $request->status
             ]);
