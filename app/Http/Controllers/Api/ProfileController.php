@@ -183,17 +183,17 @@ class ProfileController extends Controller
 
             $perusahaan->update();
 
-            $response = [
+            return response([
                 'success'     => true,
                 'message'     => 'Anda berhasil update data profile perusahaan.',
                 'data'        => $perusahaan
-            ];
+            ]);
         }
 
-        $response = [
+        return response([
             'error'   => true,
             'message' => 'Data tidak ditemukan. Sepertinya anda terdatar sebagai perorangan.'
-        ];
+        ]);
     }
 
     public function checkKota($provinsi_id, $kota_id)
