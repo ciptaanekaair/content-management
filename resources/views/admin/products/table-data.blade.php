@@ -45,7 +45,10 @@
                 Aksi &nbsp&nbsp<i class="fa fa-arrow-down"></i> 
               </botton>
               <div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
-                <a href="{{ url('products/'.$item->id.'/edit') }}" class="dropdown-item" type="button"><i class="fa fa-pencil"></i>&nbspEdit</a>
+                <a onclick="seeDetail({{ $item->id }})" class="dropdown-item">
+                  <i class="fa fa-eye"></i> &nbsp View
+                </a>
+                <a href="{{ url('products/'.$item->id.'/edit') }}" class="dropdown-item" type="button"><i class="fa fa-pencil"></i>&nbsp Edit</a>
                 <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbsp Delete</a>
               </div>
             </div>

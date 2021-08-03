@@ -18,7 +18,7 @@ class ProfileController extends Controller
     // get user data.
     public function getProfile()
     {
-        $profile  = User::with('userDetail')
+        $profile  = User::with('userDetail', 'detailPerusahaan')
                     ->where('id', auth()->user()->id)
                     ->first();
 

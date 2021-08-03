@@ -55,7 +55,7 @@
       <tr>
         <td colspan="7">
           <div class="text-center">
-            {{ $users->links() }}
+            {{ $users->links('vendor.pagination.simple-tailwind') }}
           </div>
         </td>
       </tr>

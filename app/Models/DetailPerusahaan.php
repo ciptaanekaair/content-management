@@ -17,4 +17,9 @@ class DetailPerusahaan extends Model
 
         return $npwppicurl;
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

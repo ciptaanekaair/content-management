@@ -44,7 +44,7 @@
 			@endforeach
 			<tr>
 				<td colspan="7">
-					{{ $roles->links() }}
+					{{ $roles->links('vendor.pagination.simple-tailwind') }}
 				</td>
 			</tr>
 		</tbody>

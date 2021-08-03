@@ -49,7 +49,7 @@
         <tr>
           <td colspan="5">
             <div class="text-center">
-              {{ $banners->links() }}
+              {{ $banners->links('vendor.pagination.simple-tailwind') }}
             </div>
           </td>
         </tr>

@@ -81,6 +81,11 @@ class User extends Authenticatable
         return $this->hasMany(TransactionTemporary::class);
     }
 
+    public function detailPerusahaan()
+    {
+        return $this->hasOne(DetailPerusahaan::class);
+    }
+
     // public function loadCartData()
     // {
     //     return $this->hasMany(TransactionTemporary::class);

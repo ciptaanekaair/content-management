@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Product Route
     Route::resource('products', ProductController::class);
     Route::get('data/products', [ProductController::class, 'getData'])->name('product.data');
+    Route::get('products/detail/{id}', [ProductController::class, 'getDetail'])->name('product.detail');
     Route::get('data/products/export', [ProductController::class, 'exportData'])->name('product.data.export');
 
     // product images

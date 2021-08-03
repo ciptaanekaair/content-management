@@ -65,7 +65,7 @@
 			@endforelse
 			<tr>
 				<td colspan="8">
-					{{ $transactions->links() }}
+					{{ $transactions->links('vendor.pagination.simple-tailwind') }}
 				</td>
 			</tr>
 		</tbody>

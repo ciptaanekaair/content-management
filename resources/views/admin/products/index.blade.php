@@ -186,6 +186,17 @@ function formDeleteReset() {
   $('#modalProductName').text('');
 }
 
+function seeDetail(id) {
+  $.ajax({
+    url: '{{ url("products/detail") }}/'+id,
+    type: 'GET',
+    dataType: 'JSON',
+    success: function(data) {
+      $('#modal-detail').modal('show');
+    }
+  });
+}
+
 function confirmDelete(id) {
   save_method = 'delete';
   $.ajax({

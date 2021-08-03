@@ -62,6 +62,13 @@ class ProductController extends Controller
         }
     }
 
+    public function getDetail($id)
+    {
+        if ($this->authorize('MOD1104-read')) {
+            $product = '';
+        }
+    }
+
     /**
      * Halaman form input data baru
      */ 
