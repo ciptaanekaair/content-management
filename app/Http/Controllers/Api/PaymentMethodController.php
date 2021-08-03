@@ -2,22 +2,47 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\PaymentConfirmation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PaymentCode;
+use Validator;
+use Storage;
 
 class PaymentMethodController extends Controller
 {
-    
-    public function store()
+    public function store(Request $request)
     {
-        $payment = PaymentCode::where('status', '!=', 9)
-                ->orderBy('kode_pembayaran', 'ASC')
-                ->get();
+        $rules = [
+            'transactions_id' => 'required|numeric',
+            'images'          => 'image|mimes:jpg,jpeg,png,pdf|max:5140',
+        ];
+
+        $pesan = [
+            'transactions_id.required' => 'Data transaksi tidak di temukan. Silahkan refresh browser anda.',
+            'transactions_id.numeric'  => 'Data transaksi tidak di temukan. Silahkan refresh browser anda.',
+            'images.image'             => 'File harus berupa gambar',
+            'images.mimes'             => 'File gambar harus berupa: jpg/jpeg/png, atau berupa PDF.',
+            'images.max'               => 'Ukuran file harus tidak melebihi 5MB'
+        ];
+
+        $validasi = Validator::make($request->all(), $rules, $pesan);
+
+        if ($validasi->fails()) {
+            return response([
+                'error' => true,
+                'message' => $validasi->errors()
+            ]);
+        }
+
+        $confirm = new PaymentConfirmation;
+
+        if ($request->hasFile('images')) {
+            $simpan = $request->images->store('');
+        }
 
         return response([
             'success' => true,
-            'message' => 'Berhasil mengambil data dari database.',
+            'message' => 'Berhasil mengajukan konfirmasi pembayaran.',
             'data'    => $payment
         ]);
     }

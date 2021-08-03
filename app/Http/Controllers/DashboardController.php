@@ -14,10 +14,14 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userCount    = User::where('status', '!=', 0)->count();
-        $productCount = Product::where('status', '!=', 0)->count();
-        $trnsctCount  = Transaction::where('status', 1)->count();
+        if ($this->authorize('MOD1001-read')) {
 
-        return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount'));
+            $userCount    = User::where('status', '!=', 0)->count();
+            $productCount = Product::where('status', '!=', 0)->count();
+            $trnsctCount  = Transaction::where('status', 1)->count();
+
+            return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount'));
+
+        }
     }
 }

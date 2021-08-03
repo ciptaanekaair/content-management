@@ -54,7 +54,8 @@ class CheckoutController extends Controller
     public function checkout(Request $request)
     {
         $rules = [
-            'user_id' => 'required',
+            'user_id'         => 'required',
+            'payment_code_id' => 'numeric'
         ];
 
         $validasi = Validator::make($request->all(), $rules);
@@ -106,6 +107,10 @@ class CheckoutController extends Controller
         // buat perhitungan
         $p_after_discount = $total_price - $discount;
         $pajakPPN         = $p_after_discount * 0.1;
+
+        if ($request->filled('payment_code_id')) {
+            $transaksi->payment_code_id = $request->payment_code_id;
+        }
 
         $transaksi->transaction_code     = 'TRN-'.date('ymd').rand('000', '999');
         $transaksi->transaction_date     = date('Y-m-d');
