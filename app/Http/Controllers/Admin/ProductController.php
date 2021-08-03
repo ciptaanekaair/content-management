@@ -69,6 +69,7 @@ class ProductController extends Controller
 
             if (!empty($product)) {
                 $product->qty_terjual = $product->countQty();
+                $product->price       = number_format($product->product_price);
 
                 return response([
                     'success' => true,
