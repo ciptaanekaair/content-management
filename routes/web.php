@@ -79,9 +79,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::resource('roles', RoleController::class);
     Route::get('data/roles', [RoleController::class, 'getData'])->name('roles.data');
     // Modul Provinsi
-    Route::resource('provinsis', ProvinsiController::class);
-    Route::get('data/provinsis', [ProvinsiController::class, 'getData'])->name('provinsis.data');
-    Route::get('data/provinsis/import', [ProvinsiController::class, 'importData'])->name('provinsis.import');
+    Route::resource('provinsis', App\Http\Controllers\Admin\ProvinsiController::class);
+    Route::get('data/provinsis', [App\Http\Controllers\Admin\ProvinsiController::class, 'getData'])->name('provinsis.data');
+    Route::get('data/provinsis/import', [App\Http\Controllers\Admin\ProvinsiController::class, 'importData'])->name('provinsis.import');
     // Modul Kota
     Route::resource('kotas', KotaController::class);
     Route::get('data/kotas', [KotaController::class, 'getData'])->name('kotas.data');

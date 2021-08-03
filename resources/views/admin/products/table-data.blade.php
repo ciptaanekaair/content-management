@@ -46,7 +46,7 @@
               </botton>
               <div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
                 <a href="{{ url('products/'.$item->id.'/edit') }}" class="dropdown-item" type="button"><i class="fa fa-pencil"></i>&nbspEdit</a>
-                <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbspView</a>
+                <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbsp Delete</a>
               </div>
             </div>
           </td>

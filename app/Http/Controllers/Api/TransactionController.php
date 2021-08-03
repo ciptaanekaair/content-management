@@ -123,6 +123,24 @@ class TransactionController extends Controller
                     ->first();
 
         if (!empty($transaction)) {
+
+            if ($transaction->status == 4) {
+                return response([
+                    'error'   => true,
+                    'message' => 'Anda tidak dapat membatalkan transaksi yang sedang dalam pengiriman.'
+                ], 200);
+            } elseif ($transaction->status == 5) {
+                return response([
+                    'error'   => true,
+                    'message' => 'Anda tidak dapat membatalkan transaksi yang berstatus Diterima.'
+                ], 200);
+            } elseif ($transaction->status == 1) {
+                return response([
+                    'error'   => true,
+                    'message' => 'Anda tidak dapat membatalkan transaksi yang Berstatus Complete.'
+                ], 200);
+            }
+
             $transaction->status = 6;
             $transaction->update();
 

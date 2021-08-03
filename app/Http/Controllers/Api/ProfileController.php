@@ -90,6 +90,11 @@ class ProfileController extends Controller
             $cek_kota     = $this->checkKota($request->provinsi_id, $request->kota_id);
             if ($cek_kota == true) {
                 $detail->kota_id = $request->kota_id;
+            } else {
+                return response([
+                    'error'   => true,
+                    'message' => 'Kota tidak terdapat di dalam provinsi yang anda pilih.'
+                ], 401);
             }
         }
 

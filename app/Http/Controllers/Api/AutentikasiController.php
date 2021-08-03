@@ -10,6 +10,8 @@ use Validator;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\DetailPerusahaan;
+use App\Models\Provinsi;
+use App\Models\Kota;
 
 class AutentikasiController extends Controller
 {
@@ -57,10 +59,23 @@ class AutentikasiController extends Controller
                 $perusahaan->alamat_pt = $request->alamat_pt;
             }
             if ($request->filled('provinsi_id')) {
-                $perusahaan->provinsi_id = $request->provinsi_id;
+                // Check provinsi
+                $cek_provinsi = Provinsi::find($request->provinsi_id);
+                if ($cek_provinsi) {
+                    $perusahaan->provinsi_id = $request->provinsi_id;
+                }
             }
             if ($request->filled('kota_id')) {
-                $perusahaan->kota_id = $request->kota_id;
+                // Check Kota
+                $cek_kota = $this->checkKota($request->provinsi_id, $request->kota_id);
+                if ($cek_kota == true) {
+                    $perusahaan->kota_id = $request->kota_id;
+                } else {
+                    return response([
+                        'error'   => true,
+                        'message' => 'Kota tidak terdapat di dalam provinsi yang anda pilih.'
+                    ], 401);
+                }
             }
             if ($request->filled('kecamatan_id')) {
                 $perusahaan->kecamatan_id = $request->kecamatan_id;
@@ -132,6 +147,22 @@ class AutentikasiController extends Controller
         $response = ['message' => 'Berhasil melakukan autentikasi.', 'data'=> $user, 'token' => $token];
 
         return response($response, 200);
+    }
+
+    // Check kota
+    public function checkKota($provinsi_id, $kota_id)
+    {
+        $kota = Kota::find($kota_id);
+
+        if (!empty($kota)) {
+            if ($kota->provinsi_id != $provinsi_id) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public function logout(Request $request)

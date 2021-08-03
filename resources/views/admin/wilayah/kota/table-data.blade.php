@@ -11,16 +11,7 @@
       </tr>
     </thead>
     <tbody>
-    @if($kotas->isEmpty())
-      <tr>
-        <td colspan="5">
-          <b><i>
-            Belum ada data kota, silahkan hubungi admin.
-          </i></b>
-        </td>
-      </tr>
-    @else
-      @foreach($kotas as $index => $item)
+      @forelse($kotas as $index => $item)
         <tr>
           <td>
             {{ $kotas->firstItem() + $index }}
@@ -47,7 +38,15 @@
             </div>
           </td>
         </tr>
-      @endforeach
+        @empty
+        <tr>
+          <td colspan="6" align="center">
+            <b><i>
+              Belum ada data kota, silahkan hubungi admin.
+            </i></b>
+          </td>
+        </tr>
+      @endforelse
       <tr>
         <td colspan="8">
           <div class="text-center">
@@ -55,7 +54,6 @@
           </div>
         </td>
       </tr>
-    @endif
     </tbody>
   </table>
 </div>

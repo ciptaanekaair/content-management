@@ -40,7 +40,7 @@
         </tr>
       @empty
       <tr>
-        <td colspan="5" align="center">
+        <td colspan="6" align="center">
           <b><i>
             Belum ada data kecamatan, silahkan hubungi admin.
           </i></b>

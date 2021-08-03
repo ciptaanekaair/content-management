@@ -47,9 +47,6 @@
 							<a href="{{ route('transactions.show', $item->id) }}" class="dropdown-item" type="button">
 								<i class="fa fa-eye"></i>&nbsp View Data
 							</a>
-							<a href="{{ route('transactions.edit', $item->id) }}" class="dropdown-item" type="button">
-								<i class="fa fa-pencil"></i>&nbsp Ubah Data
-							</a>
 							@if(auth()->user()->hasAccess('spesial'))
 							<a onclick="deleteData({{ $item->id }})" class="dropdown-item" type="button">
 								<i class="fa fa-trash"></i>&nbsp Delete Data
