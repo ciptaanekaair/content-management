@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\PaymentCode;
 use App\Models\PaymentConfirmation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,6 +11,17 @@ use Storage;
 
 class PaymentMethodController extends Controller
 {
+    public function index()
+    {
+        $payment_code = PaymentCode::where('status', '!=', 9)->get();
+
+        return resposnse([
+            'success' => true,
+            'message' => 'Berhasil mengambil data dari database',
+            'data' => $payment_code
+        ]);
+    }
+    
     public function store(Request $request)
     {
         $rules = [
