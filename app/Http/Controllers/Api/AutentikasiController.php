@@ -9,6 +9,7 @@ use Auth;
 use Validator;
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Models\DetailPerusahaan;
 
 class AutentikasiController extends Controller
 {
@@ -46,6 +47,47 @@ class AutentikasiController extends Controller
             'password' => Hash::make($request['password']),
             'level_id' => 1
         ]);
+
+        if ($request->filled('nama_pt')) {
+            $perusahaan = new DetailPerusahaan;
+            $perusahaan->user_id      = $user->id;
+            $perusahaan->nama_pt      = $request->nama_pt;
+
+            if ($request->filled('alamat_pt')) {
+                $perusahaan->alamat_pt = $request->alamat_pt;
+            }
+            if ($request->filled('provinsi_id')) {
+                $perusahaan->provinsi_id = $request->provinsi_id;
+            }
+            if ($request->filled('kota_id')) {
+                $perusahaan->kota_id = $request->kota_id;
+            }
+            if ($request->filled('kecamatan_id')) {
+                $perusahaan->kecamatan_id = $request->kecamatan_id;
+            }
+            if ($request->filled('kode_pos')) {
+                $perusahaan->kode_pos = $request->kode_pos;
+            }
+            if ($request->filled('telepon')) {
+                $perusahaan->telepon = $request->telepon;
+            }
+            if ($request->filled('fax')) {
+                $perusahaan->fax = $request->fax;
+            }
+            if ($request->filled('handphone')) {
+                $perusahaan->handphone = $request->handphone;
+            }
+            if ($request->filled('npwp')) {
+                $perusahaan->npwp = $request->npwp;
+            }
+            if ($request->hasFile('npwp_image')) {
+                $simpan                 = $request->npwp_image->store('perusahaan_images', 'public');
+                $perusahaan->npwp_image = $simpan;
+            }
+
+            $perusahaan->status = 0;
+            $perusahaan->save();
+        }
 
         UserDetail::create(['user_id' => $user->id]);
 

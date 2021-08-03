@@ -22,6 +22,9 @@
         </tr>
     </thead>
     <tbody>
+    @php
+        $summing = 0;
+    @endphp
     @foreach($data as $index => $item)
         <tr>
             <td>{{ $index + 1 }}</td>
@@ -38,6 +41,14 @@
             <td data-format="dd/mm/yy">{{ $item->created_at }}</td>
             <td>{{ $item->status_transaksi }}</td>
         </tr>
+        {{ $summing += $item->sub_total_price }}
     @endforeach
+        <tr>
+            <td colspan="13"></td>
+        </tr>
+        <tr>
+            <td colspan="10" align="center">Sub Total Transaksi</td>
+            <td colspan="3" align="left">{{ $summing }}</td>
+        </tr>
     </tbody>
 </table>

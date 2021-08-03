@@ -20,7 +20,7 @@
           <td>{{ $item->position_name }}</td>
           <td>{{ $item->banner_name }}</td>
           <td>
-            <a href="{{ $item->imageurl }}" data-fancybox="images" >
+            <a href="{{ $item->imageurl }}" data-fancybox>
               <button class="btn btn-sm btn-primary">
                 <i class="fa fa-eye"></i>
               </button>
