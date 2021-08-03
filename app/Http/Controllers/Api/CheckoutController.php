@@ -132,9 +132,9 @@ class CheckoutController extends Controller
                 'total_price'     => $item->total_price,
             ]);
 
-            $product = Product::findOrFail($item->product_id);
-            $product->product_stock -= $item->qty;
-            $product->update();
+            // $product = Product::findOrFail($item->product_id);
+            // $product->product_stock -= $item->qty;
+            // $product->update();
 
             $item->delete();
         }

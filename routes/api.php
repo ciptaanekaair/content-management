@@ -55,8 +55,9 @@ Route::get('kelurahan/{id}', [WilayahIndonesiaController::class, 'kelurahanShow'
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('profile', [ProfileController::class, 'getProfile'])->name('api_user_profile.data');// User profile for editing.
-    // update profile di maintenance sementara
     Route::post('profile', [ProfileController::class, 'updateProfile'])->name('api_user_profile.update');// Update profile
+    Route::post('profile-perusahaan', [ProfileController::class, 'updateProfilePerusahaan'])->name('api_perusahaan_profile.update');// Update profile Perusahaan
+    
 
     // Route for Cart
     Route::get('cart', [CartController::class, 'index'])->name('api_cart_data'); // mengambil seluruh data cart.

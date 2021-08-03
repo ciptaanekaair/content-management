@@ -108,50 +108,6 @@ class CartController extends Controller
         return response($response, 200);
     }
 
-    // public function updateCart(Request $request)
-    // {
-    //     // mengubah data produk dalam cart
-    //     $rules = [
-    //         'user_id'    => 'required',
-    //         'product_id' => 'required',
-    //         'qty'        => 'required'
-    //     ];
-
-    //     $pesan = [
-    //         'user_id.required'    => 'Session anda telah berakhir, silahkan melakukan login kembali.',
-    //         'product_id.required' => 'Produk tidak berhasil di pilih. Silahkan menghubungi Admin.',
-    //         'qty.required'        => 'Jumlah produk tidak boleh kosong!'
-    //     ];
-
-    //     $validasi = Validator::make($request->all(), $rules, $pesan);
-
-    //     if ($validasi->fails()) {
-    //         return response([
-    //             'error'   => true,
-    //             'message' => $validasi->errors()
-    //         ], 403);
-    //     }
-
-    //     // load data produk
-    //     $produk      = Product::findOrFail($request->product_id);
-
-    //     // update cart sesuai dengan qty pada UI
-    //     $cart = TransactionTemporary::where('user_id', Auth::user()->id)
-    //             ->where('product_id', $request->product_id)
-    //             ->first();
-    //     $cart->qty         = $request->qty;
-    //     $cart->total_price = $produk->product_price * $request->qty;
-    //     $cart->update();
-
-    //     $response = [
-    //         'success' => true,
-    //         'message' => 'Berhasil update cart.',
-    //         'data'    => $cart
-    //     ];
-
-    //     return response($response, 200);
-    // }
-
     public function handlePlus(Request $request)
     {
         // Handle tambah qty produk pada keranjang.

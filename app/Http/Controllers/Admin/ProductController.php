@@ -65,7 +65,22 @@ class ProductController extends Controller
     public function getDetail($id)
     {
         if ($this->authorize('MOD1104-read')) {
-            $product = '';
+            $product = Product::find($id);
+
+            if (!empty($product)) {
+                $product->qty_terjual = $product->countQty();
+
+                return response([
+                    'success' => true,
+                    'message' => 'Berhasil mengambil data dari database.',
+                    'data'    => $product
+                ]);
+            }
+
+            return response([
+                'error'   => true,
+                'message' => 'Gagal mengambil data dari database. Silahkan refresh table.'
+            ]);
         }
     }
 

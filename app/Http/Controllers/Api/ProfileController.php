@@ -125,6 +125,77 @@ class ProfileController extends Controller
         return response($response, 201);
     }
 
+    public function updateProfilePerusahaan(Request $request)
+    {
+        $perusahaan = DetailPerusahaan::where('user_id', auth()->user()->id)->first();
+
+        if (!empty($perusahaan)) {
+
+            $perusahaan->nama_pt = $request->nama_pt;
+
+            if ($request->filled('alamat_pt')) {
+                $perusahaan->alamat_pt = $request->alamat_pt;
+            }
+            if ($request->filled('provinsi_id')) {
+                // Check provinsi
+                $cek_provinsi = Provinsi::find($request->provinsi_id);
+                if ($cek_provinsi) {
+                    $perusahaan->provinsi_id = $request->provinsi_id;
+                }
+            }
+            if ($request->filled('kota_id')) {
+                // Check Kota
+                $cek_kota = $this->checkKota($request->provinsi_id, $request->kota_id);
+                if ($cek_kota == true) {
+                    $perusahaan->kota_id = $request->kota_id;
+                } else {
+                    return response([
+                        'error'   => true,
+                        'message' => 'Kota tidak terdapat di dalam provinsi yang anda pilih.'
+                    ], 401);
+                }
+            }
+            if ($request->filled('kecamatan_id')) {
+                $perusahaan->kecamatan_id = $request->kecamatan_id;
+            }
+            if ($request->filled('kode_pos')) {
+                $perusahaan->kode_pos = $request->kode_pos;
+            }
+            if ($request->filled('telepon')) {
+                $perusahaan->telepon = $request->telepon;
+            }
+            if ($request->filled('fax')) {
+                $perusahaan->fax = $request->fax;
+            }
+            if ($request->filled('handphone')) {
+                $perusahaan->handphone = $request->handphone;
+            }
+            if ($request->filled('npwp')) {
+                $perusahaan->npwp = $request->npwp;
+            }
+            if ($request->hasFile('npwp_image')) {
+                if (Storage::exists('/public/'.$request->npwp_image)) {
+                    Storage::delete('/public/'.$request->npwp_image);
+                }
+                $simpan                 = $request->npwp_image->store('perusahaan_images', 'public');
+                $perusahaan->npwp_image = $simpan;
+            }
+
+            $perusahaan->update();
+
+            $response = [
+                'success'     => true,
+                'message'     => 'Anda berhasil update data profile perusahaan.',
+                'data'        => $perusahaan
+            ];
+        }
+
+        $response = [
+            'error'   => true,
+            'message' => 'Data tidak ditemukan. Sepertinya anda terdatar sebagai perorangan.'
+        ];
+    }
+
     public function checkKota($provinsi_id, $kota_id)
     {
         $kota = Kota::find($kota_id);
@@ -142,6 +213,16 @@ class ProfileController extends Controller
 
     public function checkKecamatan($kota_id, $kecamatan_id)
     {
-        // $kota = Kecamatan::where($)
+        $kecamatan = Kecamatan::find($kecamatan_id);
+
+        if(!empty($kecamatan)) {
+            if ($kecamatan->kota_id != $kota_id) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

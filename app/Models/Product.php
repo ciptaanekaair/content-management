@@ -27,4 +27,14 @@ class Product extends Model
     {
         return $this->belongsTo(TransactionTemporary::class);
     }
+
+    public function transactionDetail()
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
+
+    public function countQty()
+    {
+        return $this->transactionDetail()->sum('qty');
+    }
 }

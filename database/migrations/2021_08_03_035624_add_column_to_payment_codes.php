@@ -14,7 +14,7 @@ class AddColumnToPaymentCodes extends Migration
     public function up()
     {
         Schema::table('payment_codes', function (Blueprint $table) {
-             $table->longText('cara_bayar')
+            $table->longText('cara_bayar')
                     ->after('cabang')
                     ->nullable();
         });
