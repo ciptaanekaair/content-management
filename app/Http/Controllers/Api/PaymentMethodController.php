@@ -15,7 +15,7 @@ class PaymentMethodController extends Controller
     {
         $payment_code = PaymentCode::where('status', '!=', 9)->get();
 
-        return resposnse([
+        return response([
             'success' => true,
             'message' => 'Berhasil mengambil data dari database',
             'data' => $payment_code
