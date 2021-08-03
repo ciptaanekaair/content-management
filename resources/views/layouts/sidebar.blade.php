@@ -66,23 +66,18 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown ">
+            <li class="dropdown {{ request()->routeIs('report*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-file"></i> <span>Laporan Transaksi</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="{{ route('transactions.index') }}">Transaksi Harian</a>
+                    <li class="{{ request()->routeIs('report.index.harian') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('report.index.harian') }}">Transaksi Harian</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="{{ route('transactions.index') }}">Transaksi Bulanan</a>
-                    </li>
-                </ul>
-                <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="{{ route('transactions.index') }}">Transaksi Tahunan</a>
+                    <li class="{{ request()->routeIs('report.index.datetodate') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('report.index.datetodate') }}">Transaksi Range Date</a>
                     </li>
                 </ul>
             </li>

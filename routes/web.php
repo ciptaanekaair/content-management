@@ -65,9 +65,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('data/transactions', [TransaksiController::class, 'getData'])->name('transactions.data');
 
     // Modul Laporan: harian, mingguan, bulanan
-    Route::get('data/transaction-report/daily/{date}', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'harian'])->name('report.harian');
-    Route::get('data/transaction-report/weekly/{date}', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'mingguan'])->name('report.mingguan');
-    Route::get('data/transaction-report/monthly/{date}', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'bulanan'])->name('report.bulanan');
+    Route::get('transaction-report/daily', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'harian'])->name('report.index.harian');
+    Route::post('data/transaction-report/daily', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'exportHarian'])->name('report.harian');
+    Route::get('transaction-report/date-to-date', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'dateToDate'])->name('report.index.datetodate');
+    Route::post('data/transaction-report/date-to-date', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'exportDateToDate'])->name('report.datetodate');
 
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
     Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');
