@@ -9,9 +9,9 @@ use Image;
 use Validator;
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Models\DetailPerusahaan;
 use App\Models\Provinsi;
 use App\Models\Kota;
-use App\Models\TransactionTemporary;
 
 class ProfileController extends Controller
 {
