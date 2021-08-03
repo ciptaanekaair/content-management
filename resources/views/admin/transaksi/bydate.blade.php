@@ -1,6 +1,11 @@
 <table>
     <thead>
         <tr>
+            <td colspan="13" align="center">
+                <h3>Laporan Transaksi</h3>
+            </td>
+        </tr>
+        <tr>
             <th>No</th>
             <th>ID</th>
             <th>Kode Transaksi</th>
@@ -34,13 +39,5 @@
             <td>{{ $item->status_transaksi }}</td>
         </tr>
     @endforeach
-    <tr>
-        <td colspan="13"></td>
-    </tr>
-    <tr>
-        <td>
-            <b>Note:</b>
-        </td>
-    </tr>
     </tbody>
 </table>
