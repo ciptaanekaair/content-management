@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\PaymentConfirmation;
+use App\Models\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
@@ -34,25 +35,48 @@ class PaymentConfirmationController extends Controller
             ], 401);
         }
 
-        $confirm = new PaymentConfirmation;
-        $confirm->transaction_id = $request->transaction_id;
-        $confirm->user_id        = auth()->user()->id;
+        if ($this->checkTransaction(auth()->user()->id, $request->transactions_id) == true) {
+            $confirm = new PaymentConfirmation;
+            $confirm->transactions_id = $request->transactions_id;
+            $confirm->user_id         = auth()->user()->id;
 
-        if ($request->hasFile('images')) {
-            $simpan          = $request->images->store('bukti_pembayaran', 'public');
-            $confirm->images = $simpan;
+            if ($request->hasFile('images')) {
+                $simpan          = $request->images->store('bukti_pembayaran', 'public');
+                $confirm->images = $simpan;
+            }
+
+            if ($request->filled('deskripsi')) {
+                $confirm->deskripsi = $request->deskripsi;
+            }
+
+            $confirm->status = 0;
+            $confirm->save();
+
+            return response([
+                'success' => true,
+                'message' => 'Berhasil upload bukti bayar.'
+            ]);
         }
-
-        if ($request->filled('deskripsi')) {
-            $confirm->deskripsi = $request->deskripsi;
-        }
-
-        $confirm->status = 0;
-        $confirm->save();
 
         return response([
-            'success' => true,
-            'message' => 'Berhasil upload bukti bayar.'
+            'error'   => true,
+            'message' => 'Transaksi tidak ditemukan, silahkan refresh browser anda.'
         ]);
+
+    }
+
+    public function checkTransaction($user_id, $id)
+    {
+        $check = Transaction::where('id', $id)->first();
+
+        if (!empty($check)) {
+            if ($check->user_id == $user_id) {
+                return true;
+            }
+
+            return false;
+        }
+
+        return false;
     }
 }
