@@ -127,35 +127,6 @@ class ProfileController extends Controller
 
     public function updateProfilePerusahaan(Request $request)
     {
-        $rules = [
-            'provinsi_id'  => 'numeric',
-            'kota_id'      => 'numeric',
-            'kecamatan_id' => 'numeric',
-            'kode_pos'     => 'numeric',
-            'telepon'      => 'numeric',
-            'fax'          => 'numeric',
-            'handphone'    => 'numeric'
-        ];
-
-        $pesan = [
-            'provinsi_id.numeric'  => 'Anda harus mengisi menggunakan form yang di sediakan.',
-            'kota_id.numeric'      => 'Anda harus mengisi menggunakan form yang di sediakan.',
-            'kecamatan_id.numeric' => 'Anda harus mengisi menggunakan form yang di sediakan.',
-            'kode_pos.numeric'     => 'Kode Pos haruslah di isi menggunakan angka.',
-            'telepon.numeric'      => 'Telepon harus di isi dengan menggunakan angka.',
-            'fax.numeric'          => 'Fax harus di isi menggunakan angka',
-            'handphone.numeric'    => 'Nomor Handphone harus di isi menggunakan angka.'
-        ];
-
-        $validasi = Validator::make($request->all(), $rules, $pesan);
-
-        if ($validasi->fails()) {
-            return response([
-                'error'   => true,
-                'message' => $validasi->errors()
-            ]);
-        }
-
         $perusahaan = DetailPerusahaan::where('user_id', auth()->user()->id)->first();
 
         if (!empty($perusahaan)) {

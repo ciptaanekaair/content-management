@@ -54,7 +54,8 @@ class PaymentConfirmationController extends Controller
 
             return response([
                 'success' => true,
-                'message' => 'Berhasil upload bukti bayar.'
+                'message' => 'Berhasil upload bukti bayar.',
+                'data'    => $confirm
             ]);
         }
 
