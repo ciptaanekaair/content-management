@@ -127,7 +127,7 @@ class ProfileController extends Controller
 
     public function updateProfilePerusahaan(Request $request)
     {
-        $rule = [
+        $rules = [
             'provinsi_id'  => 'numeric',
             'kota_id'      => 'numeric',
             'kecamatan_id' => 'numeric',
