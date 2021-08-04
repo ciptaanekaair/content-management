@@ -63,7 +63,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <canvas id="chartPenjualan" height="182"></canvas>
+                  <canvas id="statisticPenjualan" height="182"></canvas>
                   <div class="statistic-details mt-sm-4">
                     <div class="statistic-details-item">
                       <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 7%</span>
@@ -94,19 +94,19 @@
 @endsection
 
 @section('jq-script')
-
-<script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script type="text/javascript">
 
 "use strict";
 
-var ctx = document.getElementById("chartPenjualan").getContext('2d');
+var ctx = $('#statisticPenjualan');
 
-var chartPenjualan = new Chart(ctx, {
+var statisticPenjualan = new Chart(ctx, {
   type: 'line',
   data: {
     labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     datasets: [{
-      label: 'Statistics Penjualan',
+      label: 'Statistics',
       data: [640, 387, 530, 302, 430, 270, 488],
       borderWidth: 5,
       borderColor: '#6777ef',

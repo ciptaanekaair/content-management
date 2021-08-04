@@ -50,7 +50,6 @@
         <script defer src="{{ asset('stisla/js/modules/moment.min.js') }}"></script>
         <script defer src="{{ asset('stisla/js/modules/marked.min.js') }}"></script>
         <script defer src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
-        <script defer src="{{ asset('stisla/js/modules/chart.min.js') }}"></script>
         <script defer src="{{ asset('vendor/select2/select2.min.js') }}"></script>
         <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 
