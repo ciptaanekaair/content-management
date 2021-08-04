@@ -12,7 +12,6 @@ use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\RekamJejakController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\AttachingLevelController;
 use App\Http\Controllers\Admin\KotaController;
 
 
@@ -26,7 +25,7 @@ use App\Http\Controllers\Admin\KotaController;
 | contains the "web" middleware group. Now create something great!
 */
 
-Route::view('/', 'welcome')->name('welcome');
+Route::get('/', [DashboardController::class, 'gotoLogin'])->name('welcome');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -100,6 +99,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::resource('banners', App\Http\Controllers\Admin\BannerController::class);
     Route::get('data/banners', [App\Http\Controllers\Admin\BannerController::class, 'getData'])->name('banners.data');
 
-    // attaching level
-    Route::post('roles/attach', [AttachingLevelController::class, 'attachLevel'])->name('roles.attach');
+    Route::post('roles/attach', [App\Http\Controllers\Admin\AttachingLevelController::class, 'attachLevel'])->name('roles.attach'); // attaching level
+    Route::post('roles/unattach', [App\Http\Controllers\Admin\AttachingLevelController::class, 'unattachLevel'])->name('roles.unattach'); // unattaching level
 });

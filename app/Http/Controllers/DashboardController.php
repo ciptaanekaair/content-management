@@ -12,6 +12,11 @@ use App\Models\Transaction;
 
 class DashboardController extends Controller
 {
+    public function gotoLogin()
+    {
+        return redirect()->route('login');
+    }
+
     public function index()
     {
         if ($this->authorize('MOD1001-read')) {
