@@ -111,7 +111,9 @@ class ProfileController extends Controller
         }
 
         if ($request->filled('kode_pos')) {
-            $detail->kode_pos  = $request->kode_pos;
+            if ($request->kode_pos != null) {
+                $detail->kode_pos  = $request->kode_pos;
+            }
         }
 
         $detail->save();
