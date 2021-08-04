@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('metode-pembayaran', [CheckoutController::class, 'getMetodeBayar'])->name('api_get_metodebayar');// load metode pembayaran
 
-    Route::post('confirm-payment', [App\Http\Controllers\Api\PaymentConfirmation::class, 'store'])->name('api_payment_confrimation'); // Payment Confirmation
+    Route::post('confirm-payment', [App\Http\Controllers\Api\PaymentConfirmationController::class, 'store'])->name('api_payment_confrimation'); // Payment Confirmation
     
     // Logout route
     Route::get('logout', [AutentikasiController::class, 'logout'])->name('api_logout');

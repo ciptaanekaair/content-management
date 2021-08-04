@@ -6,7 +6,7 @@ use App\Models\PaymentConfirmation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PaymentConfirmation extends Controller
+class PaymentConfirmationController extends Controller
 {
     public function store(Request $request)
     {
