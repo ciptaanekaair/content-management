@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\KotaController;
 */
 
 Route::get('/', [DashboardController::class, 'gotoLogin'])->name('welcome');
+Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
