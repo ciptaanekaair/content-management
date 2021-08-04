@@ -46,15 +46,17 @@ class AutentikasiController extends Controller
 
         $username = md5($request['email']);
 
-        $user = User::create([
-            'name'     => $request['name'],
-            'email'    => $request['email'],
-            'username' => $username,
-            'password' => Hash::make($request['password']),
-            'level_id' => 1
-        ]);
-
         if ($request->filled('nama_pt')) {
+
+            $user = User::create([
+                'name'     => $request['name'],
+                'email'    => $request['email'],
+                'username' => $username,
+                'password' => Hash::make($request['password']),
+                'company'  => 1,
+                'level_id' => 1
+            ]);
+
             $perusahaan = new DetailPerusahaan;
             $perusahaan->user_id      = $user->id;
             $perusahaan->nama_pt      = $request->nama_pt;
@@ -106,6 +108,17 @@ class AutentikasiController extends Controller
 
             $perusahaan->status = 0;
             $perusahaan->save();
+        } else {
+
+            $user = User::create([
+                'name'     => $request['name'],
+                'email'    => $request['email'],
+                'username' => $username,
+                'password' => Hash::make($request['password']),
+                'company'  => 0,
+                'level_id' => 1
+            ]);
+
         }
 
         UserDetail::create(['user_id' => $user->id]);

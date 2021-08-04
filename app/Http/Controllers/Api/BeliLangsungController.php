@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendInvoiceMail;
 use Validator;
-
+use Auth;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
@@ -98,6 +100,13 @@ class BeliLangsungController extends Controller
             'qty'             => 1,
             'total_price'     => $total_price,
         ]);
+
+        $data = Transaction::where('id', $transaksi->id)
+                ->with('transactionDetail.products')
+                ->with('paymentMethod')
+                ->first();
+
+        Mail::to(Auth::user()->email)->send(new SendInvoiceMail($data));
 
         return response([
             'success' => true,

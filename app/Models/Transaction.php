@@ -43,6 +43,11 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentCode::class);
+    }
+
     public function getVoucher()
     {
         return $this->belongsToMany(Voucher::class);
