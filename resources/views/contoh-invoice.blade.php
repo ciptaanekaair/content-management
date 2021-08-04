@@ -59,7 +59,7 @@
       </div>
       <div class="flex">
         <img
-          src="public/image/product/Rectangle 20-2.jpg"
+          src="{{asset('image/product/Rectangle 20-2.jpg')}}"
           alt=""
           class="w-32 mr-4"
         />

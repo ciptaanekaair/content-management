@@ -159,7 +159,9 @@ class ProfileController extends Controller
                 $perusahaan->kecamatan_id = $request->kecamatan_id;
             }
             if ($request->filled('kode_pos')) {
-                $perusahaan->kode_pos = $request->kode_pos;
+                if ($request->kode_pos != null) {
+                    $perusahaan->kode_pos = $request->kode_pos;
+                }
             }
             if ($request->filled('telepon')) {
                 $perusahaan->telepon = $request->telepon;

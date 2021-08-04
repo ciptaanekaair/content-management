@@ -13,7 +13,6 @@
       type="text/css"
       data-noprefix
     />
-    <title>Tagihan Pembayaran Transaksi Nomor: {{ $data->transaction_code }}</title>
   </head>
   <body class="font-poppins bg-gray-200 md:px-20">
     <div class="bg-white mx-auto md:px-10 px-4 py-4">
