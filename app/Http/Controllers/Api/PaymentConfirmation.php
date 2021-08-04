@@ -31,5 +31,26 @@ class PaymentConfirmation extends Controller
                 'message' => $validasi->errors()
             ], 401);
         }
+
+        $confirm = new PaymentConfirmation;
+        $confirm->transaction_id = $request->transaction_id;
+        $confirm->user_id        = auth()->user()->id;
+
+        if ($request->hasFile('images')) {
+            $simpan          = $request->images->store('bukti_pembayaran', 'public');
+            $confirm->images = $simpan;
+        }
+
+        if ($request->filled('deskripsi')) {
+            $confirm->deskripsi = $request->deskripsi;
+        }
+
+        $confirm->status = 0;
+        $confirm->save();
+
+        return response([
+            'success' => true,
+            'message' => 'Berhasil upload bukti bayar.'
+        ]);
     }
 }

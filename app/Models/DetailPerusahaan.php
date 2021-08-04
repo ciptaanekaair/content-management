@@ -13,7 +13,11 @@ class DetailPerusahaan extends Model
 
     public function getImageurlAttribute()
     {
-        $npwppicurl = ENV('APP_URL').'/storage/'.$this->npwp_image;
+        if ($this->npwp_image == '') {
+            $npwppicurl = '';
+        } else {
+            $npwppicurl = ENV('APP_URL').'/storage/'.$this->npwp_image;
+        }
 
         return $npwppicurl;
     }
