@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Str;
 use Validator;
+use Image;
 use Storage;
 use App\Exports\ProductCategoryExport;
 use App\Models\ProductCategory;

@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body">
           <div class="table-data">
             @include('admin.payment-code.table-data')
           </div>
@@ -60,59 +60,6 @@ $(function() {
     fetch_table(page, perpage, search);
   });
 
-  $('#category_form').on('submit', function(e){
-    e.preventDefault();
-
-    var id = $('#category_id').val();
-
-    perpage = $('#perpage').val();
-    search  = $('#pencarian').val();
-    page    = $('#posisi_page').val();
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    if (save_method == "update") {
-      url  = "{{ url('product-categories') }}/"+id;
-    }
-    else {
-      url = "{{ url('product-categories') }}";
-    }
-
-    $.ajax({
-      url: url,
-      type: 'POST',
-      data: new FormData($('#modal-form form')[0]),
-      contentType: false,
-      processData: false,
-      beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
-      success: function(data) {
-        formReset();
-        $('#modal-form').modal('hide');
-        Swal.fire('Success!', data.message, 'success');
-        fetch_table(page, perpage, search);
-      }, error: function(response) {
-        console.log(response);
-        $('#category_nameError').text(response.responseJSON.errors.category_name);
-        $('#category_descriptionError').text(response.responseJSON.errors.category_description);
-        $('#category_imageError').text(response.responseJSON.errors.category_image);
-        $('#keywordsError').text(response.responseJSON.errors.keywords);
-        $('#description_seoError').text(response.responseJSON.errors.description_seo);
-        $('#statusError').text(response.responseJSON.errors.status);
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
-      }
-    });
-  }); // end submit save or update
-
   // start script pencarian
   $('input[name="pencarian"]').bind('change paste', function(){
     search = $(this).val();
@@ -123,14 +70,14 @@ $(function() {
   }); // end pencarian
 
   // start script delete
-  $('#category_delete_form').on('submit', function(e) {
+  $('#delete-form').on('submit', function(e) {
     e.preventDefault();
 
-    var id         = $('#category_id_d').val();
+    var id         = $('#peyment_method_id_d').val();
     var total_data = "{{ $pMethod->total() }}";
 
-      perpage = $('#perpage').val();
-      search  = $('#pencarian').val();
+    perpage = $('#perpage').val();
+    search  = $('#pencarian').val();
     if (total_data <= 10) {
       page    = $('#posisi_page').val(1);
     } else {
@@ -138,22 +85,18 @@ $(function() {
     }
 
     $.ajax({
-      url: '{{ url("product-categories") }}/'+id,
+      url: '{{ url("payment-methodes") }}/'+id,
       type: 'POST',
+      data: $(this).serialize(),
       beforeSend: function(){
         // Show image container
         $("#modal-loading").modal('show');
       },
-      data: $(this).serialize(),
       success: function(data) {
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
         formDeleteReset();
-        Swal.fire(
-          'Success!',
-          'Berhasil menghapus data tersebut.',
-          'success'
-        );
+        Swal.fire('Success!', 'Berhasil menghapus data tersebut.', 'success');
       },
       complete: function(data) {
         // Hide image container
@@ -181,18 +124,9 @@ function cariData(data) {
   fetch_table(1, perpage, data);
 }
 
-function newData() {
-  save_method = 'create';
-  formReset();
-  $('.modal-title').text('Tambah data baru');
-  $('#formMethod').val('POST');
-  $('#category_image_link').removeAttr('href');
-  $('#modal-form').modal('show');
-}
-
 function fetch_table(page, perpage, search) {
   $.ajax({
-    url: '{{ route("product-catetgories.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
+    url: '{{ route("payment-methodes.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
     beforeSend: function(){
       // Show image container
@@ -212,57 +146,10 @@ function formDeleteReset() {
   $('#modal-delete form')[0].reset();
 }
 
-function formReset() {
-  $('#modal-form form')[0].reset();
-}
-
-function editData(id) {
-  save_method = 'update';
-  $.ajax({
-    url: '{{ url("product-categories") }}/'+id+'/edit',
-    type: 'GET',
-    dataType: 'JSON',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
-    success: function(data) {
-      $('.modal-title').text('Edit: '+data.data.category_name);
-      $('#category_id').val(data.data.id);
-      $('#formMethod').val('PUT');
-      $('#category_name').val(data.data.category_name);
-      $('#category_description').val(data.data.category_description);
-      $('#keywords').val(data.data.keywords);
-      $('#description_seo').val(data.data.description_seo);
-      $('#category_image_link').attr('href', data.data.imageurl);
-      $('#btnSave').text('Update Data');
-      $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
-      $('#modal-form').modal('show');
-    },
-    error: function(message) {
-      // var error = jQuery.parseJSON(xhr.responseText);
-      // for(var k in error.message){
-      //   if (error.massage.hasOwnProperty(k)) {
-      //     error.message[k].forEach(function(pesan) {
-
-      //     });
-      //   }
-      // }
-      // $('#category_nameError').text(e.data.category_name);
-      // $('#statusError').text(e.data.status);
-      // $('#nameError').text(response.responseJSON.errors.name);
-    },
-    complete: function(data) {
-      // Hide image container
-      $("#modal-loading").modal('hide');
-    }
-  });
-}
-
 function confirmDelete(id) {
   save_method = 'delete';
   $.ajax({
-    url: '{{ url("product-categories") }}/'+id,
+    url: '{{ url("payment-methodes") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
     beforeSend: function(){
@@ -270,10 +157,10 @@ function confirmDelete(id) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
-      $('.modal-title-delete').text('Delete data: '+data.data.category_name);
-      $('#category_id_d').val(data.data.id);
+      $('.modal-title-delete').text('Delete data: '+data.data.nama_pembayaran);
+      $('#peyment_method_id_d').val(data.data.id);
       $('#formMethodD').val('DELETE');
-      $('#category_name_d').text(data.data.category_name);
+      $('#payment_method_name_d').text(data.data.nama_pembayaran);
       $('#modal-delete').modal('show');
     },
     complete: function(data) {

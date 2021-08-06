@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title-delete"></h5>
@@ -10,11 +10,11 @@
 			<form type="POST" id="delete-form" name="delete-form">
 			<div class="modal-body">
 					{{ csrf_field() }}
-					<input type="hidden" name="category_id_d" id="category_id_d">
+					<input type="hidden" name="peyment_method_id_d" id="peyment_method_id_d">
 					<input type="hidden" name="_method" id="formMethodD" value="DELETE">
 				<p align="center">
 					Anda akan menghapus data:<br>
-					<code id="category_name_d"></code>.
+					<code id="payment_method_name_d"></code>.
 					<br>
 					<b>Apakah anda yakin? Anda tidak akan dapat mengembalikan data ini.</b>
 				</p>

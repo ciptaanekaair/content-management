@@ -20,15 +20,11 @@
         	@endif
         </div>
         <div class="card-body">
-        @if(request()->routeIs('payment-methodes.create'))
-        <form name="form-payment" action="{{ route('payment-methodes.store') }}" method="POST">
-        @else
-        	<form name="form-payment" action="{{ url('payment-methodes') }}/{{ $pMethod->id }}" method="POST">
-        		@method('PUT')
-        @endif
+        <form name="form-payment" id="form-payment">
         @csrf
-
-        	<div class="row">
+        <input type="hidden" name="_method" id="formMethod" value="{{ $pMethod->id == '' ? 'POST' : 'PUT' }}">
+        <input type="hidden" name="payment_code_id" id="payment_code_id" value="{{ old('payment_code_id', $pMethod->id) }}">
+        <div class="row">
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="kode_pembayaran">Kode Pembayaran</label>
@@ -123,11 +119,42 @@
 @section('jq-script')
 
 <script type="text/javascript">
+	var url;
+
 	$(function() {
 
 		CKEDITOR.replace('cara_bayar');
-		// for ( instance in CKEDITOR.instances )
-		//         CKEDITOR.instances[instance].updateElement();
+
+		$('#form-payment').on('submit', function(e) {
+			e.preventDefault();
+
+			var idPayment = $('#payment_code_id').val();
+			for ( instance in CKEDITOR.instances )
+			        CKEDITOR.instances[instance].updateElement();
+			
+			if(idPayment === '') url = '{{ route("payment-methodes.store") }}';
+			else url = '{{ url("payment-methodes") }}/'+idPayment;
+
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: $(this).serialize(),
+				beforeSend: function() {
+					$('#modal-loading').modal('show');
+				},
+				success: function(data) {
+					Swal.fire('Success!', data.message, 'success');
+					window.location.href = "{{ url('payment-methodes') }}";
+				},
+				error: function(response) {
+					Swal.fire('Error!', response.responseJSON.errors.message, 'errors');
+				},
+				complete: function(data) {
+					$('#modal-loading').modal('hide');
+				},
+			});
+		});
+
 	});
 </script>
 

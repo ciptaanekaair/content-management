@@ -24,6 +24,27 @@ class PaymentCodeController extends Controller
         }
     }
 
+    public function getData(Request $request)
+    {
+        if ($this->authorize('MOD1007-edit')) {
+            $search       = $request->get('search');
+            $list_perpage = $request->get('list_perpage');
+
+            if (!empty($search)) {
+                $pMethod = PaymentCode::where('status', '!=', 9)
+                            ->where('nama_pembayaran', 'LIKE', '%'.$search.'%')
+                            ->orderBy('id', 'DESC')
+                            ->paginate(10);
+            } else {
+                $pMethod = PaymentCode::where('status', '!=', 9)
+                            ->orderBy('id', 'DESC')
+                            ->paginate(10);
+            }
+
+            return view('admin.payment-code.table-data', compact('pMethod'));
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -70,13 +91,15 @@ class PaymentCodeController extends Controller
             $pMethod->kode_pembayaran    = $request->kode_pembayaran;
             $pMethod->nama_pembayaran    = $request->nama_pembayaran;
             $pMethod->nama_bank          = $request->nama_bank;
+            $pMethod->cabang             = $request->cabang;
             $pMethod->atas_nama_rekening = $request->atas_nama_rekening;
             $pMethod->nomor_rekening     = $request->nomor_rekening;
+            $pMethod->cara_bayar         = $request->cara_bayar;
             $pMethod->save();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Berashil mendapatkan sertifikat yang kalian daftarkan',
+                'message' => 'Berhasil menambahkan data metode pembayaran baru.',
                 'data'    => $pMethod
             ]);
         }
@@ -163,12 +186,17 @@ class PaymentCodeController extends Controller
             $pMethod->kode_pembayaran    = $request->kode_pembayaran;
             $pMethod->nama_pembayaran    = $request->nama_pembayaran;
             $pMethod->nama_bank          = $request->nama_bank;
+            $pMethod->cabang             = $request->cabang;
             $pMethod->atas_nama_rekening = $request->atas_nama_rekening;
             $pMethod->nomor_rekening     = $request->nomor_rekening;
             $pMethod->cara_bayar         = $request->cara_bayar;
             $pMethod->update();
 
-            return redirect()->route('payment-methodes.index');
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil merubah data metode pembayaran baru.',
+                'data'    => $pMethod
+            ]);
         }
     }
 
@@ -180,8 +208,24 @@ class PaymentCodeController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->authorize('MOD1007-edit')) {
-            // code...
+        if ($this->authorize('MOD1007-delete')) {
+            $pMethod = PaymentCode::find($id);
+
+            if (!empty($pMethod)) {
+                $pMethod->status = 9;
+                $pMethod->update();
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil menghapus data metode pembayaran.',
+                ]);
+            }
+                
+            return response()->json([
+                'error'   => true,
+                'message' => 'Gagal menghapus data metode pembayaran. Silahkan refresh table.',
+            ]);
+
         }
     }
 }

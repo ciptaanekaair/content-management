@@ -20,7 +20,7 @@ class Transaction extends Model
             $status_transaksi = 'Success';
         }
         elseif ($this->status == 2) {
-            $status_transaksi = 'Ferivy Payment';
+            $status_transaksi = 'Proses Verifikasi Pembayaran';
         }
         elseif ($this->status == 3) {
             $status_transaksi = 'Pengemasan';
@@ -33,6 +33,9 @@ class Transaction extends Model
         }
         elseif ($this->status == 6) {
             $status_transaksi = 'Canceled';
+        }
+        elseif ($this->status == 7) {
+            $status_transaksi = 'Pembayaran Terverifikasi';
         }
 
         return $status_transaksi;

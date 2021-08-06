@@ -7,6 +7,7 @@ use App\Models\BannerPosition;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+use Image;
 use Storage;
 
 class BannerController extends Controller

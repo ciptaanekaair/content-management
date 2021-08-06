@@ -5,10 +5,11 @@
         <th width="100">No</th>
         <th width="100">Kode</th>
         <th>Payment Name</th>
-        <th>Payment Name</th>
         <th>Bank</th>
+        <th>No. Rekening</th>
+        <th>A.n</th>
         <th>Status</th>
-        <th>Action</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
