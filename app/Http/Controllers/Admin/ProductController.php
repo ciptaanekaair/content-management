@@ -125,7 +125,7 @@ class ProductController extends Controller
                 $ext       = $gambar->getClientOriginalExtension();
                 $rename    = rand('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '1234567890').'.'.$ext;
                 $watermark = $gambar->insert('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
-                $simpan    = 
+                $simpan    = $gambar->move('public/storage/'.$rename);
 
                 $simpan = $request->product_images->store('product-images', 'public');
             }

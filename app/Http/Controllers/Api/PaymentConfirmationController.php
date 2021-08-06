@@ -36,6 +36,16 @@ class PaymentConfirmationController extends Controller
         }
 
         if ($this->checkTransaction(auth()->user()->id, $request->transactions_id) == true) {
+
+            if (auth()->user()->company == 1) {
+                if (auth()->user()->detailPerusahaan->status == 0) {
+                    return response([
+                        'error'   => true,
+                        'message' => 'Status Perusahaan belum terkonfirmasi oleh Admin. Silahkan chat admin.'
+                    ]);
+                }
+            }
+
             $transaction = Transaction::find($request->transactions_id);
             $transaction->status = 2;
             $transaction->update();

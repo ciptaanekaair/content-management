@@ -19,20 +19,20 @@ class AutentikasiController extends Controller
     public function registrasi(Request $request)
     {
         $rules = [
-            'name' => 'required|string',
-            'email' => 'required|unique:users,email',
-            'password' => 'required|confirmed',
+            'name'       => 'required|string',
+            'email'      => 'required|unique:users,email',
+            'password'   => 'required|confirmed',
             'npwp_image' => 'image|mimes:jpg,jpeg,png|max:4112'
         ];
 
         $pesan = [
-            'name.required' => 'Field Nama wajib di isi.',
-            'name.required' => 'Field Nama harus berupa huruf, tak boleh memasukan simbol ataupun angka.',
-            'email.required' => 'Silahkan masukan email yang benar.',
-            'email.required' => 'Email telah digunakan. Siahkan menggunakan email baru',
+            'name.required'    => 'Field Nama wajib di isi.',
+            'name.required'    => 'Field Nama harus berupa huruf, tak boleh memasukan simbol ataupun angka.',
+            'email.required'   => 'Silahkan masukan email yang benar.',
+            'email.required'   => 'Email telah digunakan. Siahkan menggunakan email baru',
             'npwp_image.image' => 'File npwp harus berupa photo/image.',
             'npwp_image.mimes' => 'File harus berekstensi: JPG/JPEG/PNG',
-            'npwp_image.max' => 'File terlalu bersar. Ukuran file tidak boleh lebih dari 4MB'
+            'npwp_image.max'   => 'File terlalu bersar. Ukuran file tidak boleh lebih dari 4MB'
         ];
 
         $validasi = Validator::make($request->all(), $rules);
