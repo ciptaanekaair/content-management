@@ -47,6 +47,7 @@
 
 @section('formodal')
   @include('admin.wilayah.kota.form')
+  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -74,6 +75,10 @@ $(function() {
 			data: new FormData($('#modal-import form')[0]),
 			contentType: false,
 			processData: false,
+			beforeSend: function(){
+				// Show image container
+				$("#modal-loading").modal('show');
+			},
 			success: function(data) {
 				$('#file_upload').val('');
 				$('#modal-import').modal('hide');
@@ -81,6 +86,10 @@ $(function() {
 				Swal.fire('Success!', 'Berhasil import data kota.', 'success');
 			}, error: function(response) {
 				$('#file_uploadError').text(response.responseJSON.errors.file_upload);
+			},
+			complete: function(data) {
+				// Hide image container
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});

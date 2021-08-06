@@ -30,6 +30,7 @@ Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('charts', [DashboardController::class, 'grafikChartSatu'])->name('grafiksatu');
 
     // Product Category Route
     Route::resource('product-categories', ProductCategoryController::class);

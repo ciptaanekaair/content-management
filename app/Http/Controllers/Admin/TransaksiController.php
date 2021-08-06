@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use Validator;
+use Storage;
 
 class TransaksiController extends Controller
 {
@@ -69,7 +71,34 @@ class TransaksiController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1008-read')) {
-            // code...
+            $rules = [
+                'status' => 'required|numeric'
+            ];
+
+            $pesan = [
+                'status.required' => 'Status transaksi harus di isi.',
+                'status.numeric'  => 'Status transaksi harus di isi.',
+            ];
+
+            $this->validate($request, $rules, $pesan);
+
+            $transaksi = Transaction::find($id);
+
+            if (!empty($transaksi)) {
+                $transaksi->status = $request->status;
+                $transaksi->update();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil mengubah status transaksi.',
+                    'data'    => $transaksi
+                ]);
+            }
+
+            return response()->json([
+                'error'   => true,
+                'message' => 'Gagal mengubah status transaksi. Silahkan refresh browser anda.'
+            ]);
         }
     }
 

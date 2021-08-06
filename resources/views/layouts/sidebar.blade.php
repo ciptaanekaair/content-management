@@ -60,11 +60,6 @@
                         <a class="nav-link" href="{{ route('transactions.index') }}">List Transaksi</a>
                     </li>
                 </ul>
-                <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('transactions.create') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('transactions.create') }}">New Transaksi</a>
-                    </li>
-                </ul>
             </li>
             <li class="dropdown {{ request()->routeIs('report*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">

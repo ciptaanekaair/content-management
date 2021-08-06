@@ -51,6 +51,7 @@
 
 @section('formodal')
   @include('admin.role.form')
+  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -96,6 +97,10 @@ $(function() {
       data: new FormData($('#modal-form form')[0]),
       contentType: false,
       processData: false,
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
       success: function(data) {
         formReset();
         $('#modal-form').modal('hide');
@@ -109,6 +114,10 @@ $(function() {
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nama_roleError').text(response.responseJSON.errors.nama_role);
         $('#statusError').text(response.responseJSON.errors.status);
+      },
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
       }
     });
   }); // end submit save or update
@@ -212,9 +221,20 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("roles.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       $('.table-data').html(data);
     },
+    error: function(response) {
+      Swal.fire('Error!', response.responseJSON.errors.message);
+    },
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
+      }
   });
 }
 

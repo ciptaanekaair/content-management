@@ -36,6 +36,10 @@ class PaymentConfirmationController extends Controller
         }
 
         if ($this->checkTransaction(auth()->user()->id, $request->transactions_id) == true) {
+            $transaction = Transaction::find($request->transactions_id);
+            $transaction->status = 2;
+            $transaction->update();
+
             $confirm = new PaymentConfirmation;
             $confirm->transactions_id = $request->transactions_id;
             $confirm->user_id         = auth()->user()->id;

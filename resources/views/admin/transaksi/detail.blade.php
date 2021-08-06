@@ -80,21 +80,63 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="form-group">
-					<label for="status">Status Transaksi</label>
-					<select name="status" id="status" class="form-control">
-						<option value="">Pilih Status</option>
-						<option value="0" {{ $transaction->status == 0 ? 'selected' : '' }}>Pending (Belum di bayar)</option>
-						<option value="1" {{ $transaction->status == 1 ? 'selected' : '' }}>Complete</option>
-						<option value="2" {{ $transaction->status == 2 ? 'selected' : '' }}>Ferivy Payment</option>
-						<option value="3" {{ $transaction->status == 3 ? 'selected' : '' }}>Pengemasan</option>
-						<option value="4" {{ $transaction->status == 4 ? 'selected' : '' }}>Pengiriman</option>
-						<option value="5" {{ $transaction->status == 5 ? 'selected' : '' }}>Diterima</option>
-						<option value="6" {{ $transaction->status == 6 ? 'selected' : '' }}>Canceled</option>
-					</select>
-				</div>
+				<form method="POST" id="form_status" name="form_status">
+					@csrf
+					@method('PUT')
+					<div class="form-group">
+						<input type="hidden" name="transaction_id" id="transaction_id" value="{{ $transaction->id }}">
+						<label for="status">Status Transaksi</label>
+						<select name="status" id="status" class="form-control">
+							<option value="">Pilih Status</option>
+							<option value="0" {{ $transaction->status == 0 ? 'selected' : '' }}>Pending (Belum di bayar)</option>
+							<option value="1" {{ $transaction->status == 1 ? 'selected' : '' }}>Complete</option>
+							<option value="2" {{ $transaction->status == 2 ? 'selected' : '' }}>Ferivy Payment</option>
+							<option value="3" {{ $transaction->status == 3 ? 'selected' : '' }}>Pengemasan</option>
+							<option value="4" {{ $transaction->status == 4 ? 'selected' : '' }}>Pengiriman</option>
+							<option value="5" {{ $transaction->status == 5 ? 'selected' : '' }}>Diterima</option>
+							<option value="6" {{ $transaction->status == 6 ? 'selected' : '' }}>Canceled</option>
+						</select>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('formodal')
+	@include('admin.modal-loading')
+@endsection
+
+@section('jq-script')
+
+<script type="text/javascript">
+$(function() {
+	$('#status').on('change', function() {
+		var id = $('#transaction_id').val();
+
+		$.ajax({
+			url: '{{ url("transactions") }}/'+id,
+			type: 'POST',
+			data: $('#form_status').serialize(),
+			beforeSend: function(){
+				// Show image container
+				$("#modal-loading").modal('show');
+			},
+			success: function(data) {
+				$('#status [value='+data.status+']').attr('selected', 'selected');
+				Swal.fire('Success!', data.message, 'success');
+			},
+			error: function(response) {
+				Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+			},
+			complete: function(data) {
+				// Hide image container
+				$("#modal-loading").modal('hide');
+			}
+		});
+	});
+});
+</script>
+
 @endsection
