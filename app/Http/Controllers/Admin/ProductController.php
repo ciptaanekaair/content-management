@@ -121,11 +121,11 @@ class ProductController extends Controller
             $simpan = '';
 
             if ($request->hasFile('product_images')) {
-                $gambar    = $request->file('product_images');
-                $ext       = $gambar->getClientOriginalExtension();
-                $rename    = rand('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '1234567890').'.'.$ext;
-                $watermark = $gambar->insert('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
-                $simpan    = $gambar->move('public/storage/'.$rename);
+                // $gambar    = $request->file('product_images');
+                // $ext       = $gambar->getClientOriginalExtension();
+                // $rename    = rand('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '1234567890').'.'.$ext;
+                // $watermark = $gambar->insert('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
+                // $simpan    = $gambar->move('public/storage/'.$rename);
 
                 $simpan = $request->product_images->store('product-images', 'public');
             }
