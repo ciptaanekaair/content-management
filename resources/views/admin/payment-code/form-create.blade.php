@@ -21,7 +21,7 @@
         </div>
         <div class="card-body">
         @if(request()->routeIs('payment-methodes.create'))
-        <form name="form-payment" action="{{ route('payment-methodes.') }}" method="POST">
+        <form name="form-payment" action="{{ route('payment-methodes') }}" method="POST">
         @else
         	<form name="form-payment" action="{{ url('payment-methodes') }}/{{ $pMethod->id }}" method="POST">
         		@method('PUT')
