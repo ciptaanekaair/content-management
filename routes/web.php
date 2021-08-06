@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\RekamJejakController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\KotaController;
+use App\Mail\CheckoutTemplateMail;
 
 
 /*
@@ -26,6 +27,9 @@ use App\Http\Controllers\Admin\KotaController;
 */
 
 Route::get('/', [DashboardController::class, 'gotoLogin'])->name('welcome');
+Route::get('/checoutmail', function() {
+    return new CheckoutTemplateMail();
+});
 Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
@@ -96,6 +100,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Product Banner Position
     Route::resource('banner-positions', App\Http\Controllers\Admin\BannerPositionController::class);
     Route::get('data/banner-positions', [App\Http\Controllers\Admin\BannerPositionController::class, 'getData'])->name('banner-positions.data');
+
+    // Payment Method
+    Route::resource('payment-methodes', App\Http\Controllers\Admin\PaymentCodeController::class);
+    Route::get('data/payment-methodes', [App\Http\Controllers\Admin\PaymentCodeController::class, 'getData'])->name('payment-methodes.data');
 
     // Product Banner
     Route::resource('banners', App\Http\Controllers\Admin\BannerController::class);
