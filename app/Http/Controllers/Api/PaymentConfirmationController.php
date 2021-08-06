@@ -15,7 +15,7 @@ class PaymentConfirmationController extends Controller
     {
         $rules = [
             'transactions_id' => 'required',
-            'images'          => 'required|image|mimes:jpg,jpeg,png|max:3048',
+            'images'          => 'required|image|mimes:jpg,jpeg,png|max:5140',
         ];
 
         $pesan = [
