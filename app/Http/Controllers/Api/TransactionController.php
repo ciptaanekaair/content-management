@@ -155,4 +155,67 @@ class TransactionController extends Controller
             'message' => 'Gagal! Data transaksi tidak di temukan. Silahkan refresh browser anda.'
         ], 401);
     }
+
+    public function getPengemasan()
+    {
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+                        ->where('status', 3)
+                        ->with('paymentMethod', 'transactionDetail.products')
+                        ->first();
+
+        if (!empty($transaction)) {
+            return response([
+                'success' => true,
+                'message' => 'Berhasil mengambil detail transaksi yang di pilih.',
+                'data'    => $transaction
+            ]);
+        }
+
+        return response([
+            'error'   => true,
+            'message' => 'Data transaksi tidak ada, silahkan refresh browser Anda.'
+        ], 401);
+    }
+
+    public function getPengiriman()
+    {
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+                        ->where('status', 4)
+                        ->with('paymentMethod', 'transactionDetail.products')
+                        ->first();
+
+        if (!empty($transaction)) {
+            return response([
+                'success' => true,
+                'message' => 'Berhasil mengambil detail transaksi yang di pilih.',
+                'data'    => $transaction
+            ]);
+        }
+
+        return response([
+            'error'   => true,
+            'message' => 'Data transaksi tidak ada, silahkan refresh browser Anda.'
+        ], 401);
+    }
+
+    public function getSelesai()
+    {
+        $transaction = Transaction::where('user_id', auth()->user()->id)
+                        ->where('status', 1)
+                        ->with('paymentMethod', 'transactionDetail.products')
+                        ->first();
+
+        if (!empty($transaction)) {
+            return response([
+                'success' => true,
+                'message' => 'Berhasil mengambil detail transaksi yang di pilih.',
+                'data'    => $transaction
+            ]);
+        }
+
+        return response([
+            'error'   => true,
+            'message' => 'Data transaksi tidak ada, silahkan refresh browser Anda.'
+        ], 401);
+    }
 }
