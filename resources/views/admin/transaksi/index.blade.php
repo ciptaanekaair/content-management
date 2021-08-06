@@ -50,7 +50,7 @@ var save_method, page, perpage, search, url, data;
 
 $(function() {
 
-	$('body').on('click', '.inline-flex a', function(e) {
+	$('body').on('click', '.paginasi a', function(e) {
 		e.preventDefault();
 
 		page    = $(this).attr('href').split('page=')[1];

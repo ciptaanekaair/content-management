@@ -37,7 +37,7 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::where('user_id', auth()->user()->id)
                         ->where('id', $id)
-                        ->with('transactionDetail.products')
+                        ->with('paymentMethod', 'transactionDetail.products')
                         ->first();
 
         if (!empty($transaction)) {

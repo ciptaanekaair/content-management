@@ -45,7 +45,7 @@ class Transaction extends Model
 
     public function paymentMethod()
     {
-        return $this->belongsTo(PaymentCode::class);
+        return $this->belongsTo(PaymentCode::class, 'payment_code_id', 'id');
     }
 
     public function getVoucher()
