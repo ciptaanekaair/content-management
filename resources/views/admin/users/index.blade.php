@@ -88,6 +88,10 @@ $(function() {
       data: new FormData($('#modal-new form')[0]),
       contentType: false,
       processData: false,
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
       success: function(data) {
         formReset();
         $('#modal-new').modal('hide');
@@ -107,6 +111,10 @@ $(function() {
         $('#password_confirmationError').text(response.responseJSON.errors.password_confirmation);
         $('#level_idError').text(response.responseJSON.errors.level_id);
         $('#statusError').text(response.responseJSON.errors.status);
+      },
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
       }
     });
   }); // end submit save or update
@@ -130,6 +138,10 @@ $(function() {
       data: new FormData($('#modal-form form')[0]),
       contentType: false,
       processData: false,
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
       success: function(data) {
         formReset();
         $('#modal-form').modal('hide');
@@ -147,6 +159,10 @@ $(function() {
         $('#alamatError').text(response.responseJSON.errors.alamat);
         $('#provinsi_idError').text(response.responseJSON.errors.provinsi_id);
         $('#kode_posError').text(response.responseJSON.errors.kode_pos);
+      },
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
       }
     });
   }); // end submit save or update
@@ -179,6 +195,10 @@ $(function() {
       url: '{{ url("pengguna") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
       success: function(data) {
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
@@ -188,6 +208,10 @@ $(function() {
           'Berhasil menghapus data tersebut.',
           'success'
         );
+      },
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
       }
     });
   }); // end script delete
@@ -254,9 +278,17 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("pengguna.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       $('.table-data').html(data);
     },
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
+    }
   });
 }
 
@@ -275,6 +307,10 @@ function editData(id) {
     url: '{{ url("pengguna") }}/'+id+'/edit',
     type: 'GET',
     dataType: 'JSON',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       resetErrorUserForm();
       $('#formUserMethod').val('PUT');
@@ -291,6 +327,10 @@ function editData(id) {
     },
     error: function(message) {
       Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
+    },
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
     }
   });
 }
@@ -301,6 +341,10 @@ function editShipping(id) {
     url: '{{ url("pengguna-detail") }}/'+id+'/edit',
     type: 'GET',
     dataType: 'JSON',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       resetErrorUserForm();
       formReset();
@@ -319,6 +363,10 @@ function editShipping(id) {
     },
     error: function(message) {
       Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
+    },
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
     }
   });
 }
@@ -329,6 +377,10 @@ function confirmDelete(id) {
     url: '{{ url("pengguna") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       $('.modal-title-delete').text('Delete data: '+data.data.name);
       $('#formMethodD').val('DELETE');
@@ -336,6 +388,10 @@ function confirmDelete(id) {
       $('#user_name_d').text(data.data.name);
       $('#modal-delete').modal('show');
     },
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
+    }
   });
 }
 </script>

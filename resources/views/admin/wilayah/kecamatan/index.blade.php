@@ -74,6 +74,10 @@ $(function() {
 			data: new FormData($('#modal-import form')[0]),
 			contentType: false,
 			processData: false,
+			beforeSend: function(){
+				// Show image container
+				$("#modal-loading").modal('show');
+			},
 			success: function(data) {
 				$('#file_upload').val('');
 				$('#modal-import').modal('hide');
@@ -81,6 +85,10 @@ $(function() {
 				Swal.fire('Success!', 'Berhasil import data kecamatans.', 'success');
 			}, error: function(response) {
 				$('#file_uploadError').text(response.responseJSON.errors.file_upload);
+			},
+			complete: function(data) {
+				// Hide image container
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -101,6 +109,10 @@ $(function() {
 			url: url,
 			type: 'POST',
 			data: $(this).serialize(),
+			beforeSend: function(){
+				// Show image container
+				$("#modal-loading").modal('show');
+			},
 			success: function(data) {
 				formDataReset();
 				$('#modal-form').modal('hide');
@@ -111,6 +123,10 @@ $(function() {
 				$('#kota_idError').text(response.responseJSON.errors.kota_id);
 				$('#nama_kemcatanError').text(response.responseJSON.errors.nama_kecamatan);
 				$('#statusError').text(response.responseJSON.errors.status);
+			},
+			complete: function(data) {
+				// Hide image container
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -128,6 +144,10 @@ $(function() {
 			url: '{{ url("kecamatans") }}/'+id,
 			type: 'POST',
 			data: $(this).serialize(),
+			beforeSend: function(){
+				// Show image container
+				$("#modal-loading").modal('show');
+			},
 			success: function(data) {
 				formDeleteReset();
 				$('#modal-delete').modal('hide');
@@ -135,6 +155,10 @@ $(function() {
 				Swal.fire('Success!', data.message, 'success');
 			}, error: function(response) {
 				Swal.fire('Error!', response.responseJSON.message, 'error');
+			},
+			complete: function(data) {
+				// Hide image container
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -208,9 +232,17 @@ function fetch_table(page, perpage, search) {
 	$.ajax({
 		url: '{{ route("kecamatans.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
 		type: 'GET',
+		beforeSend: function(){
+			// Show image container
+			$("#modal-loading").modal('show');
+		},
 		success: function(data) {
 			$('.table-data').html(data);
 		},
+		complete: function(data) {
+			// Hide image container
+			$("#modal-loading").modal('hide');
+		}
 	});
 }
 
@@ -219,6 +251,10 @@ function editData(id) {
 	$.ajax({
 		url: '{{ url("kecamatans") }}/'+id_ku+'/edit',
 		type: 'GET',
+		beforeSend: function(){
+			// Show image container
+			$("#modal-loading").modal('show');
+		},
 		success: function(data) {
 			save_method = 'edit';
 			$('#formAddMethod').val('PUT');
@@ -231,6 +267,10 @@ function editData(id) {
 		},
 		error: function(response) {
 			Swal.fire('Error!', response.responseJSON.message, 'error');
+		},
+		complete: function(data) {
+			// Hide image container
+			$("#modal-loading").modal('hide');
 		}
 	});
 }
@@ -239,6 +279,10 @@ function confirmDelete(id) {
 	$.ajax({
 		url: '{{ url("kecamatans") }}/'+id+'/edit',
 		type: 'GET',
+		beforeSend: function(){
+			// Show image container
+			$("#modal-loading").modal('show');
+		},
 		success: function(data) {
 			$('.title-delete').text('Delete data: ['+data.data.id+'] -'+data.data.nama_kecamatan);
 			$('#kecamatan_id_d').val(data.data.id);

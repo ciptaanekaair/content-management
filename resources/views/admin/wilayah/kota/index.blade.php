@@ -110,6 +110,10 @@ $(function() {
 			url: url,
 			type: 'POST',
 			data: $(this).serialize(),
+			beforeSend: function(){
+				// Show image container
+				$("#modal-loading").modal('show');
+			},
 			success: function(data) {
 				formDataReset();
 				$('#modal-data').modal('hide');
@@ -119,6 +123,10 @@ $(function() {
 				$('#provinsi_idError').text(response.responseJSON.errors.provinsi_id);
 				$('#nama_kotaError').text(response.responseJSON.errors.nama_kota);
 				$('#statusError').text(response.responseJSON.errors.status);
+			},
+			complete: function(data) {
+				// Hide image container
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -175,9 +183,17 @@ function fetch_table(page, perpage, search) {
 	$.ajax({
 		url: '{{ route("kotas.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
 		type: 'GET',
+		beforeSend: function(){
+			// Show image container
+			$("#modal-loading").modal('show');
+		},
 		success: function(data) {
 			$('.table-data').html(data);
 		},
+		complete: function(data) {
+			// Hide image container
+			$("#modal-loading").modal('hide');
+		}
 	});
 }
 

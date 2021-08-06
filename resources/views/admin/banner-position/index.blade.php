@@ -47,6 +47,7 @@
 
 @section('formodal')
     @include('admin.banner-position.form')
+    @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -90,6 +91,10 @@
                     data: new FormData($('#modal-form form')[0]),
                     contentType: false,
                     processData: false,
+                    beforeSend: function(){
+                        // Show image container
+                        $("#modal-loading").modal('show');
+                    },
                     success: function(data) {
                         formReset();
                         $('#modal-form').modal('hide');
@@ -103,6 +108,10 @@
                         console.log(response);
                         $('#position_nameError').text(response.responseJSON.errors.category_name);
                         $('#position_descriptionError').text(response.responseJSON.errors.category_description);
+                    },
+                    complete: function(data) {
+                        // Hide image container
+                        $("#modal-loading").modal('hide');
                     }
                 });
             }); // end submit save or update
@@ -135,6 +144,10 @@
                     url: '{{ url("banner-positions") }}/'+id,
                     type: 'POST',
                     data: $(this).serialize(),
+                    beforeSend: function(){
+                        // Show image container
+                        $("#modal-loading").modal('show');
+                    },
                     success: function(data) {
                         fetch_table(page, perpage, search);
                         $('#modal-delete').modal('hide');
@@ -144,6 +157,10 @@
                             'Berhasil menghapus data tersebut.',
                             'success'
                         );
+                    },
+                    complete: function(data) {
+                        // Hide image container
+                        $("#modal-loading").modal('hide');
                     }
                 });
             }); // end script delete
@@ -188,9 +205,17 @@
             $.ajax({
                 url: '{{ route("banner-positions.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
                 type: 'GET',
+                beforeSend: function(){
+                    // Show image container
+                    $("#modal-loading").modal('show');
+                },
                 success: function(data) {
                     $('.table-data').html(data);
                 },
+                complete: function(data) {
+                    // Hide image container
+                    $("#modal-loading").modal('hide');
+                }
             });
         }
 
@@ -208,6 +233,10 @@
                 url: '{{ url("banner-positions") }}/'+id+'/edit',
                 type: 'GET',
                 dataType: 'JSON',
+                beforeSend: function(){
+                    // Show image container
+                    $("#modal-loading").modal('show');
+                },
                 success: function(data) {
                     $('.modal-title').text('Edit: '+data.data.position_name);
                     $('#position_id').val(data.data.id);
@@ -219,6 +248,10 @@
                 },
                 error: function(response) {
                     Swal.fire('Error!', response.responseJSON.errors.message);
+                },
+                complete: function(data) {
+                    // Hide image container
+                    $("#modal-loading").modal('hide');
                 }
             });
         }
@@ -229,6 +262,10 @@
                 url: '{{ url("banner-positions") }}/'+id,
                 type: 'GET',
                 dataType: 'JSON',
+                beforeSend: function(){
+                    // Show image container
+                    $("#modal-loading").modal('show');
+                },
                 success: function(data) {
                     $('.modal-title-delete').text('Delete data: '+data.data.position_name);
                     $('#position_id_d').val(data.data.id);
@@ -236,6 +273,10 @@
                     $('#position_name_d').text(data.data.position_name);
                     $('#modal-delete').modal('show');
                 },
+                complete: function(data) {
+                    // Hide image container
+                    $("#modal-loading").modal('hide');
+                }
             });
         }
     </script>

@@ -169,6 +169,7 @@
 
 @section('formodal')
   @include('admin.products.modal-form')
+  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -201,6 +202,10 @@ $(function() {
 			data: new FormData($('#tabContent form')[0]),
 			contentType: false,
 			processData: false,
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
 			success: function(data) {
 				window.location.href = '{{ url("products") }}/'+data.data.id+'/edit';
 			},
@@ -216,7 +221,11 @@ $(function() {
 				$('#product_commisionError').text(response.responseJSON.errors.product_commision);
 				$('#statusError').text(response.responseJSON.errors.status);
 				$('#product_imageError').text(response.responseJSON.errors.product_image);
-			}
+			},
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
+      }
 		});
   });
 
@@ -235,6 +244,10 @@ $(function() {
       data: new FormData($('#modal-form form')[0]),
       contentType: false,
       processData: false,
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
       success: function(data) {
       	fetch_image(productID);
       	$('#images').val('');
@@ -245,6 +258,10 @@ $(function() {
       	$('#product_id_iError').text(response.responseJSON.errors.product_id_i);
       	$('#images_id').text(response.responseJSON.errors.images_id);
       	$('#imagesError').text(response.responseJSON.errors.images);
+      },
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
       }
 		});
 	});
@@ -259,6 +276,10 @@ $(function() {
 			url: '{{ url("products/images") }}/'+id+'/hapus',
 			type: 'POST',
 			data: $(this).serialize(),
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
 			success: function(data) {
 				$('#modal-delete').modal('hide');
 				Swal.fire(
@@ -273,7 +294,11 @@ $(function() {
 					'Gagal menghapus data gambar. Silahkan ulangi atau apabila error ini lebih dari 2 kali, mohon hubungi Developer',
 					'error'
 				);
-			}
+			},
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
+      }
 		});
 	});
 });
@@ -305,9 +330,17 @@ function fetch_image(id) {
 	$.ajax({
 		url: '{{ url("products") }}/'+id+'/images',
 		type: 'GET',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
 		success: function(data) {
 			$('.table-data').html(data);
-		}
+		},
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
+    }
 	});
 }
 
@@ -320,12 +353,20 @@ function editImage(id) {
 	$.ajax({
 		url: '{{ url("products/images") }}/'+id,
 		type: 'GET',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
 		success: function(data) {
 			$('.modal-title').text('Ubah image ID: '+data.data.id);
 			$('#modalFormMethod').val('PUT');
 			$('#images_id').val(data.data.id);
 			$('#modal-form').modal('show');
-		}
+		},
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
+    }
 	});
 }
 
@@ -333,6 +374,10 @@ function deleteImage(id) {
 	$.ajax({
 		url: '{{ url("products/images") }}/'+id,
 		type: 'GET',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
 		success: function(data) {
 			$('#images_id_d').val(data.data.id);
 			$('#produk_id_d').text(data.data.id);
@@ -340,7 +385,11 @@ function deleteImage(id) {
 		},
 		error: function(response) {
 			Swal.fire('error', 'Gagal load data image.', 'error');
-		}
+		},
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
+    }
 	});
 }
 

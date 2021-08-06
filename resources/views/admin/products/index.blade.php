@@ -46,6 +46,7 @@
 
 @section('formodal')
  @include('admin.products.modal-form')
+ @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -93,6 +94,10 @@ $(function() {
       url: '{{ url("products") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
       success: function(data) {
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
@@ -102,6 +107,10 @@ $(function() {
           'Berhasil menghapus data tersebut.'+total_data,
           'success'
         );
+      },
+      complete: function(data) {
+        // Hide image container
+        $("#modal-loading").modal('hide');
       }
     });
   }); // end script delete
@@ -147,9 +156,17 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("product.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       $('.table-data').html(data);
     },
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
+    }
   });
 }
 
@@ -164,6 +181,10 @@ function seeDetail(id) {
     url: '{{ url("products/detail") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       $('#detail-title').text('Data Product: '+data.data.product_name);
       $('#product_name_text').text(data.data.product_name);
@@ -172,6 +193,10 @@ function seeDetail(id) {
       $('#product_stock_text').text(data.data.product_stock);
       $('#product_terjual_text').text(data.data.qty_terjual);
       $('#modal-detail').modal('show');
+    },
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
     }
   });
 }
@@ -182,6 +207,10 @@ function confirmDelete(id) {
     url: '{{ url("products") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
       $('.modal-title-delete').text('Delete data: '+data.data.product_name);
       $('#product_id').val(data.data.id);
@@ -189,6 +218,10 @@ function confirmDelete(id) {
       $('#modalProductName').text(data.data.product_name);
       $('#modal-delete').modal('show');
     },
+    complete: function(data) {
+      // Hide image container
+      $("#modal-loading").modal('hide');
+    }
   });
 }
 </script>
