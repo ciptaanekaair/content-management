@@ -42,7 +42,7 @@ class PaymentConfirmationController extends Controller
                     return response([
                         'error'   => true,
                         'message' => 'Status Perusahaan belum terkonfirmasi oleh Admin. Silahkan chat admin.'
-                    ]);
+                    ], 422);
                 }
             }
 
