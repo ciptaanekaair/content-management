@@ -365,7 +365,7 @@
                             <tr>
                               <td align="left" style="font-size:0px;padding:0px 25px;word-break:break-word;">
                                 <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1;text-align:left;color:#9da3a3;">
-                                  <span style="font-size:16px;color:#059669">Rp. {{ $data->total_price }}</span><br/><div style="margin:8px 0;"></div>
+                                  <span style="font-size:16px;color:#059669">Rp. {{ number_format($data->total_price) }}</span><br/><div style="margin:8px 0;"></div>
                               </td>
                             </tr>
                           </tbody>
@@ -415,7 +415,7 @@
                             <tr>
                               <td align="left" style="font-size:0px;padding:0px 25px;word-break:break-word;">
                                 <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1;text-align:left;color:#9da3a3;">
-                                  <span style="font-size:16px;color:#059669">Rp. {{ $data->discount }}</span><br/><div style="margin:8px 0;"></div>
+                                  <span style="font-size:16px;color:#059669">Rp. {{ number_format($data->discount) }}</span><br/><div style="margin:8px 0;"></div>
                               </td>
                             </tr>
                           </tbody>
@@ -465,7 +465,7 @@
                             <tr>
                               <td align="left" style="font-size:0px;padding:0px 25px;word-break:break-word;">
                                 <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1;text-align:left;color:#9da3a3;">
-                                  <span style="font-size:16px;color:#059669">Rp. {{ $data->pajak_ppn }}</span><br/><div style="margin:8px 0;"></div>
+                                  <span style="font-size:16px;color:#059669">Rp. {{ number_format($data->pajak_ppn) }}</span><br/><div style="margin:8px 0;"></div>
                               </td>
                             </tr>
                           </tbody>
@@ -515,7 +515,7 @@
                             <tr>
                               <td align="left" style="font-size:0px;padding:0px 25px;word-break:break-word;">
                                 <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1;text-align:left;color:#9da3a3;">
-                                  <span style="font-size:16px;color:#059669">Rp. {{ $data->sub_total_price }}</span><br/><div style="margin:8px 0;"></div>
+                                  <span style="font-size:16px;color:#059669">Rp. {{ number_format($data->sub_total_price) }}</span><br/><div style="margin:8px 0;"></div>
                               </td>
                             </tr>
                           </tbody>
