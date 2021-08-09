@@ -44,6 +44,8 @@ class PaymentConfirmationController extends Controller
                         'message' => 'Status Perusahaan belum terkonfirmasi oleh Admin. Silahkan chat admin.'
                     ], 422);
                 }
+            } else {
+                // 
             }
 
             $transaction = Transaction::find($request->transactions_id);
