@@ -138,9 +138,10 @@
                           <tbody>
                             <tr>
                               <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1;text-align:left;color:#000000;">
+                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#1e40af;">
                                   <center>
-                                    <img src="logo.png" width="50%" alt="FilterPedia.co.id">
+                                    <img src="{{ asset('logo.png') }}" width="50%" alt="FilterPedia.co.id"><br>
+                                    FILTERPEDIA
                                   </center>
                                 </div>
                               </td>
