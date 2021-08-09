@@ -73,6 +73,7 @@ class PenggunaController extends Controller
                 'email'              => 'required|unique:users',
                 'password'           => 'required|min:6|confirmed',
                 'level_id'           => 'required|numeric',
+                'company'            => 'required|numeric',
                 'status'             => 'required|numeric',
                 'profile_photo_path' => 'image|mimes:jpg, jpeg, png, bmp',
             ];
@@ -92,6 +93,7 @@ class PenggunaController extends Controller
                 'password'           => Hash::make($request->password),
                 'profile_photo_path' => $simpan == '' ? null : $simpan,
                 'level_id'           => $request->level_id,
+                'company'            => $request->company,
                 'status'             => $request->status
             ]);
 
@@ -146,6 +148,7 @@ class PenggunaController extends Controller
             $rules = [
                 'name'               => 'required',
                 'password'           => 'string|min:6|confirmed',
+                'company'            => 'required|numeric',
                 'status'             => 'required|numeric',
                 'level_id'           => 'required|numeric',
                 'profile_photo_path' => 'image|mimes:jpg, jpeg, png, bmp|max: 2048',
@@ -170,6 +173,7 @@ class PenggunaController extends Controller
 
             $user->name     = $request->name;
             $user->level_id = $request->level_id;
+            $user->company  = $request->company;
             $user->status   = $request->status;
             $user->update();
 
