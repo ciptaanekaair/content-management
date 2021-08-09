@@ -31,6 +31,7 @@ Route::get('banner-positions/{id}', [App\Http\Controllers\Api\BannerPositionCont
  */
 Route::get('/products', [ProductController::class, 'index'])->name('api_products_data');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('api_product_detail');
+Route::get('/products/search/{keywords}', [ProductController::class, 'searching'])->name('api_product_searching');
 Route::post('/products/search', [ProductController::class, 'search'])->name('api_product_search');
 
 // Product Categories
