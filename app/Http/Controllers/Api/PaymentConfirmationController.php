@@ -46,6 +46,13 @@ class PaymentConfirmationController extends Controller
                 }
             }
 
+            if ($this->checkPaymentConfirmation($request->transactions_id) == true) {
+                return response([
+                    'error'   => true,
+                    'message' => 'Anda telah melakukan konfirmasi pembayaran. Untuk kembali melakukan konfirmasi pembayaran yang baru, Anda harus menunggu hingga Admin merubah status payment confirmation menjadi ditolak.'
+                ], 422);
+            }
+
             $transaction = Transaction::find($request->transactions_id);
             $transaction->status = 2;
             $transaction->update();
@@ -86,6 +93,21 @@ class PaymentConfirmationController extends Controller
 
         if (!empty($check)) {
             if ($check->user_id == $user_id) {
+                return true;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    public function checkPaymentConfirmation($transaction_id)
+    {
+        $check = PaymentConfirmation::where('transaction_id', $transaction_id)->first();
+
+        if (!empty($check)) {
+            if ($check->status == 0) {
                 return true;
             }
 
