@@ -37,7 +37,7 @@ class PaymentConfirmationController extends Controller
 
         if ($this->checkTransaction(auth()->user()->id, $request->transactions_id) == true) {
 
-            if (auth()->user()->company == 1) {
+            if (auth()->user()->company != 0) {
                 if (auth()->user()->detailPerusahaan->status == 0) {
                     return response([
                         'error'   => true,
