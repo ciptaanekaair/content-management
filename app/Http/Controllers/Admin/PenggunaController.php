@@ -145,14 +145,26 @@ class PenggunaController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1001-update')) {
-            $rules = [
-                'name'               => 'required',
-                'password'           => 'sometimes|string|min:6|confirmed',
-                'company'            => 'required|numeric',
-                'status'             => 'required|numeric',
-                'level_id'           => 'required|numeric',
-                'profile_photo_path' => 'image|mimes:jpg, jpeg, png, bmp|max: 2048',
-            ];
+            if ($request->password == '') {
+                $rules = [
+                    'name'                  => 'required',
+                    'company'               => 'required|numeric',
+                    'status'                => 'required|numeric',
+                    'level_id'              => 'required|numeric',
+                    'profile_photo_path'    => 'image|mimes:jpg, jpeg, png, bmp|max: 2048',
+                ];
+            } else {
+                $rules = [
+                    'name'                  => 'required',
+                    'password'              => 'sometimes|string|min:6|confirmed',
+                    'password_confirmation' => 'sometimes|required_with:password|same:password',
+                    'company'               => 'required|numeric',
+                    'status'                => 'required|numeric',
+                    'level_id'              => 'required|numeric',
+                    'profile_photo_path'    => 'image|mimes:jpg, jpeg, png, bmp|max: 2048',
+                ];   
+            }
+            
 
             $validasi = $this->validate($request, $rules);
 
