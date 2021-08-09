@@ -134,12 +134,15 @@ class CheckoutController extends Controller
                 'total_price'     => $item->total_price,
             ]);
 
-            // $product = Product::findOrFail($item->product_id);
-            // $product->product_stock -= $item->qty;
-            // $product->update();
-
             $item->delete();
         }
+
+        $data = Transaction::where('id', $transaksi_id)
+                ->with('transactionDetail.products')
+                ->with('paymentMethod')
+                ->first();
+
+        Mail::to(Auth::user()->email)->send(new SendInvoiceMail($data));
 
         $response = [
             'success' => true,
