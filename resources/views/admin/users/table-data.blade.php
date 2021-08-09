@@ -29,7 +29,9 @@
           <td>{{ $item->id }}</td>
           <td>{{ $item->name }}</td>
           <td>{{ $item->email }}</td>
-          <td>{{ $item->Level->nama_level }}</td>
+          <td>{{ $item->Level->nama_level }}<br>
+            <small>{{ $item->company == 1 ? '[Perusahaan]':'[Perorangan]' }}</small>
+          </td>
           <td>
             @if ($item->status == 1)
               <div class="badge badge-success">Active</div>
