@@ -46,7 +46,7 @@ class AutentikasiController extends Controller
 
         $username = md5($request['email']);
 
-        if ($request->filled('nama_pt')) {
+        if ($request->nama_pt != '') {
 
             $user = User::create([
                 'name'     => $request['name'],
