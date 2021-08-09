@@ -104,7 +104,7 @@ class PaymentConfirmationController extends Controller
 
     public function checkPaymentConfirmation($transaction_id)
     {
-        $check = PaymentConfirmation::where('transaction_id', $transaction_id)->first();
+        $check = PaymentConfirmation::where('transactions_id', $transaction_id)->first();
 
         if (!empty($check)) {
             if ($check->status == 0) {
