@@ -46,6 +46,7 @@ class TransaksiController extends Controller
             $transaction = Transaction::where('id', $id)
                         ->with('transactionDetail.products')
                         ->with('user')
+                        ->with('paymentConfirmation')
                         ->first();
 
             return view('admin.transaksi.detail', compact('transaction'));

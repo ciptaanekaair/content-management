@@ -34,13 +34,15 @@ class BeliLangsungController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'user_id'    => 'required',
-            'product_id' => 'required'
+            'user_id'         => 'required',
+            'product_id'      => 'required',
+            'payment_code_id' => 'required'
         ];
 
         $pesan = [
             'user_id.required'    => 'Anda harus login terlebih dahulu.',
-            'product_id.required' => 'Gagal mengambil data produk dalam database, silahkan hubungi admin.'
+            'product_id.required' => 'Gagal mengambil data produk dalam database, silahkan hubungi admin.',
+            'payment_code_id'     => 'Anda harus memilih metode pembayaran.'
         ];
 
         $validasi = Validator::make($request->all(), $rules, $pesan);
@@ -82,6 +84,7 @@ class BeliLangsungController extends Controller
         $pajakPPN         = $p_after_discount * 0.1;
 
         $transaksi->user_id              = $user_id;
+        $transaksi->payment_code_id      = $request->payment_code_id;
         $transaksi->transaction_code     = 'TRN-'.date('ymd').rand('000', '999');
         $transaksi->transaction_date     = date('Y-m-d');
         $transaksi->total_item           = 1;

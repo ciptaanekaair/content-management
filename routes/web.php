@@ -32,6 +32,13 @@ Route::get('/checoutmail', function() {
 });
 Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
 
+Route::get('/logout', function() {
+    auth()->logout();
+    Session()->flush();
+
+    return Redirect::to('/login');
+})->name('get-logout');
+
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('charts', [DashboardController::class, 'grafikChartSatu'])->name('grafiksatu');

@@ -80,6 +80,66 @@
 						</tbody>
 					</table>
 				</div>
+				<div>
+					<table class="table table-stripped table-hover">
+						<thead>
+							<tr>
+								<th colspan="5" align="center">
+									Bukti Pembayaran
+								</th>
+							</tr>
+							<tr>
+								<th>Tanggal</th>
+								<th>Deskripsi</th>
+								<th>Bukti</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@forelse($transaction->paymentConfirmation as $item)
+							<tr>
+								<td>
+									{{ $item->created_at->toDateString() }}
+								</td>
+								<td>
+									{{ $item->deskripsi }}
+								</td>
+								<td>
+									<a href="{{ $item->imageurl }}" data-fancybox class="btn btn-primary">
+										<i class="fa fa-eye"></i>
+									</a>
+								</td>
+								<td>
+									@if($item->status == 0)
+									<div class="badge badge-warning">Belum Diverifikasi</div>
+									@elseif($item->status == 9)
+									<div class="badge badge-danger">Dibatalkan</div>
+									@else
+									<div class="badge badge-success">Terverifikasi</div>
+									@endif
+								</td>
+								<td>
+									<div class="btn-group">
+									@if($item->status == 0)
+									<button class="btn btn-success" onclick="verify({{ $item->id }})">Verifikasi</button>
+									@elseif($item->status == 1)
+									<button class="btn btn-warning" onclick="unverify({{ $item->id }})">Batalkan</button>
+									@endif
+									<button class="btn btn-danger" onclick="terminate({{ $item->id }})">Terminate</button>
+									</div>
+								</td>
+							</tr>
+							@empty
+							<tr>
+								<td colspan="5" align="center">
+									<b>Belum ada data</b>
+								</td>
+							</tr>
+							@endforelse
+						</tbody>
+					</table>
+				</div>
 				<form method="POST" id="form_status" name="form_status">
 					@csrf
 					@method('PUT')
@@ -137,6 +197,14 @@ $(function() {
 		});
 	});
 });
+
+function unverify(id) {
+	url: '{{ url("transactions/unverify") }}/{{ $item->id }}',
+	type: 'GET',
+	success: function(data) {
+
+	},
+}
 </script>
 
 @endsection

@@ -22,8 +22,9 @@ class DashboardController extends Controller
             $trnsctCount  = Transaction::where('status', 1)->count();
 
             return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount'));
-
         }
+
+        return redirect()->route('get-logout');
     }
 
     public function gotoLogin()
