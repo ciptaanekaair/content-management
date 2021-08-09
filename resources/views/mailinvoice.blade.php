@@ -548,7 +548,7 @@
                             <tbody>
                               <tr>
                                 <td align="center" style="font-size:0px;padding:0 25px;padding-bottom:10px;word-break:break-word;">
-                                  <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">Pembayaran melalui: <b>Cara Bayar</b></div>
+                                  <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">Pembayaran melalui: <b>{{ $data->paymentMethod->nama_pembayaran }}</b></div>
                                 </td>
                               </tr>
                               <tr>
@@ -559,7 +559,7 @@
                                         <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">Bank</div>
                                       </td>
                                       <td>
-                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>BCA</b></div>
+                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>{{ $data->paymentMethod->nama_bank }}</b></div>
                                       </td>
                                     </tr>
                                     <tr>
@@ -567,7 +567,7 @@
                                         <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">No. Rekening</div>
                                       </td>
                                       <td>
-                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>317202040993</b></div>
+                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>{{ $data->paymentMethod->nomor_rekening }}</b></div>
                                       </td>
                                     </tr>
                                     <tr>
@@ -575,7 +575,7 @@
                                         <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">A.N</div>
                                       </td>
                                       <td>
-                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>PT. Cipta Aneka Air</b></div>
+                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>{{ $data->paymentMethod->atas_nama_rekening }}</b></div>
                                       </td>
                                     </tr>
                                     <tr>
@@ -583,7 +583,7 @@
                                         <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">Cabang</div>
                                       </td>
                                       <td>
-                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>KCP Kampung Melayu</b></div>
+                                        <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">: <b>{{ $data->paymentMethod->cabang }}</b></div>
                                       </td>
                                     </tr>
                                   </table>
@@ -591,7 +591,9 @@
                               </tr>
                               <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:10px;word-break:break-word;">
-                                  <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">Pesanan mu sudah siap nih, Pesanan akan langsung di proses setelah kamu melakukan pembayaran. Jika pesanan tidak sampai ke lokasi mu <b>dana akan di kembalikan 100%</b>.</div>
+                                  <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#45474e;">
+                                    {{ $data->paymentMethod->cara_bayar }}
+                                  </div>
                                 </td>
                               </tr>
                             </tbody>
