@@ -147,7 +147,7 @@ class PenggunaController extends Controller
         if ($this->authorize('MOD1001-update')) {
             $rules = [
                 'name'               => 'required',
-                'password'           => 'string|min:6|confirmed',
+                'password'           => 'sometimes|string|min:6|confirmed',
                 'company'            => 'required|numeric',
                 'status'             => 'required|numeric',
                 'level_id'           => 'required|numeric',
