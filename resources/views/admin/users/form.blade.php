@@ -86,6 +86,22 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-lg-12 col-md-12">
+							<div class="form-group">
+								<label for="company">Status Akun</label>
+								<select name="company" id="company" class="form-control">
+									<option>Pilih Status Akun</option>
+									<option value="0">Perorangan</option>
+									<option value="1">Perusahaan</option>
+								</select>
+								<div class="alert-message">
+									<code id="companyError"></code>
+								</div>
+							</div>
+							<a href="" target="_blank" id="profile_photo_url" visible="false">
+								<i class="fas fa-eye"></i> &nbsp Lihat Picture
+							</a>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
