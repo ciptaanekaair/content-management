@@ -34,13 +34,11 @@ class BeliLangsungController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'user_id'         => 'required',
             'product_id'      => 'required',
             'payment_code_id' => 'required'
         ];
 
         $pesan = [
-            'user_id.required'    => 'Anda harus login terlebih dahulu.',
             'product_id.required' => 'Gagal mengambil data produk dalam database, silahkan hubungi admin.',
             'payment_code_id'     => 'Anda harus memilih metode pembayaran.'
         ];
