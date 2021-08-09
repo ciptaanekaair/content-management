@@ -198,8 +198,24 @@ $(function() {
 	});
 });
 
+function ferivy(id) {
+	url: '{{ url("transactions/ferivy") }}/{{ $transaction->id }}',
+	type: 'GET',
+	success: function(data) {
+
+	},
+}
+
 function unverify(id) {
-	url: '{{ url("transactions/unverify") }}/{{ $item->id }}',
+	url: '{{ url("transactions/unverify") }}/{{ $transaction->id }}',
+	type: 'GET',
+	success: function(data) {
+
+	},
+}
+
+function terminate(id) {
+	url: '{{ url("transactions/terminate") }}/{{ $transaction->id }}',
 	type: 'GET',
 	success: function(data) {
 

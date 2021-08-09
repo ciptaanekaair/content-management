@@ -28,7 +28,7 @@ class SendInvoiceMail extends Mailable
      */
     public function build()
     {
-        return $this->from('billing@filterpedia.co.id')
+        return $this->from('admin@filterpedia.co.id')
                     ->subject('Invoice')
                     ->view('mailinvoice')
                     ->with('data', $this->data);

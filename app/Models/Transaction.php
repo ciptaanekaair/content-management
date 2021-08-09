@@ -14,7 +14,7 @@ class Transaction extends Model
     public function getStatusTransaksiAttribute()
     {
         if ($this->status == 0) {
-            $status_transaksi = 'Unpaid';
+            $status_transaksi = 'Belum Di Bayar';
         } 
         elseif ($this->status == 1) {
             $status_transaksi = 'Success';
