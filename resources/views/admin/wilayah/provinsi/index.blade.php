@@ -256,6 +256,10 @@ function confirmDelete(id) {
 		},
 		error: function(response) {
 			Swal.fire('Error!', response.responseJSON.message, 'error');
+		},
+		complete: function(data) {
+			// Hide image container
+			$("#modal-loading").modal('hide');
 		}
 	});
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\PaymentConfirmation;
 use App\Models\Transaction;
+use App\Models\RekamJejak;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
@@ -35,6 +36,15 @@ class PaymentConfirmationController extends Controller
             $transaction->status = 7;
             $transaction->update();
 
+            $rekam = new RekamJejak;
+            $rekam->user_id     = auth()->user()->id;
+            $rekam->modul_code  = '[MOD1104] products';
+            $rekam->action      = 'Create';
+            $rekam->description = 'User: '.auth()->user()->email.' membuat data: '.
+                                    $product->product_name.', dengan ID: '.$product->id.
+                                    '. Pada: '.date('Y-m-d H:i:s').'.';
+            $rekam->save();
+            
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil verifikasi data pembayaran.'

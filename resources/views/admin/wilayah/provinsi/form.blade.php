@@ -7,40 +7,41 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form type="POST" id="form-data" enctype="multipart/form-data">
-			<input type="hidden" name="provinsi_id" class="form-control" id="provinsi_id">
-			<div class="modal-body">
-				<div class="form-group">
-					<label for="provinsi_code">Kode Provinsi</label>
-					<input type="text" name="provinsi_code" class="form-control" id="provinsi_code" placeholder="Kode Provinsi. Ex: AC untuk Aceh">
-					<div class="alert-message">
-						<code id="provinsi_codeError"></code>
+			<form type="POST" id="form-data">
+		       	<input type="hidden" name="_method" id="formAddMethod">
+				<input type="hidden" name="provinsi_id" class="form-control" id="provinsi_id">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="provinsi_code">Kode Provinsi</label>
+						<input type="text" name="provinsi_code" class="form-control" id="provinsi_code" placeholder="Kode Provinsi. Ex: AC untuk Aceh">
+						<div class="alert-message">
+							<code id="provinsi_codeError"></code>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="provinsi_name">Nama Provinsi</label>
+						<input type="text" name="provinsi_name" class="form-control" id="provinsi_name" placeholder="Nama Provinsi. Ex: Aceh">
+						<div class="alert-message">
+							<code id="provinsi_nameError"></code>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="status">Status</label>
+						<select name="status" class="form-control" id="status">
+							<option>Pilih Status</option>
+							<option value="0">Draft</option>
+							<option value="1">Publish</option>
+						</select>
+						<div class="alert-message">
+							<code id="statusError"></code>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="provinsi_name">Nama Provinsi</label>
-					<input type="text" name="provinsi_name" class="form-control" id="provinsi_name" placeholder="Nama Provinsi. Ex: Aceh">
-					<div class="alert-message">
-						<code id="provinsi_nameError"></code>
-					</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary" id="btnImport"><i class="fa fa-save"></i> &nbsp Simpan</button>
 				</div>
-				<div class="form-group">
-					<label for="status">Status</label>
-					<select name="status" class="form-control" id="status">
-						<option>Pilih Status</option>
-						<option value="0">Draft</option>
-						<option value="1">Publish</option>
-					</select>
-					<div class="alert-message">
-						<code id="statusError"></code>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary" id="btnImport"><i class="fa fa-save"></i> &nbsp Simpan</button>
 			</form>
-			</div>
 		</div>
 	</div>
 </div>

@@ -82,19 +82,6 @@ class ProvinsiController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        if ($this->authorize('MOD1300-read')) {
-            
-        }
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -102,7 +89,22 @@ class ProvinsiController extends Controller
      */
     public function edit($id)
     {
-        if ($this->authorize('MOD1300-edit')) {}
+        if ($this->authorize('MOD1300-edit')) {
+            $provinsi = Provinsi::find($id);
+
+            if (!empty($provinsi)) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berasil mengambil data dari database.',
+                    'data'    => $provinsi
+                ], 200);
+            }
+
+            return response()->json([
+                'error'   => true,
+                'message' => 'Gagal mengambil data dari database. Silahkan refresh table provinsi.'
+            ], 401);
+        }
     }
 
     /**
@@ -114,7 +116,35 @@ class ProvinsiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($this->authorize('MOD1300-update')) {}
+        if ($this->authorize('MOD1300-update')) {
+            $rules = [
+                'provinsi_code' => 'required|string',
+                'provinsi_name' => 'required|string',
+                'status'        => 'required|numeric'
+            ];
+
+            $pesan = [
+                'provinsi_code.required' => 'Field Kode Provinsi harus di isi.',
+                'provinsi_code.string'   => 'Field Kode Provinsi harus berupa Huruf.',
+                'provinsi_name.required' => 'Field Nama Provinsi harus di isi.',
+                'provinsi_name.string'   => 'Field Kode Provinsi harus berupa Huruf.',
+                'status.required'        => 'Field Status harus di isi.',
+                'status.numeric'         => 'Field Status harus di isi.'
+            ];
+
+            $this->validate($request, $rules, $pesan);
+
+            Provinsi::find($id)->update([
+                'provinsi_code' => $request->provinsi_code,
+                'provinsi_name' => $request->provinsi_name,
+                'status'        => $request->status
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil merubah data Provinsi.'
+            ]);
+        }
     }
 
     /**
@@ -125,6 +155,23 @@ class ProvinsiController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->authorize('MOD1300-delete')) {}
+        if ($this->authorize('MOD1300-delete')) {
+            $provinsi = Provinsi::find($id);
+
+            if (!empty($provinsi)) {
+                $provinsi->status = 9;
+                $provinsi->update();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berasil menghapus data dari database.'
+                ], 200);
+            }
+
+            return response()->json([
+                'error'   => true,
+                'message' => 'Gagal mengambil data dari database. Silahkan refresh table provinsi.'
+            ], 401);
+        }
     }
 }

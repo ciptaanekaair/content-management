@@ -87,7 +87,7 @@ class ForgetPasswordController extends Controller
             return response([
                 'error'   => true,
                 'message' => $validasi->errors()
-            ]);
+            ], 422);
         }
 
         $check = PasswordReset::where('token', md5($request->token))

@@ -20,6 +20,7 @@ MOD2001 = Laporan Transaksi.
 MOD1009 = Product Reviews.
 MOD1100 = Banner Position.
 MOD1101 = Banner.
+MOD1108 = Payment Transaction.
 
 Note:
 untuk setiap table, apabila data memiliki status 9 maka artinya data tersebut dalam status terhapus.
