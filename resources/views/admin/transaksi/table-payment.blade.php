@@ -1,6 +1,9 @@
 @forelse($pConfirmation as $payment)
 <tr>
 	<td>
+		{{ $payment->id }}
+	</td>
+	<td>
 		{{ $payment->created_at->toDateString() }}
 	</td>
 	<td>
@@ -22,19 +25,19 @@
 	</td>
 	<td width="150">
 		@if ($payment->status == 0)
-		<button class="btn btn-sm btn-primary" onclick="verify({{ $payment->id }})">
+		<a class="btn btn-sm btn-primary" onclick="verify({{ $payment->id }})">
 			<i class="fa fa-thumbs-up"></i>
-		</button>
-		<button class="btn btn-sm btn-danger" onclick="terminate({{ $payment->id }})">
+		</a>
+		<a class="btn btn-sm btn-danger" onclick="terminate({{ $payment->id }})">
 			<i class="fa fa-thumbs-down"></i>
-		</button>
+		</a>
 		@elseif ($payment->status == 1)
-		<button class="btn btn-sm btn-warning" onclick="unverify({{ $payment->id }})">
+		<a class="btn btn-sm btn-warning" onclick="unverify({{ $payment->id }})">
 			<i class="fa fa-minus"></i>
-		</button>
-		<button class="btn btn-sm btn-danger" onclick="terminate({{ $payment->id }})">
+		</a>
+		<a class="btn btn-sm btn-danger" onclick="terminate({{ $payment->id }})">
 			<i class="fa fa-thumbs-down"></i>
-		</button>
+		</a>
 		@else
 		-
 		@endif
@@ -42,7 +45,7 @@
 </tr>
 @empty
 <tr>
-	<td colspan="5" align="center">
+	<td colspan="6" align="center">
 		<b>Belum ada data</b>
 	</td>
 </tr>

@@ -12,9 +12,15 @@ class PaymentMethodController extends Controller
 {
     public function getDetail($id)
     {
-        $pConfirmation = PaymentConfirmation::where('transactions_id', $id)->get();
+        $pConfirmation = PaymentConfirmation::select('id', 'user_id', 'deskripsi', 'images', 'status', 'created_at')
+                        ->where('transactions_id', $id)
+                        ->get();
 
-        return view('admin.transaksi.table-payment', compact('pConfirmation'));
+        if (!empty($pConfirmation)) {
+            return view('admin.transaksi.table-payment', compact('pConfirmation'));
+        }
+
+        return view('admin.transaksi.table-payment', compact(['pConfirmation' => new PaymentConfirmation]));
     }
 
     public function verify($id)

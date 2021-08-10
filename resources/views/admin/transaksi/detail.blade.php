@@ -84,11 +84,12 @@
 					<table class="table table-stripped table-hover">
 						<thead>
 							<tr align="center">
-								<th colspan="5">
+								<th colspan="6">
 									Bukti Pembayaran
 								</th>
 							</tr>
 							<tr>
+								<th width="20">id</th>
 								<th>Tanggal</th>
 								<th>Deskripsi</th>
 								<th>Bukti</th>
@@ -111,6 +112,7 @@
 							<option value="0" {{ $transaction->status == 0 ? 'selected' : '' }}>Pending (Belum di bayar)</option>
 							<option value="1" {{ $transaction->status == 1 ? 'selected' : '' }}>Complete</option>
 							<option value="2" {{ $transaction->status == 2 ? 'selected' : '' }}>Ferivy Payment</option>
+							<option value="6" {{ $transaction->status == 7 ? 'selected' : '' }}>Pembayaran Terverifikasi</option>
 							<option value="3" {{ $transaction->status == 3 ? 'selected' : '' }}>Pengemasan</option>
 							<option value="4" {{ $transaction->status == 4 ? 'selected' : '' }}>Pengiriman</option>
 							<option value="5" {{ $transaction->status == 5 ? 'selected' : '' }}>Diterima</option>
@@ -132,8 +134,7 @@
 
 <script type="text/javascript">
 $(function() {
-	var id = '{{ $transaction->id }}';
-	fetch_payment_data(id);
+	fetch_payment_data({{ $transaction->id }});
 
 	$('#status').on('change', function() {
 		var id = $('#transaction_id').val();
@@ -177,9 +178,9 @@ function fetch_payment_data(id) {
 	});
 }
 
-function verify(id) {
+function verify(key) {
 	$.ajax({
-		url: '{{ url("transaction/verify") }}/{{ $transaction->id }}',
+		url: '{{ url("transaction/verify") }}/'+key,
 		type: 'GET',
 		beforeSend: function() {
 			$("#modal-loading").modal('show');
@@ -198,9 +199,9 @@ function verify(id) {
 	});
 }
 
-function unverify(id) {
+function unverify(key) {
 	$.ajax({
-		url: '{{ url("transaction/unverify") }}/{{ $transaction->id }}',
+		url: '{{ url("transaction/unverify") }}/'+key,
 		type: 'GET',
 		beforeSend: function() {
 			$("#modal-loading").modal('show');
@@ -219,9 +220,9 @@ function unverify(id) {
 	});
 }
 
-function terminate(id) {
+function terminate(key) {
 	$.ajax({
-		url: '{{ url("transaction/terminate") }}/{{ $transaction->id }}',
+		url: '{{ url("transaction/terminate") }}/'+key,
 		type: 'GET',
 		beforeSend: function() {
 			$("#modal-loading").modal('show');

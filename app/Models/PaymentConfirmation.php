@@ -16,13 +16,18 @@ class PaymentConfirmation extends Model
                             'status'
                         ];
 
-    protected $appends    = ['imageurl'];
+    protected $appends    = ['imageurl', 'payment_confirmation_id'];
 
     public function getImageurlAttribute()
     {
         $productpicurl = ENV('APP_URL').'/storage/'.$this->images;
 
         return $productpicurl;
+    }
+
+    public function getPaymentConfirmationIdAttribute()
+    {
+        return $this->id;
     }
 
     public function transaction()
