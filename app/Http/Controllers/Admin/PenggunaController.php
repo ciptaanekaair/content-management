@@ -20,10 +20,15 @@ class PenggunaController extends Controller
     public function index()
     {
         if ($this->authorize('MOD1001-read')) {
-            $users = User::where([
-                    ['status', '!=', 9],
-                    ['level_id', '!=', 4]
-                ])->paginate(10);
+            // $users = User::select('users.*', 'detail_perusahaans.status')
+            //         ->join('detail_perusahaans', 'detail_perusahaans.user_id', '=', 'users.id')
+            //         ->where('users.status', '!=', 9)
+            //         ->where('users.level_id', '!=', 4)
+            //         ->paginate(10);
+            $users = User::with('perusahaanDetail')
+                ->where('status', '!=', 9)
+                ->where('level_id', '!=', 4)
+                ->paginate(10);
 
             $levels    = Level::orderBy('id', 'ASC')->get();
             $provinsis = Provinsi::where('status', '!=', 9)->orderBy('provinsi_name', 'ASC')->get();
@@ -40,19 +45,23 @@ class PenggunaController extends Controller
             $search       = $request->get('search');
 
             if (!empty($search)) {
-                $users = User::where([
+                $users = User::with('perusahaanDetail')
+                ->where([
                     ['status', '!=', 9],
                     ['level_id', '!=', 4],
                     ['name', 'LIKE', '%'.$search.'%']
-                ])->orWhere('email', 'LIKE', '%'.$search.'%')
+                ])
+                ->orWhere('email', 'LIKE', '%'.$search.'%')
                 ->orderBy('id', 'ASC')
                 ->paginate(10);
             } else {
 
-                $users = User::where([
+                $users = User::with('perusahaanDetail')
+                ->where([
                     ['status', '!=', 9],
                     ['level_id', '!=', 4]
-                ])->orderBy('id', 'ASC')
+                ])
+                ->orderBy('id', 'ASC')
                 ->paginate(10);
             }
 

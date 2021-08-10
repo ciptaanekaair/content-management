@@ -29,8 +29,8 @@
           <td>{{ $item->id }}</td>
           <td>{{ $item->name }}</td>
           <td>{{ $item->email }}</td>
-          <td>{{ $item->Level->nama_level }}<br>
-            <small>{{ $item->company == 1 ? '[Perusahaan]':'[Perorangan]' }}</small>
+          <td>{{ $item->Level->nama_level }}
+            {!! $item->company == 1 ? '<br><small>[ Perusahaan ]</small>' : '' !!}
           </td>
           <td>
             @if ($item->status == 1)
@@ -42,12 +42,14 @@
           <td>
             <div class="dropdown">
               <botton class="btn btn-primary" type="button" id="actionMenu{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Aksi &nbsp&nbsp<i class="fa fa-arrow-down"></i> 
+                Aksi
               </botton>
               <div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
                 <a onclick="editData({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-key"></i>&nbsp Ubah Data</a>
                 <a onclick="editShipping({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-home"></i>&nbsp Ubah Alamat</a>
-                <a onclick="viewData({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-eye"></i>&nbsp View Data</a>
+                @if ($item->company == 1)
+                <a onclick="viewData({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-eye"></i>&nbsp Data Perusahaan</a>
+                @endif
                 <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbsp Delete Data</a>
               </div>
             </div>

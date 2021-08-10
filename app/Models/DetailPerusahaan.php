@@ -9,7 +9,7 @@ class DetailPerusahaan extends Model
 {
     use HasFactory;
 
-    protected $appends    = ['imageurl'];
+    protected $appends    = ['imageurl', 'status_perusahaan'];
 
     public function getImageurlAttribute()
     {
@@ -22,8 +22,19 @@ class DetailPerusahaan extends Model
         return $npwppicurl;
     }
 
+    public function getStatusPerusahaanAttribute()
+    {
+        if ($this->status == 0) {
+            $this->status_perusahaan = 'unverified';
+        } elseif ($this->status == 1) {
+            $this->status_perusahaan = 'verified';
+        } else {
+            $this->status_perusahaan = 'error';
+        }
+    }
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

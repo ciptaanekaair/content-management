@@ -87,6 +87,17 @@ class User extends Authenticatable
         return $this->hasOne(DetailPerusahaan::class);
     }
 
+    public function perusahaanDetail()
+    {
+        $data = array();
+
+        if ($this->company == 1) {
+            return $this->detailPerusahaan()->where('user_id', $this->id)->first();
+        }
+
+        return $data;
+    }
+
     // public function loadCartData()
     // {
     //     return $this->hasMany(TransactionTemporary::class);
