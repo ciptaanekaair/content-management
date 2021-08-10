@@ -96,7 +96,7 @@ class ForgetPasswordController extends Controller
         if (!$check) {
             return response([
                 'error'   => true,
-                'message' => 'Gagal melakukan verifikasi. Silahkan melakukan verifikasi ulang.'
+                'message' => 'Kode rahasia yang anda masukan salah. Mohon perika kembali di email yang terdaftar.'
             ]);
         }
 

@@ -132,11 +132,18 @@ class KotaController extends Controller
         if ($this->authorize('MOD1301-edit')) {
             $kota = Kota::find($id);
 
+            if (!empty($kota)) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil mengambil data dari database.',
+                    'data'    => $kota
+                ], 200);
+            }
+
             return response()->json([
-                'success' => true,
-                'message' => 'Berasi mengambil data kota dari database.',
-                'data'    => $kota
-            ]);
+                'error'   => true,
+                'message' => 'Gagal mengambil data dari database.'
+            ], 401);
         }
     }
 
@@ -150,7 +157,25 @@ class KotaController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1301-update')) {
-            
+            $rules = [
+                'provinsi_id' => 'required|numeric',
+                'nama_kota'   => 'required',
+                'status'      => 'required|numeric'
+            ];
+
+            $validasi = $this->validate($request, $rules);
+
+            $kota = Kota::find($id);
+            $kota->provinsi_id = $request->provinsi_id;
+            $kota->nama_kota   = $request->nama_kota;
+            $kota->status      = $request->status;
+            $kota->update();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil update data kota.',
+                'data'    => $kota
+            ]);
         }
     }
 
@@ -163,7 +188,21 @@ class KotaController extends Controller
     public function destroy($id)
     {
         if ($this->authorize('MOD1301-delete')) {
-            
+            $kota = Kota::find($id);
+
+            if (!empty($kota)) {
+                $kota->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil menghapus data kota dari database.'
+                ], 200);
+            }
+
+            return response()->json([
+                'error'   => true,
+                'message' => 'Gagal mengambil data dari database.'
+            ], 401);
         }
     }
 }

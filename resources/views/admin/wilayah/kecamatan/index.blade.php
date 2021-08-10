@@ -121,7 +121,7 @@ $(function() {
 			}, error: function(response) {
 				Swal.fire('Error!', 'Gagal melakukan penyimpanan data. Silahkan cek pengisian form.', 'error');
 				$('#kota_idError').text(response.responseJSON.errors.kota_id);
-				$('#nama_kemcatanError').text(response.responseJSON.errors.nama_kecamatan);
+				$('#nama_kecamatanError').text(response.responseJSON.errors.nama_kecamatan);
 				$('#statusError').text(response.responseJSON.errors.status);
 			},
 			complete: function(data) {

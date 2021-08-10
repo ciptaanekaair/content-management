@@ -4,21 +4,21 @@
       <tr>
         <th width="100">No</th>
         <th width="100">#</th>
-        <th>Nama Kota</th>
-        <th>Provinsi</th>
+        <th>Kode Provinsi</th>
+        <th>Nama Provinsi</th>
         <th>Status</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      @forelse($kotas as $index => $item)
+      @forelse($provinsis as $index => $item)
         <tr>
           <td>
-            {{ $kotas->firstItem() + $index }}
+            {{ $provinsis->firstItem() + $index }}
           </td>
           <td>{{ $item->id }}</td>
-          <td>{{ $item->nama_kota }}</td>
-          <td>{{ $item->provinsi->provinsi_name }}</td>
+          <td>{{ $item->provinsi_code }}</td>
+          <td>{{ $item->provinsi_name }}</td>
           <td>
             @if ($item->status == 1)
               <div class="badge badge-success">active</div>
@@ -32,8 +32,8 @@
                 Aksi &nbsp&nbsp<i class="fa fa-arrow-down"></i> 
               </botton>
               <div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
-                <a onclick="editData({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-pencil"></i>&nbspEdit</a>
-                <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbspView</a>
+                <a onclick="editData({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-pencil"></i>&nbsp Edit</a>
+                <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbsp Delete</a>
               </div>
             </div>
           </td>
@@ -42,7 +42,7 @@
         <tr>
           <td colspan="6" align="center">
             <b><i>
-              Belum ada data kota, silahkan hubungi admin.
+              Belum ada data provinsi, silahkan hubungi admin.
             </i></b>
           </td>
         </tr>
@@ -50,7 +50,7 @@
       <tr>
         <td colspan="8">
           <div class="text-center">
-            {{ $kotas->links('vendor.pagination.simple-tailwind') }}
+            {{ $provinsis->links('vendor.pagination.simple-tailwind') }}
           </div>
         </td>
       </tr>

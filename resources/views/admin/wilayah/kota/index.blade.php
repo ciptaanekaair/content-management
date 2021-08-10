@@ -38,7 +38,7 @@
 				<div class="table-data">
 					@include('admin.wilayah.kota.table-data')
 				</div>
-				<input type="hidden" name="perpage" id="posisi_page">
+				<input type="hidden" name="perpage" id="posisi_page" value="1">
 			</div>
 		</div>
 	</div>
@@ -111,12 +111,12 @@ $(function() {
 			type: 'POST',
 			data: $(this).serialize(),
 			beforeSend: function(){
-				// Show image container
 				$("#modal-loading").modal('show');
 			},
 			success: function(data) {
 				formDataReset();
-				$('#modal-data').modal('hide');
+				fetch_table(page, perpage, search);
+				$('#modal-form').modal('hide');
 				Swal.fire('Success!', 'Berhasil menyimpan data.', 'success');
 			}, error: function(response) {
 				Swal.fire('Error!', 'Gagal melakukan penyimpanan data. Silahkan cek pengisian form.', 'error');
@@ -125,11 +125,43 @@ $(function() {
 				$('#statusError').text(response.responseJSON.errors.status);
 			},
 			complete: function(data) {
+				$("#modal-loading").modal('hide');
+			}
+		});
+	});
+
+	$('#formDataDelete').on('submit', function(e) {
+		e.preventDefault();
+
+		var id = $('#kota_id_d').val();
+
+		page    = $('#posisi_page').val();
+		perpage = $('#perpage').val();
+		search  = $('#pencarian').val();
+
+		$.ajax({
+			url: '{{ url("kotas") }}/'+id,
+			type: 'POST',
+			data: $(this).serialize(),
+			beforeSend: function(){
+				// Show image container
+				$("#modal-loading").modal('show');
+			},
+			success: function(data) {
+				formDeleteReset();
+				$('#modal-delete').modal('hide');
+				fetch_table(page, perpage, search);
+				Swal.fire('Success!', data.message, 'success');
+			}, error: function(response) {
+				Swal.fire('Error!', response.responseJSON.message, 'error');
+			},
+			complete: function(data) {
 				// Hide image container
 				$("#modal-loading").modal('hide');
 			}
 		});
 	});
+	
 
 	$('body').on('click', '.paginasi a', function(e) {
 		e.preventDefault();
@@ -159,9 +191,15 @@ function importData() {
 function formDataReset() {
 	$('#form-data').find('input').each(function(i, v) {
 		$(this).val('');
-    });
-    $('#provinsi_id').prop('selectedIndex', 0);
-    $('#status').prop('selectedIndex', 0);
+  });
+  $('#provinsi_id').prop('selectedIndex', 0);
+  $('#status').prop('selectedIndex', 0);
+}
+
+function formDeleteReset() {
+	$('.title-delete').text('');
+	$('#kota_id_d').val('');
+	$('#kota_name_d').text('');
 }
 
 function refresh() {
@@ -197,6 +235,58 @@ function fetch_table(page, perpage, search) {
 	});
 }
 
+function editData(id) {
+	var id_ku = id;
+	$.ajax({
+		url: '{{ url("kotas") }}/'+id_ku+'/edit',
+		type: 'GET',
+		beforeSend: function(){
+			// Show image container
+			$("#modal-loading").modal('show');
+		},
+		success: function(data) {
+			save_method = 'edit';
+			$('#formAddMethod').val('PUT');
+			$('.title-form').text('Edit data: ['+data.data.id+'] -'+data.data.nama_kota);
+			$('#kota_id').val(data.data.id);
+			$('#provinsi_id [value="'+data.data.provinsi_id+'"]').prop('selected', 'selected');
+			$('#nama_kota').val(data.data.nama_kota);
+			$('#status [value="'+data.data.status+'"]').prop('selected', 'selected');
+			$('#modal-form').modal('show');
+		},
+		error: function(response) {
+			Swal.fire('Error!', response.responseJSON.message, 'error');
+		},
+		complete: function(data) {
+			// Hide image container
+			$("#modal-loading").modal('hide');
+		}
+	});
+}
+
+function confirmDelete(id) {
+	$.ajax({
+		url: '{{ url("kotas") }}/'+id+'/edit',
+		type: 'GET',
+		beforeSend: function(){
+			// Show image container
+			$("#modal-loading").modal('show');
+		},
+		success: function(data) {
+			$('.title-delete').text('Delete data: ['+data.data.id+'] -'+data.data.nama_kota);
+			$('#kota_id_d').val(data.data.id);
+			$('#kota_name_d').text(data.data.nama_kota);
+			$('#modal-delete').modal('show');
+		},
+		error: function(response) {
+			Swal.fire('Error!', response.responseJSON.message, 'error');
+		},
+		complete: function(data) {
+			// Hide image container
+			$("#modal-loading").modal('hide');
+		}
+	});
+}
 </script>
 
 @endsection

@@ -33,7 +33,7 @@
               </botton>
               <div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
                 <a onclick="editData({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-pencil"></i>&nbsp Edit</a>
-                <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbsp Delete Data</a>
+                <a onclick="confirmDelete({{ $item->id }})" class="dropdown-item" type="button"><i class="fa fa-trash"></i>&nbsp Delete</a>
               </div>
             </div>
           </td>

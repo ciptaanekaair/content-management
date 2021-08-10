@@ -42,14 +42,12 @@
             @endif
           </td>
           <td>
-            <div class="btn-group">
-              <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-info">
+              <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-primary">
                 <i class="fa fa-pencil"></i>
               </button>
               <button onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger">
                 <i class="fa fa-trash"></i>
               </button>
-            </div>
           </td>
         </tr>
       @endforeach

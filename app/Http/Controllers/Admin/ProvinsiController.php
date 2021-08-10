@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Provinsi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,17 +15,31 @@ class ProvinsiController extends Controller
      */
     public function index()
     {
-        //
+        if ($this->authorize('MOD1300-read')) {
+            return view('admin.wilayah.provinsi.index');
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getData(Request $request)
     {
-        //
+        if ($this->authorize('MOD1300-read')) {
+            $search       = $request->get('search');
+            $list_perpage = $request->get('list_perpage');
+
+            if (!empty($search)) {
+                $provinsis = Provinsi::where('status', '!=', 9)
+                            ->where('provinsi_name', 'LIKE', '%'.$search.'%')
+                            ->orWhere('provinsi_code', 'LIKE', '%'.$search.'%')
+                            ->orderBy('id', 'DESC')
+                            ->paginate($list_perpage);
+            } else {
+                $provinsis = Provinsi::where('status', '!=', 9)
+                            ->orderBy('id', 'DESC')
+                            ->paginate($list_perpage);
+            }
+
+            return view('admin.wilayah.provinsi.table-data', compact('provinsis'));
+        }
     }
 
     /**
@@ -35,7 +50,35 @@ class ProvinsiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($this->authorize('MOD1300-create')) {
+            $rules = [
+                'provinsi_code' => 'required|string',
+                'provinsi_name' => 'required|string',
+                'status'        => 'required|numeric'
+            ];
+
+            $pesan = [
+                'provinsi_code.required' => 'Field Kode Provinsi harus di isi.',
+                'provinsi_code.string'   => 'Field Kode Provinsi harus berupa Huruf.',
+                'provinsi_name.required' => 'Field Nama Provinsi harus di isi.',
+                'provinsi_name.string'   => 'Field Kode Provinsi harus berupa Huruf.',
+                'status.required'        => 'Field Status harus di isi.',
+                'status.numeric'         => 'Field Status harus di isi.'
+            ];
+
+            $this->validate($request, $rules, $pesan);
+
+            Provinsi::create([
+                'provinsi_code' => $request->provinsi_code,
+                'provinsi_name' => $request->provinsi_name,
+                'status'        => $request->status
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menambahkan data Provinsi ke dalam database.'
+            ]);
+        }
     }
 
     /**
@@ -46,7 +89,9 @@ class ProvinsiController extends Controller
      */
     public function show($id)
     {
-        //
+        if ($this->authorize('MOD1300-read')) {
+            
+        }
     }
 
     /**
@@ -57,7 +102,7 @@ class ProvinsiController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ($this->authorize('MOD1300-edit')) {}
     }
 
     /**
@@ -69,7 +114,7 @@ class ProvinsiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($this->authorize('MOD1300-update')) {}
     }
 
     /**
@@ -80,6 +125,6 @@ class ProvinsiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($this->authorize('MOD1300-delete')) {}
     }
 }
