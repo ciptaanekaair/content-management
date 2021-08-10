@@ -240,18 +240,8 @@ function editData(id) {
       $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
       $('#modal-form').modal('show');
     },
-    error: function(message) {
-      // var error = jQuery.parseJSON(xhr.responseText);
-      // for(var k in error.message){
-      //   if (error.massage.hasOwnProperty(k)) {
-      //     error.message[k].forEach(function(pesan) {
-
-      //     });
-      //   }
-      // }
-      // $('#category_nameError').text(e.data.category_name);
-      // $('#statusError').text(e.data.status);
-      // $('#nameError').text(response.responseJSON.errors.name);
+    error: function(response) {
+      Swal.fire('Error!', response.responseJSON.errors.message, 'error');
     },
     complete: function(data) {
       // Hide image container
