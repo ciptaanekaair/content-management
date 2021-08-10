@@ -21,7 +21,6 @@ class PaymentMethodController extends Controller
     {
         $pConfirmation = PaymentConfirmation::find($id);
 
-
         if (!empty($pConfirmation)) {
             $pConfirmation->status = 1;
             $pConfirmation->update();
