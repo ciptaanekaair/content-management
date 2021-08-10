@@ -6,7 +6,6 @@
 				<th>ID</th>
 				<th>Tanggal</th>
 				<th>Jumlah Item</th>
-				<th>Discount</th>
 				<th>Sub Total</th>
 				<th>Status</th>
 				<th></th>
@@ -19,7 +18,6 @@
 				<td>{{ $item->transaction_code }}</td>
 				<td>{{ $item->transaction_date }}</td>
 				<td>{{ $item->total_item }}</td>
-				<td>{{ number_format($item->discount) }}</td>
 				<td>{{ number_format($item->sub_total_price) }}</td>
 				<td>
 					@if($item->status == 0)
