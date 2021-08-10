@@ -55,6 +55,10 @@ class PaymentMethodController extends Controller
             $pConfirmation->status = 0;
             $pConfirmation->update();
 
+            $transaction = Transaction::find($id);
+            $transaction->status = 2;
+            $transaction->update();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil non-verifikasi data pembayaran.'
