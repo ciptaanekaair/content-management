@@ -34,6 +34,8 @@
 					<div class="badge badge-success">{{ $item->status_transaksi }}</div>
 					@elseif($item->status == 6)
 					<div class="badge badge-danger">{{ $item->status_transaksi }}</div>
+					@elseif($item->status == 7)
+					<div class="badge badge-warning">{{ $item->status_transaksi }}</div>
 					@endif
 				</td>
 				<td>

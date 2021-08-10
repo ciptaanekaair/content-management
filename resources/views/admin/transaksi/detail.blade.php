@@ -189,8 +189,8 @@ function verify(id) {
 			fetch_payment_data(id);
 			// $('#paymentTable').html(data);
 		},
-		error: function(response) {
-			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+		error: function(e) {
+			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
 		},
 		complete: function() {
 			$("#modal-loading").modal('hide');
@@ -210,8 +210,8 @@ function unverify(id) {
 			fetch_payment_data(id);
 			// $('#paymentTable').html(data);
 		},
-		error: function(response) {
-			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+		error: function(e) {
+			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
 		},
 		complete: function() {
 			$("#modal-loading").modal('hide');
@@ -231,8 +231,8 @@ function terminate(id) {
 			fetch_payment_data(id);
 			// $('#paymentTable').html(data);
 		},
-		error: function(response) {
-			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+		error: function(e) {
+			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
 		},
 		complete: function() {
 			$("#modal-loading").modal('hide');

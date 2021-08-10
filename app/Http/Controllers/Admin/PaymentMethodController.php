@@ -21,14 +21,19 @@ class PaymentMethodController extends Controller
     {
         $pConfirmation = PaymentConfirmation::find($id);
 
+
         if (!empty($pConfirmation)) {
             $pConfirmation->status = 1;
             $pConfirmation->update();
 
+            $transaction = Transaction::find($id);
+            $transaction->status = 7;
+            $transaction->update();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil verifikasi data pembayaran.'
-            ],200);
+            ], 200);
         }
 
         return response()->json([
@@ -52,7 +57,7 @@ class PaymentMethodController extends Controller
         }
 
         return response()->json([
-            'error' => true,
+            'error'   => true,
             'message' => 'Gagal mengambil data dari database.'
         ], 401);
     }
@@ -72,7 +77,7 @@ class PaymentMethodController extends Controller
         }
 
         return response()->json([
-            'error' => true,
+            'error'   => true,
             'message' => 'Gagal mengambil data dari database.'
         ], 401);
     }
