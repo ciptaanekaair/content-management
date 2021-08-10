@@ -64,7 +64,7 @@
 							<div class="form-group">
 								<label for="level_id">Level User</label>
 								<select name="level_id" id="level_id" class="form-control">
-									<option value="levelid">Pilih Status</option>
+									<option value="levelid">Pilih Level User</option>
 									@foreach($levels as $item)
 									<option value="{{ $item->id }}">{{ $item->nama_level }}</option>
 									@endforeach
@@ -98,9 +98,6 @@
 									<code id="companyError"></code>
 								</div>
 							</div>
-							<a href="" target="_blank" id="profile_photo_url" visible="false">
-								<i class="fas fa-eye"></i> &nbsp Lihat Picture
-							</a>
 						</div>
 					</div>
 				</div>

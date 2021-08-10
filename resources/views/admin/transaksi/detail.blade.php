@@ -83,8 +83,8 @@
 				<div>
 					<table class="table table-stripped table-hover">
 						<thead>
-							<tr>
-								<th colspan="5" align="center">
+							<tr align="center">
+								<th colspan="5">
 									Bukti Pembayaran
 								</th>
 							</tr>
@@ -96,47 +96,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
-							@forelse($transaction->paymentConfirmation as $item)
-							<tr>
-								<td>
-									{{ $item->created_at->toDateString() }}
-								</td>
-								<td>
-									{{ $item->deskripsi }}
-								</td>
-								<td>
-									<a href="{{ $item->imageurl }}" data-fancybox class="btn btn-primary">
-										<i class="fa fa-eye"></i>
-									</a>
-								</td>
-								<td>
-									@if($item->status == 0)
-									<div class="badge badge-warning">Belum Diverifikasi</div>
-									@elseif($item->status == 9)
-									<div class="badge badge-danger">Dibatalkan</div>
-									@else
-									<div class="badge badge-success">Terverifikasi</div>
-									@endif
-								</td>
-								<td>
-									<div class="btn-group">
-									@if($item->status == 0)
-									<button class="btn btn-success" onclick="verify({{ $item->id }})">Verifikasi</button>
-									@elseif($item->status == 1)
-									<button class="btn btn-warning" onclick="unverify({{ $item->id }})">Batalkan</button>
-									@endif
-									<button class="btn btn-danger" onclick="terminate({{ $item->id }})">Terminate</button>
-									</div>
-								</td>
-							</tr>
-							@empty
-							<tr>
-								<td colspan="5" align="center">
-									<b>Belum ada data</b>
-								</td>
-							</tr>
-							@endforelse
+						<tbody id="paymentTable">
 						</tbody>
 					</table>
 				</div>
@@ -172,6 +132,9 @@
 
 <script type="text/javascript">
 $(function() {
+	var id = '{{ $transaction->id }}';
+	fetch_payment_data(id);
+
 	$('#status').on('change', function() {
 		var id = $('#transaction_id').val();
 
@@ -198,28 +161,83 @@ $(function() {
 	});
 });
 
-function ferivy(id) {
-	url: '{{ url("transactions/ferivy") }}/{{ $transaction->id }}',
-	type: 'GET',
-	success: function(data) {
+function fetch_payment_data(id) {
+	$.ajax({
+		url: '{{ url("data-payment/transaction") }}/'+id,
+		type: 'GET',
+		beforeSend: function() {
+			$("#modal-loading").modal('show');
+		},
+		success: function(data) {
+			$('#paymentTable').html(data);
+		},
+		complete: function() {
+			$("#modal-loading").modal('hide');
+		}
+	});
+}
 
-	},
+function verify(id) {
+	$.ajax({
+		url: '{{ url("transaction/verify") }}/{{ $transaction->id }}',
+		type: 'GET',
+		beforeSend: function() {
+			$("#modal-loading").modal('show');
+		},
+		success: function(data) {
+			Swal.fire('Success!', data.message, 'success');
+			fetch_payment_data(id);
+			// $('#paymentTable').html(data);
+		},
+		error: function(response) {
+			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+		},
+		complete: function() {
+			$("#modal-loading").modal('hide');
+		},
+	});
 }
 
 function unverify(id) {
-	url: '{{ url("transactions/unverify") }}/{{ $transaction->id }}',
-	type: 'GET',
-	success: function(data) {
-
-	},
+	$.ajax({
+		url: '{{ url("transaction/unverify") }}/{{ $transaction->id }}',
+		type: 'GET',
+		beforeSend: function() {
+			$("#modal-loading").modal('show');
+		},
+		success: function(data) {
+			Swal.fire('Success!', data.message, 'success');
+			fetch_payment_data(id);
+			// $('#paymentTable').html(data);
+		},
+		error: function(response) {
+			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+		},
+		complete: function() {
+			$("#modal-loading").modal('hide');
+		},
+	});
 }
 
 function terminate(id) {
-	url: '{{ url("transactions/terminate") }}/{{ $transaction->id }}',
-	type: 'GET',
-	success: function(data) {
-
-	},
+	$.ajax({
+		url: '{{ url("transaction/terminate") }}/{{ $transaction->id }}',
+		type: 'GET',
+		beforeSend: function() {
+			$("#modal-loading").modal('show');
+		},
+		success: function(data) {
+			Swal.fire('Success!', data.message, 'success');
+			fetch_payment_data(id);
+			// $('#paymentTable').html(data);
+		},
+		error: function(response) {
+			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+		},
+		complete: function() {
+			$("#modal-loading").modal('hide');
+		},
+	});
 }
 </script>
 

@@ -2,13 +2,13 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th width="100">No</th>
-        <th width="100">#</th>
+        <th width="50"><center>No</center></th>
+        <th  width="50"><center>#</center></th>
         <th>Name</th>
         <th>Email</th>
-        <th>Level</th>
-        <th>Status</th>
-        <th>Action</th>
+        <th><center>Level</center></th>
+        <th><center>Status</center></th>
+        <th><center>Action</center></th>
       </tr>
     </thead>
     <tbody>
@@ -23,23 +23,23 @@
     @else
       @foreach($users as $index => $item)
         <tr>
-          <td>
+          <td align="center">
             {{ $users->firstItem() + $index }}
           </td>
-          <td>{{ $item->id }}</td>
+          <td align="center">{{ $item->id }}</td>
           <td>{{ $item->name }}</td>
           <td>{{ $item->email }}</td>
-          <td>{{ $item->Level->nama_level }}
+          <td align="center">{{ $item->Level->nama_level }}
             {!! $item->company == 1 ? '<br><small>[ Perusahaan ]</small>' : '' !!}
           </td>
-          <td>
+          <td align="center">
             @if ($item->status == 1)
               <div class="badge badge-success">Active</div>
             @elseif($item->status == 0)
               <div class="badge badge-warning">Unactive</div>
             @endif
           </td>
-          <td>
+          <td align="center">
             <div class="dropdown">
               <botton class="btn btn-primary" type="button" id="actionMenu{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Aksi

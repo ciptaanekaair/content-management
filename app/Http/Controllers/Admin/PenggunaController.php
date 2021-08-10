@@ -25,8 +25,7 @@ class PenggunaController extends Controller
             //         ->where('users.status', '!=', 9)
             //         ->where('users.level_id', '!=', 4)
             //         ->paginate(10);
-            $users = User::with('perusahaanDetail')
-                ->where('status', '!=', 9)
+            $users = User::where('status', '!=', 9)
                 ->where('level_id', '!=', 4)
                 ->paginate(10);
 
@@ -45,8 +44,7 @@ class PenggunaController extends Controller
             $search       = $request->get('search');
 
             if (!empty($search)) {
-                $users = User::with('perusahaanDetail')
-                ->where([
+                $users = User::where([
                     ['status', '!=', 9],
                     ['level_id', '!=', 4],
                     ['name', 'LIKE', '%'.$search.'%']
@@ -56,8 +54,7 @@ class PenggunaController extends Controller
                 ->paginate(10);
             } else {
 
-                $users = User::with('perusahaanDetail')
-                ->where([
+                $users = User::where([
                     ['status', '!=', 9],
                     ['level_id', '!=', 4]
                 ])

@@ -13,7 +13,6 @@ use App\Http\Controllers\Admin\RekamJejakController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\KotaController;
-use App\Mail\CheckoutTemplateMail;
 
 
 /*
@@ -27,9 +26,7 @@ use App\Mail\CheckoutTemplateMail;
 */
 
 Route::get('/', [DashboardController::class, 'gotoLogin'])->name('welcome');
-Route::get('/checoutmail', function() {
-    return new CheckoutTemplateMail();
-});
+
 Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
 
 Route::get('/logout', function() {
@@ -82,6 +79,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('data/transaction-report/daily', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'exportHarian'])->name('report.harian');
     Route::get('transaction-report/date-to-date', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'dateToDate'])->name('report.index.datetodate');
     Route::post('data/transaction-report/date-to-date', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'exportDateToDate'])->name('report.datetodate');
+
+    Route::get('data-payment/transaction/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'getDetail'])->name('payment.detail');
+    Route::get('transaction/verify/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'verify'])->name('payment.verify');
+    Route::get('transaction/unverify/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'unverify'])->name('payment.unverify');
+    Route::get('transaction/terminate/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'terminated'])->name('payment.terminated');
 
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
     Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');

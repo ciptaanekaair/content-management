@@ -44,9 +44,7 @@ class TransaksiController extends Controller
     {
         if ($this->authorize('MOD1008-read')) {
             $transaction = Transaction::where('id', $id)
-                        ->with('transactionDetail.products')
-                        ->with('user')
-                        ->with('paymentConfirmation')
+                        ->with('transactionDetail.products', 'paymentConfirmation', 'user')
                         ->first();
 
             return view('admin.transaksi.detail', compact('transaction'));

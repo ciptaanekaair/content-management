@@ -322,8 +322,8 @@ function editData(id) {
       $('#profile_photo_url').attr('href', data.data.profile_photo_url);
       $('#btnUserSave').text('Update Data');
       $('#level_id [value="'+data.data.level_id+'"]').attr('selected', 'selected');
-      $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
       $('#company [value="'+data.data.company+'"]').attr('selected', 'selected');
+      $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
       $('#modal-new').modal('show'); 
     },
     error: function(message) {
