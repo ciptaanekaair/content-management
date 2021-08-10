@@ -187,7 +187,7 @@ function verify(key) {
 		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
-			fetch_payment_data(id);
+			fetch_payment_data({{ $transaction->id }});
 			// $('#paymentTable').html(data);
 		},
 		error: function(e) {
@@ -208,7 +208,7 @@ function unverify(key) {
 		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
-			fetch_payment_data(id);
+			fetch_payment_data({{ $transaction->id }});
 			// $('#paymentTable').html(data);
 		},
 		error: function(e) {
@@ -229,7 +229,7 @@ function terminate(key) {
 		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
-			fetch_payment_data(id);
+			fetch_payment_data({{ $transaction->id }});
 			// $('#paymentTable').html(data);
 		},
 		error: function(e) {
