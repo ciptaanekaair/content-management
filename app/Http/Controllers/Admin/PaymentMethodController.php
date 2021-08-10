@@ -79,6 +79,10 @@ class PaymentMethodController extends Controller
             $pConfirmation->status = 9;
             $pConfirmation->update();
 
+            $transaction = Transaction::find($id);
+            $transaction->status = 0;
+            $transaction->update();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil membatalkan pembayaran.'
