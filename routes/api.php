@@ -28,7 +28,8 @@ Route::get('banner-positions/{id}', [App\Http\Controllers\Api\BannerPositionCont
 
 // Forget Password
 Route::post('forget-password', [App\Http\Controllers\Api\ForgetPasswordController::class, 'forgetPassword'])->name('api_forget_password'); // Ferivy Token Forget Password
-Route::post('ferivy-forget-password', [App\Http\Controllers\Api\ForgetPasswordController::class, 'verifyForgetPassword'])->name('api_ferivy_forget_password'); // Ferivy Token Forget Password
+Route::post('reset-password', [App\Http\Controllers\Api\ForgetPasswordController::class, 'resetPassword'])->name('api_reset_password'); // Ferivy Token Forget Password
+// Route::post('ferivy-forget-password', [App\Http\Controllers\Api\ForgetPasswordController::class, 'verifyForgetPassword'])->name('api_ferivy_forget_password'); // Ferivy Token Forget Password 3 step
 
 /**
  * Route API untuk product & kategori produk
