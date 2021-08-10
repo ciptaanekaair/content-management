@@ -40,6 +40,17 @@ class TransaksiController extends Controller
         }
     }
 
+    public function showAjax($id)
+    {
+        if ($this->authorize('MOD1008-read')) {
+            $transaction = Transaction::where('id', $id)
+                        ->with('transactionDetail.products', 'paymentConfirmation', 'user')
+                        ->first();
+
+            return response()->json($transaction);
+        }
+    }
+
     public function show($id)
     {
         if ($this->authorize('MOD1008-read')) {

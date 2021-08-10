@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Modul Transaksi
     Route::resource('transactions', TransaksiController::class);
     Route::get('data/transactions', [TransaksiController::class, 'getData'])->name('transactions.data');
+    Route::get('data/transactions/status/{id}', [TransaksiController::class, 'showAjax'])->name('transactions.ajax-data');
 
     // Modul Laporan: harian, mingguan, bulanan
     Route::get('transaction-report/daily', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'harian'])->name('report.index.harian');
@@ -80,10 +81,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('transaction-report/date-to-date', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'dateToDate'])->name('report.index.datetodate');
     Route::post('data/transaction-report/date-to-date', [App\Http\Controllers\Admin\LaporanTransaksiController::class, 'exportDateToDate'])->name('report.datetodate');
 
-    Route::get('data-payment/transaction/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'getDetail'])->name('payment.detail');
-    Route::get('transaction/verify/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'verify'])->name('payment.verify');
-    Route::get('transaction/unverify/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'unverify'])->name('payment.unverify');
-    Route::get('transaction/terminate/{id}', [App\Http\Controllers\Admin\PaymentMethodController::class, 'terminated'])->name('payment.terminated');
+    Route::get('data-payment/transaction/{id}', [App\Http\Controllers\Admin\PaymentConfirmationController::class, 'getDetail'])->name('payment.detail');
+    Route::get('transaction/verify/{id}', [App\Http\Controllers\Admin\PaymentConfirmationController::class, 'verify'])->name('payment.verify');
+    Route::get('transaction/unverify/{id}', [App\Http\Controllers\Admin\PaymentConfirmationController::class, 'unverify'])->name('payment.unverify');
+    Route::get('transaction/terminate/{id}', [App\Http\Controllers\Admin\PaymentConfirmationController::class, 'terminated'])->name('payment.terminated');
 
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
     Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');

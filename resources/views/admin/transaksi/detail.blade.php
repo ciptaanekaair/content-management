@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('header')
-	<h1>Transaction: {{ $transaction->transaction_code }}</h1>
+	<h1>Transaction: {{ $transaction->transaction_code }}</h1> - [ <div id="statusTransaksi">{{ $transaction->status_transaksi }}</div> ]
 @endsection
 
 @section('content')
@@ -170,10 +170,22 @@ function fetch_payment_data(id) {
 			$("#modal-loading").modal('show');
 		},
 		success: function(data) {
+			checkStatus();
 			$('#paymentTable').html(data);
 		},
 		complete: function() {
 			$("#modal-loading").modal('hide');
+		}
+	});
+}
+
+function checkStatus() {
+	$.ajax({
+		url: '{{ url("data/transactions/status/".$transaction->id) }}',
+		type: 'GET',
+		success: function(data) {
+			$('#status [value="'+data.status+'"]').attr('selected', 'selected');
+			$('#statusTransaksi').text(data.status_transaksi);
 		}
 	});
 }

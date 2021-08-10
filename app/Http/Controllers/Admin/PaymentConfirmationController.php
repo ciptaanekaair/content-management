@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
 
-class PaymentMethodController extends Controller
+class PaymentConfirmationController extends Controller
 {
     public function getDetail($id)
     {
@@ -31,7 +31,7 @@ class PaymentMethodController extends Controller
             $pConfirmation->status = 1;
             $pConfirmation->update();
 
-            $transaction = Transaction::find($id);
+            $transaction = Transaction::find($pConfirmation->transactions_id);
             $transaction->status = 7;
             $transaction->update();
 
@@ -55,7 +55,7 @@ class PaymentMethodController extends Controller
             $pConfirmation->status = 0;
             $pConfirmation->update();
 
-            $transaction = Transaction::find($id);
+            $transaction = Transaction::find($pConfirmation->transactions_id);
             $transaction->status = 2;
             $transaction->update();
 
@@ -79,7 +79,7 @@ class PaymentMethodController extends Controller
             $pConfirmation->status = 9;
             $pConfirmation->update();
 
-            $transaction = Transaction::find($id);
+            $transaction = Transaction::find($pConfirmation->transactions_id);
             $transaction->status = 0;
             $transaction->update();
 
