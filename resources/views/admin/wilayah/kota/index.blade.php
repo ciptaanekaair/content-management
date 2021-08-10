@@ -36,7 +36,7 @@
 			</div>	
 			<div class="card-body">
 				<div class="table-data">
-					@include('admin.wilayah.kota.table-data')
+					
 				</div>
 				<input type="hidden" name="perpage" id="posisi_page" value="1">
 			</div>
@@ -61,6 +61,8 @@ $(function() {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	})
+
+	fetch_table(1, 10, '');
 
 	$('#form-import').on('submit', function(e) {
 		e.preventDefault();

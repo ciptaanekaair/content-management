@@ -38,7 +38,6 @@
         <div class="card-body pb-0" id="card-attachment">
           <form name="form-attachment" id="form-attachment" >
             <div class="table-data">
-              @include('admin.role.table-data')
             </div>
             <input type="hidden" name="level_id" id="level_id">
           </form>
@@ -64,6 +63,8 @@ $(function() {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
   })
+
+  fetch_table(1, 10, '');
 
   $('#select-all').click(function(){
     $('input[type="checkbox"]').prop('checked', this.checked);

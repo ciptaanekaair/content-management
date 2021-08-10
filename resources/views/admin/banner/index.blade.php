@@ -37,7 +37,6 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="table-data">
-                        @include('admin.banner.table-data')
                     </div>
                     <input type="hidden" name="perpage" id="posisi_page">
                 </div>
@@ -54,6 +53,8 @@
 @section('jq-script')
     <script type="text/javascript">
         var table, save_method, page, perpage, search, url, data;
+
+        fetch_table(1, 10, '');
 
         $(function() {
             $('#perpage').on('change', function() {

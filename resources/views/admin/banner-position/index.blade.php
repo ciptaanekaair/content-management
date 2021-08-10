@@ -36,7 +36,6 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="table-data">
-                        @include('admin.banner-position.table-data')
                     </div>
                     <input type="hidden" name="perpage" id="posisi_page">
                 </div>
@@ -55,6 +54,8 @@
         var table, save_method, page, perpage, search, url, data;
 
         $(function() {
+            fetch_table(1, 10, '');
+
             $('#perpage').on('change', function() {
                 perpage = $(this).val();
                 search  = $('#pencarian').val();

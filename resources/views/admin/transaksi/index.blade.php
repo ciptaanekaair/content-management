@@ -34,13 +34,16 @@
 			</div>	
 			<div class="card-body">
 				<div class="table-data">
-					@include('admin.transaksi.table-data')
 				</div>
-				<input type="hidden" name="perpage" id="posisi_page">
+				<input type="hidden" name="perpage" id="posisi_page" value="1">
 			</div>
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('formodal')
+  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -49,6 +52,8 @@
 var save_method, page, perpage, search, url, data;
 
 $(function() {
+
+	fetch_table(1, 10, '');
 
 	$('body').on('click', '.paginasi a', function(e) {
 		e.preventDefault();
@@ -83,9 +88,15 @@ function fetch_table(page, perpage, search) {
 	$.ajax({
 		url: '{{ route("transactions.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
 		type: 'GET',
+		beforeSend: function() {
+			$('#modal-loading').modal('show');
+		},
 		success: function(data) {
 			$('.table-data').html(data);
 		},
+		complete: function() {
+			$('#modal-loading').modal('hide');
+		}
 	});
 }
 

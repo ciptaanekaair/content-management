@@ -34,7 +34,6 @@
         </div>
         <div class="card-body pb-0">
           <div class="table-data">
-            @include('admin.level.table-data')
           </div>
           <input type="hidden" name="perpage" id="posisi_page">
         </div>
@@ -45,6 +44,7 @@
 
 @section('formodal')
   @include('admin.level.form')
+  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -58,6 +58,8 @@ $(function() {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
   })
+
+  fetch_table(1, 10, '');
 
   $('#perpage').on('change', function() {
     perpage = $(this).val();
@@ -87,6 +89,9 @@ $(function() {
       data: new FormData($('#modal-new form')[0]),
       contentType: false,
       processData: false,
+      beforeSend: function() {
+        $('#modal-loading').modal('show');
+      },
       success: function(data) {
         formReset();
         $('#modal-new').modal('hide');
@@ -106,7 +111,10 @@ $(function() {
         $('#password_confirmationError').text(response.responseJSON.errors.password_confirmation);
         $('#level_idError').text(response.responseJSON.errors.level_id);
         $('#statusError').text(response.responseJSON.errors.status);
-      }
+      },
+      complete: function() {
+        $('#modal-loading').modal('hide');
+      },
     });
   }); // end submit save or update
 
@@ -138,6 +146,9 @@ $(function() {
       url: '{{ url("levels") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
+      beforeSend: function() {
+        $('#modal-loading').modal('show');
+      },
       success: function(data) {
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
@@ -147,6 +158,9 @@ $(function() {
           'Berhasil menghapus data tersebut.',
           'success'
         );
+      },
+      complete: function() {
+        $('#modal-loading').modal('hide');
       }
     });
   }); // end script delete
@@ -206,9 +220,15 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("levels.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
+    beforeSend: function() {
+      $('#modal-loading').modal('show');
+    },
     success: function(data) {
       $('.table-data').html(data);
     },
+    complete: function() {
+      $('#modal-loading').modal('hide');
+    }
   });
 }
 
@@ -218,6 +238,9 @@ function editData(id) {
     url: '{{ url("levels") }}/'+id+'/edit',
     type: 'GET',
     dataType: 'JSON',
+    beforeSend: function() {
+      $('#modal-loading').modal('show');
+    },
     success: function(data) {
       resetErrorUserForm();
       $('#formUserMethod').val('PUT');
@@ -234,6 +257,9 @@ function editData(id) {
     },
     error: function(message) {
       Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
+    },
+    complete: function() {
+      $('#modal-loading').modal('hide');
     }
   });
 }
@@ -244,6 +270,9 @@ function confirmDelete(id) {
     url: '{{ url("levels") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
+    beforeSend: function() {
+      $('#modal-loading').modal('show');
+    },
     success: function(data) {
       $('.modal-title-delete').text('Delete data: '+data.data.name);
       $('#formMethodD').val('DELETE');
@@ -251,6 +280,9 @@ function confirmDelete(id) {
       $('#user_name_d').text(data.data.name);
       $('#modal-delete').modal('show');
     },
+    complete: function() {
+      $('#modal-loading').modal('hide');
+    }
   });
 }
 </script>

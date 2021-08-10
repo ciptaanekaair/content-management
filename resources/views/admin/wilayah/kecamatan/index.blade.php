@@ -36,9 +36,9 @@
 			</div>	
 			<div class="card-body">
 				<div class="table-data">
-					@include('admin.wilayah.kecamatan.table-data')
+					
 				</div>
-				<input type="hidden" name="perpage" id="posisi_page">
+				<input type="hidden" name="perpage" id="posisi_page" value="1">
 			</div>
 		</div>
 	</div>
@@ -47,6 +47,7 @@
 
 @section('formodal')
   @include('admin.wilayah.kecamatan.form')
+  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -60,6 +61,8 @@ $(function() {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	})
+
+	fetch_table(1, 10, '');
 
 	$('#form-import').on('submit', function(e) {
 		e.preventDefault();

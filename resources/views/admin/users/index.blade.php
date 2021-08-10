@@ -35,7 +35,6 @@
         </div>
         <div class="card-body pb-0">
           <div class="table-data">
-            @include('admin.users.table-data')
           </div>
           <input type="hidden" name="perpage" id="posisi_page">
         </div>
@@ -46,6 +45,7 @@
 
 @section('formodal')
   @include('admin.users.form')
+  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -53,6 +53,8 @@
 var save_method, page, perpage, search, url, data;
 
 $(function() {
+
+  fetch_table(1, 10, '');
 
   $.ajaxSetup({
       headers: {
