@@ -34,11 +34,11 @@ class PaymentCodeController extends Controller
                 $pMethod = PaymentCode::where('status', '!=', 9)
                             ->where('nama_pembayaran', 'LIKE', '%'.$search.'%')
                             ->orderBy('id', 'DESC')
-                            ->paginate(10);
+                            ->paginate($list_perpage);
             } else {
                 $pMethod = PaymentCode::where('status', '!=', 9)
                             ->orderBy('id', 'DESC')
-                            ->paginate(10);
+                            ->paginate($list_perpage);
             }
 
             return view('admin.payment-code.table-data', compact('pMethod'));

@@ -30,13 +30,13 @@ class LevelController extends Controller
                     ['status', '!=', 9],
                     ['nama_level', 'LIKE', '%'.$search.'%'],
                 ])->orderBy('nama_level', 'ASC')
-                ->paginate(10);
+                ->paginate($perpage);
         } else {
             $levels = Level::where([
                     ['status', '!=', 9],
                     ['nama_level', 'LIKE', '%'.$search.'%'],
                 ])->orderBy('nama_level', 'ASC')
-                ->paginate(10);
+                ->paginate($perpage);
         }
 
         return view('admin.level.table-data', compact('levels'));

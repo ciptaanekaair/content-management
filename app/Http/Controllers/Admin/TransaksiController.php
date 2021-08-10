@@ -30,10 +30,10 @@ class TransaksiController extends Controller
             if (!empty($search)) {
                 $transactions = Transaction::where('status', '!=', 9)
                                 ->where('transaction_code', 'LIKE', '%'.$search.'%')
-                                ->paginate(10);
+                                ->paginate($perpage);
             } else {
                 $transactions = Transaction::where('status', '!=', 9)
-                                ->paginate(10);
+                                ->paginate($perpage);
             }
 
             return view('admin.transaksi.table-data', compact('transactions'));

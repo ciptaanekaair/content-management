@@ -51,7 +51,7 @@ class PenggunaController extends Controller
                 ])
                 ->orWhere('email', 'LIKE', '%'.$search.'%')
                 ->orderBy('id', 'ASC')
-                ->paginate(10);
+                ->paginate($list_perpage);
             } else {
 
                 $users = User::where([
@@ -59,7 +59,7 @@ class PenggunaController extends Controller
                     ['level_id', '!=', 4]
                 ])
                 ->orderBy('id', 'ASC')
-                ->paginate(10);
+                ->paginate($list_perpage);
             }
 
             return view('admin.users.table-data', compact('users'));

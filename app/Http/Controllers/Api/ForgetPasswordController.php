@@ -66,19 +66,20 @@ class ForgetPasswordController extends Controller
     public function resetPassword(Request $request)
     {
         $rules = [
-            'token'                 => 'required|numeric',
+            'token'                 => 'required|numeric|min:6',
             'password'              => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required'
         ];
 
         $pesan = [
-            'token.required'                      => 'Kode rahasia wajib di isi.',
-            'token.numeric'                       => 'Kode rahasia yang anda masukan salah!',
-            'password.required'                   => 'Password wajib di isi.',
-            'password.string'                     => 'Password berupa kombinasi huruf dan angka.',
-            'password.min'                        => 'Password minimal 6 karakter.',
-            'password.confirmed'                  => 'Password tidak sama. Pastikan password yang Anda masukan sama.',
-            'password_confirmation.required'      => 'Field Konfirmasi Password wajib di isi.'
+            'token.required'                 => 'Kode rahasia wajib di isi.',
+            'token.numeric'                  => 'Kode rahasia yang anda masukan salah!',
+            'token.min'                      => 'Kode rahasia yang anda masukan salah!',
+            'password.required'              => 'Password wajib di isi.',
+            'password.string'                => 'Password berupa kombinasi huruf dan angka.',
+            'password.min'                   => 'Password minimal 6 karakter.',
+            'password.confirmed'             => 'Password tidak sama. Pastikan password yang Anda masukan sama.',
+            'password_confirmation.required' => 'Field Konfirmasi Password wajib di isi.'
         ];
 
         $validasi = Validator::make($request->all(), $rules, $pesan);

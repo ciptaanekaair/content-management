@@ -32,11 +32,11 @@ class RoleController extends Controller
                     ['status', '!=', 9],
                     ['nama_role', 'LIKE', '%'.$search.'%'],
                 ])->orderBy('nama_role', 'ASC')
-                ->paginate(10);
+                ->paginate($perpage);
         } else {
             $roles = Role::where('status', '!=', 9)
                 ->orderBy('nama_role', 'ASC')
-                ->paginate(10);
+                ->paginate($perpage);
         }
 
         return view('admin.role.table-data', compact('roles'));

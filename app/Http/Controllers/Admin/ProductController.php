@@ -45,11 +45,11 @@ class ProductController extends Controller
                             ->where('product_name', 'LIKE', '%'.$search.'%')
                             ->orWhere('product_code', 'LIKE', '%'.$search.'%')
                             ->orderBy('product_name', 'ASC')
-                            ->paginate(10);
+                            ->paginate($perpage);
             } else {
                 $products = Product::where('status', '!=', 9)
                             ->orderBy('id', 'DESC')
-                            ->paginate(10);
+                            ->paginate($perpage);
             }
 
             return view('admin.products.table-data', compact('products'));
