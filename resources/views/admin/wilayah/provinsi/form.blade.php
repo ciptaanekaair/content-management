@@ -38,7 +38,7 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary" id="btnImport"><i class="fa fa-trash"></i> &nbsp Import</button>
+				<button type="submit" class="btn btn-primary" id="btnImport"><i class="fa fa-save"></i> &nbsp Simpan</button>
 			</form>
 			</div>
 		</div>

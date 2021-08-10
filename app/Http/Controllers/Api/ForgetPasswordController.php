@@ -97,7 +97,7 @@ class ForgetPasswordController extends Controller
             return response([
                 'error'   => true,
                 'message' => 'Kode rahasia yang anda masukan salah. Mohon perika kembali di email yang terdaftar.'
-            ]);
+            ], 401);
         }
 
         $user = User::where('email', $check->email)->first();
