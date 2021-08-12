@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Auth;
 use Response;
+use Redirect;
 
 use App\Models\User;
 use App\Models\Product;
@@ -15,16 +16,22 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if ($this->authorize('MOD1001-read')) {
-
-            $userCount    = User::where('status', '!=', 0)->count();
-            $productCount = Product::where('status', '!=', 0)->count();
-            $trnsctCount  = Transaction::where('status', 1)->count();
-
-            return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount'));
+        if (auth()->user()->level_id != 1)
+        {
+            if ($this->authorize('MOD1001-read')) {
+    
+                $userCount    = User::where('status', '!=', 0)->count();
+                $productCount = Product::where('status', '!=', 0)->count();
+                $trnsctCount  = Transaction::where('status', 1)->count();
+    
+                return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount'));
+            }
         }
 
-        return redirect()->route('get-logout');
+        auth()->logout();
+        Session()->flush();
+
+        return Redirect::to('https://fitlerpedia.co.id');
     }
 
     public function gotoLogin()
@@ -87,7 +94,6 @@ class DashboardController extends Controller
         $currentDateTime = Carbon::now();
 
         $newDateTime = Carbon::now()->subMonths(4);
-
 
         return response([$currentDateTime, $newDateTime]);
 
