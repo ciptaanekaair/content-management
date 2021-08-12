@@ -101,10 +101,10 @@ var ctx = $('#statisticPenjualan');
 var statisticPenjualan = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    labels: [],
     datasets: [{
       label: 'Statistics',
-      data: [640, 387, 530, 302, 430, 270, 488],
+      data: [],
       borderWidth: 5,
       borderColor: '#6777ef',
       backgroundColor: 'transparent',
@@ -124,7 +124,7 @@ var statisticPenjualan = new Chart(ctx, {
           drawBorder: false,
         },
         ticks: {
-          stepSize: 150
+          beginAtZero: true
         }
       }],
       xAxes: [{
@@ -136,6 +136,30 @@ var statisticPenjualan = new Chart(ctx, {
     },
   }
 });
+var updateChart = function() {
+  $.ajax({
+    url: "{{ route('grafiksatu') }}",
+    type: 'GET',
+    dataType: 'json',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function(data) {
+      statisticPenjualan.data.labels = data.old_month_word;
+      statisticPenjualan.data.datasets[0].data = data.total_transaksi;
+      statisticPenjualan.update();
+    },
+    error: function(data){
+      console.log(data);
+    }
+  });
+}
+
+updateChart();
+
+function numberFormat(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 </script>
 
 @endsection

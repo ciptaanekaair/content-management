@@ -23,8 +23,18 @@ class DashboardController extends Controller
                 $userCount    = User::where('status', '!=', 0)->count();
                 $productCount = Product::where('status', '!=', 0)->count();
                 $trnsctCount  = Transaction::where('status', 1)->count();
+
+                $currentDateTime = Carbon::now();
+
+                $newDateTime  = array();
+                $oldMonthWord = array();
+
+                for ($i=1; $i <= 4; $i++) {
+                    $oldMonthNumber[] = Carbon::now()->subMonths($i)->format('m');
+                    $oldMonthWord[]   = Carbon::now()->subMonths($i)->format('M');
+                }
     
-                return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount'));
+                return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount', 'oldMonthNumber', 'oldMonthWord'));
             }
         }
 
@@ -41,61 +51,42 @@ class DashboardController extends Controller
 
     public function grafikChartSatu($today = null, $scheduleMonths = 4)
     {
+        $currentMonth = Carbon::now()->format('m');
+        $currentYear  = Carbon::now()->format('Y');
 
-        // $today = !is_null($today) ? Carbon::createFromFormat('Y-m-d',$today) : Carbon::now();
+        $newDateTime    = array();
+        $oldMonthWord   = array();
+        $totalTransaksi = array();
 
-        // $startDate = Carbon::instance($today)->startOfMonth()->startOfWeek()->subMonth(); // start on Sunday
-        // $endDate = Carbon::instance($startDate)->addMonths($scheduleMonths)->endOfMonth();
-        // $endDate->addDays(6 - $endDate->dayOfWeek);
+        for ($i=4; $i > 0; $i--) {
+            $oldMonth         = Carbon::now()->subMonths($i)->format('m');
+            $totalTransaksi[] = Transaction::whereYear('transaction_date', $currentYear)
+                                ->whereMonth('transaction_date', $oldMonth)
+                                ->where('status', '!=', 9)
+                                ->where('status', '!=', 0)
+                                ->where('status', '!=', 2)
+                                ->where('status', '!=', 6)
+                                ->sum('sub_total_price');
 
-        // $epoch = Carbon::createFromTimestamp(0);
-        // $firstDay = $epoch->diffInDays($startDate);
-        // $lastDay = $epoch->diffInDays($endDate);
+            $oldMonthWord[]   = Carbon::now()->subMonths($i)->format('M');
+        }
 
-        // $week=0;
-        // $monthNum = $today->month;
-        // $yearNum = $today->year;
-        // $prevDay = null;
-        // $theDay = $startDate;
-        // $prevMonth = $monthNum;
+        $oldMonthWord[4]       = Carbon::now()->subMonths($i)->format('M');
+        $totalTransaksi[4]  = Transaction::whereYear('transaction_date', $currentYear)
+                                ->whereMonth('transaction_date', $currentMonth)
+                                ->where('status', '!=', 9)
+                                ->where('status', '!=', 0)
+                                ->where('status', '!=', 2)
+                                ->where('status', '!=', 6)
+                                ->sum('sub_total_price');
 
-        // $data = array();
+        $maxValue = max($totalTransaksi);
 
-        // while ($firstDay < $lastDay) {
-
-        //     if (($theDay->dayOfWeek == Carbon::SUNDAY) && (($theDay->month > $monthNum) || ($theDay->month == 1))) $monthNum = $theDay->month;
-        //     if ($prevMonth > $monthNum) $yearNum++;
-
-        //     $theMonth = Carbon::createFromFormat("Y-m-d",$yearNum."-".$monthNum."-01")->format('F Y');
-
-        //     if (!array_key_exists($theMonth,$data)) $data[$theMonth] = array();
-        //     if (!array_key_exists($week,$data[$theMonth])) $data[$theMonth][$week] = array(
-        //         'day_range' => '',
-        //     );
-
-        //     if ($theDay->dayOfWeek == Carbon::SUNDAY) $data[$theMonth][$week]['day_range'] = sprintf("%d-",$theDay->day);
-        //     if ($theDay->dayOfWeek == Carbon::SATURDAY) $data[$theMonth][$week]['day_range'] .= sprintf("%d",$theDay->day);
-
-        //     $firstDay++;
-        //     if ($theDay->dayOfWeek == Carbon::SATURDAY) $week++;
-        //     $theDay = $theDay->copy()->addDay();
-        //     $prevMonth = $monthNum;
-        // }
-
-        // $totalWeeks = $week;
-
-        // return array(
-        //     'startDate' => $startDate,
-        //     'endDate' => $endDate,
-        //     'totalWeeks' => $totalWeeks,
-        //     'schedule' => $data,
-        // );
-
-        $currentDateTime = Carbon::now();
-
-        $newDateTime = Carbon::now()->subMonths(4);
-
-        return response([$currentDateTime, $newDateTime]);
+        return response()->json([
+            'total_transaksi' => $totalTransaksi,
+            'old_month_word'  => $oldMonthWord,
+            'transaksi_max'   => $maxValue
+        ]);
 
     }
 }

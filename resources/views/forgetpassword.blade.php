@@ -293,7 +293,7 @@
                           <tbody>
                             <tr>
                               <td align="center" style="padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
-                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#45474e;font-weight:bold;">PT. Cipta Aneka Air (CAA)
+                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#45474e;font-weight:bold;">FILTERPEDIA
                                 </div>
                               </td>
                             </tr>
