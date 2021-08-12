@@ -28,10 +28,10 @@ class DashboardController extends Controller
             }
         }
 
-        auth()->logout();
+        // Auth::logout(); # cause logout can't work, langsung flus() session browser.
         Session()->flush();
 
-        return Redirect::to('https://fitlerpedia.co.id');
+        return Redirect::to('https://filterpedia.co.id');
     }
 
     public function gotoLogin()
