@@ -207,9 +207,12 @@ function fetch_table(page, perpage, search) {
 			$("#modal-loading").modal('hide');
 			$('.table-data').html(data);
 		},
-			complete: function() {
-				$("#modal-loading").modal('hide');
-			}
+		error: function(response) {
+			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
+		},
+		complete: function() {
+			$("#modal-loading").modal('hide');
+		}
 	});
 }
 
@@ -237,9 +240,9 @@ function editData(id) {
 			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
 		},
-			complete: function() {
-				$("#modal-loading").modal('hide');
-			}
+		complete: function() {
+			$("#modal-loading").modal('hide');
+		}
 	});
 }
 
@@ -262,9 +265,9 @@ function confirmDelete(id) {
 			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
 		},
-			complete: function() {
-				$("#modal-loading").modal('hide');
-			}
+		complete: function() {
+			$("#modal-loading").modal('hide');
+		}
 	});
 }
 
