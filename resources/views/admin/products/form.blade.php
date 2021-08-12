@@ -169,7 +169,6 @@
 
 @section('formodal')
   @include('admin.products.modal-form')
-  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -202,16 +201,10 @@ $(function() {
 			data: new FormData($('#tabContent form')[0]),
 			contentType: false,
 			processData: false,
-      beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				window.location.href = '{{ url("products") }}/'+data.data.id+'/edit';
 			},
 			error: function(response) {
-				$("#modal-loading").modal('hide');
 				$('#product_category_idError').text(response.responseJSON.errors.product_category_id);
 				$('#product_codeError').text(response.responseJSON.errors.product_code);
 				$('#product_nameError').text(response.responseJSON.errors.product_name);
@@ -242,18 +235,12 @@ $(function() {
       data: new FormData($('#modal-form form')[0]),
       contentType: false,
       processData: false,
-      beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
       success: function(data) {
-      	$("#modal-loading").modal('hide');
       	fetch_image(productID);
       	$('#images').val('');
       	$('#modal-form').modal('hide');
       	Swal.fire('Success!', 'Berhasil upload image baru', 'success');
       }, error: function(response) {
-      	$("#modal-loading").modal('hide');
       	Swal.fire('Error!', response.message, 'error');
       	$('#product_id_iError').text(response.responseJSON.errors.product_id_i);
       	$('#images_id').text(response.responseJSON.errors.images_id);
@@ -272,12 +259,7 @@ $(function() {
 			url: '{{ url("products/images") }}/'+id+'/hapus',
 			type: 'POST',
 			data: $(this).serialize(),
-      beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				$('#modal-delete').modal('hide');
 				Swal.fire(
 					'Success',
@@ -286,7 +268,6 @@ $(function() {
 				);
 				fetch_image(productID);
 			}, error: function(data) {
-				$("#modal-loading").modal('hide');
 				Swal.fire(
 					'Error!',
 					'Gagal menghapus data gambar. Silahkan ulangi atau apabila error ini lebih dari 2 kali, mohon hubungi Developer',
@@ -324,14 +305,16 @@ function fetch_image(id) {
 	$.ajax({
 		url: '{{ url("products") }}/'+id+'/images',
 		type: 'GET',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			$('.table-data').html(data);
-		}
+		},
+    error: function (response) {
+      Swal.fire(
+        'Error!',
+        response.responseJSON.errors.message,
+        'error'
+      );
+    }
 	});
 }
 
@@ -344,17 +327,19 @@ function editImage(id) {
 	$.ajax({
 		url: '{{ url("products/images") }}/'+id,
 		type: 'GET',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			$('.modal-title').text('Ubah image ID: '+data.data.id);
 			$('#modalFormMethod').val('PUT');
 			$('#images_id').val(data.data.id);
 			$('#modal-form').modal('show');
-		}
+		},
+    error: function (response) {
+      Swal.fire(
+        'Error!',
+        response.responseJSON.errors.message,
+        'error'
+      );
+    }
 	});
 }
 
@@ -362,18 +347,12 @@ function deleteImage(id) {
 	$.ajax({
 		url: '{{ url("products/images") }}/'+id,
 		type: 'GET',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			$('#images_id_d').val(data.data.id);
 			$('#produk_id_d').text(data.data.id);
 			$('#modal-delete').modal('show');
 		},
 		error: function(response) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('error', 'Gagal load data image.', 'error');
 		}
 	});

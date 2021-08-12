@@ -44,7 +44,6 @@
 
 @section('formodal')
   @include('admin.payment-code.form')
-  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -88,16 +87,18 @@ $(function() {
       url: '{{ url("payment-methodes") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
-      beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
       success: function(data) {
-        $("#modal-loading").modal('hide');
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
         formDeleteReset();
         Swal.fire('Success!', 'Berhasil menghapus data tersebut.', 'success');
+      },
+      error: function (response) {
+        Swal.fire(
+          'Error!',
+          response.responseJSON.errors.message,
+          'error'
+        );
       }
     });
   }); // end script delete
@@ -125,13 +126,15 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("payment-methodes.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       $('.table-data').html(data);
+    },
+    error: function (response) {
+      Swal.fire(
+        'Error!',
+        response.responseJSON.errors.message,
+        'error'
+      );
     }
   });
 }
@@ -146,17 +149,19 @@ function confirmDelete(id) {
     url: '{{ url("payment-methodes") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       $('.modal-title-delete').text('Delete data: '+data.data.nama_pembayaran);
       $('#peyment_method_id_d').val(data.data.id);
       $('#formMethodD').val('DELETE');
       $('#payment_method_name_d').text(data.data.nama_pembayaran);
       $('#modal-delete').modal('show');
+    },
+    error: function (response) {
+      Swal.fire(
+        'Error!',
+        response.responseJSON.errors.message,
+        'error'
+      );
     }
   });
 }

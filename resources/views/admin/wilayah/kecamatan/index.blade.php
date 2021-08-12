@@ -47,7 +47,6 @@
 
 @section('formodal')
   @include('admin.wilayah.kecamatan.form')
-  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -164,16 +163,6 @@ $(function() {
 		fetch_table(page, perpage, search);
 	});
 
-});
-
-
-$(document).on({
-    ajaxStart: function(){
-        $("#modal-loading").modal('show');
-    },
-    ajaxStop: function(){ 
-        $("#modal-loading").modal('hide');
-    }    
 });
 
 function addData() {

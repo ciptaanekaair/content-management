@@ -143,17 +143,11 @@ $(function() {
 			url: '{{ url("transactions") }}/'+id,
 			type: 'POST',
 			data: $('#form_status').serialize(),
-			beforeSend: function(){
-				// Show image container
-				$("#modal-loading").modal('show');
-			},
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				$('#status [value='+data.status+']').attr('selected', 'selected');
 				Swal.fire('Success!', data.message, 'success');
 			},
 			error: function(response) {
-				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', response.responseJSON.errors.message, 'error');
 			}
 		});
@@ -164,12 +158,8 @@ function fetch_payment_data(id) {
 	$.ajax({
 		url: '{{ url("data-payment/transaction") }}/'+id,
 		type: 'GET',
-		beforeSend: function() {
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
 			checkStatus();
-			$("#modal-loading").modal('hide');
 			$('#paymentTable').html(data);
 		}
 	});
@@ -190,17 +180,12 @@ function verify(key) {
 	$.ajax({
 		url: '{{ url("transaction/verify") }}/'+key,
 		type: 'GET',
-		beforeSend: function() {
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
 			fetch_payment_data({{ $transaction->id }});
-			$("#modal-loading").modal('hide');
 			// $('#paymentTable').html(data);
 		},
 		error: function(e) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
 		}
 	});
@@ -210,17 +195,12 @@ function unverify(key) {
 	$.ajax({
 		url: '{{ url("transaction/unverify") }}/'+key,
 		type: 'GET',
-		beforeSend: function() {
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
 			fetch_payment_data({{ $transaction->id }});
-			$("#modal-loading").modal('hide');
 			// $('#paymentTable').html(data);
 		},
 		error: function(e) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
 		}
 	});
@@ -230,17 +210,12 @@ function terminate(key) {
 	$.ajax({
 		url: '{{ url("transaction/terminate") }}/'+key,
 		type: 'GET',
-		beforeSend: function() {
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
 			fetch_payment_data({{ $transaction->id }});
-			$("#modal-loading").modal('hide');
 			// $('#paymentTable').html(data);
 		},
 		error: function(e) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
 		}
 	});

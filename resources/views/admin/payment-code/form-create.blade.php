@@ -112,10 +112,6 @@
   </div>
 @endsection
 
-@section('formodal')
-  @include('admin.modal-loading')
-@endsection
-
 @section('jq-script')
 
 <script type="text/javascript">
@@ -139,18 +135,12 @@
 				url: url,
 				type: 'POST',
 				data: $(this).serialize(),
-				beforeSend: function() {
-					$('#modal-loading').modal('show');
-				},
 				success: function(data) {
 					Swal.fire('Success!', data.message, 'success');
 					window.location.href = "{{ url('payment-methodes') }}";
 				},
 				error: function(response) {
 					Swal.fire('Error!', response.responseJSON.errors.message, 'errors');
-				},
-				complete: function(data) {
-					$('#modal-loading').modal('hide');
 				},
 			});
 		});

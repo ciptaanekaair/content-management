@@ -47,7 +47,6 @@
 
 @section('formodal')
     @include('admin.banner.form')
-    @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -93,12 +92,7 @@
                     data: new FormData($('#modal-form form')[0]),
                     contentType: false,
                     processData: false,
-                    beforeSend: function(){
-                        // Show image container
-                        $("#modal-loading").modal('show');
-                    },
                     success: function(data) {
-                        $("#modal-loading").modal('hide');
                         formReset();
                         $('#modal-form').modal('hide');
                         Swal.fire(
@@ -108,7 +102,6 @@
                         );
                         fetch_table(page, perpage, search);
                     }, error: function(response) {
-                        $("#modal-loading").modal('hide');
                         $('#banner_nameError').text(response.responseJSON.errors.category_name);
                         $('#banner_imageError').text(response.responseJSON.errors.banner_image);
                     }
@@ -143,10 +136,6 @@
                     url: '{{ url("banners") }}/'+id,
                     type: 'POST',
                     data: $(this).serialize(),
-                    beforeSend: function(){
-                        // Show image container
-                        $("#modal-loading").modal('show');
-                    },
                     success: function(data) {
                         $("#modal-loading").modal('hide');
                         fetch_table(page, perpage, search);
@@ -156,6 +145,13 @@
                             'Success!',
                             'Berhasil menghapus data tersebut.',
                             'success'
+                        );
+                    },
+                    error: function (response) {
+                        Swal.fire(
+                            'Error!',
+                            response.responseJSON.errors.message,
+                            'error'
                         );
                     }
                 });
@@ -201,13 +197,15 @@
             $.ajax({
                 url: '{{ route("banners.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
                 type: 'GET',
-                beforeSend: function(){
-                    // Show image container
-                    $("#modal-loading").modal('show');
-                },
                 success: function(data) {
-                    $("#modal-loading").modal('hide');
                     $('.table-data').html(data);
+                },
+                error: function (response) {
+                    Swal.fire(
+                        'Error!',
+                        response.responseJSON.errors.message,
+                        'error'
+                    );
                 }
             });
         }
@@ -227,12 +225,7 @@
                 url: '{{ url("banners") }}/'+id+'/edit',
                 type: 'GET',
                 dataType: 'JSON',
-                beforeSend: function(){
-                    // Show image container
-                    $("#modal-loading").modal('show');
-                },
                 success: function(data) {
-                    $("#modal-loading").modal('hide');
                     $('.modal-title').text('Edit: '+data.data.banner_name);
                     $('#banner_id').val(data.data.id);
                     $('#formMethod').val('PUT');
@@ -243,7 +236,6 @@
                     $('#modal-form').modal('show');
                 },
                 error: function(response) {
-                    $("#modal-loading").modal('hide');
                     Swal.fire('Error!', response.responseJSON.errors.message);
                 }
             });
@@ -255,17 +247,19 @@
                 url: '{{ url("banners") }}/'+id,
                 type: 'GET',
                 dataType: 'JSON',
-                beforeSend: function(){
-                    // Show image container
-                    $("#modal-loading").modal('show');
-                },
                 success: function(data) {
-                    $("#modal-loading").modal('hide');
                     $('.modal-title-delete').text('Delete data: '+data.data.banner_name);
                     $('#banner_id_d').val(data.data.id);
                     $('#formMethodD').val('DELETE');
                     $('#banner_name_d').text(data.data.banner_name);
                     $('#modal-delete').modal('show');
+                },
+                error: function (response) {
+                    Swal.fire(
+                        'Error!',
+                        response.responseJSON.errors.message,
+                        'error'
+                    );
                 }
             });
         }

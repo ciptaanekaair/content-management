@@ -47,7 +47,6 @@
 
 @section('formodal')
   @include('admin.wilayah.kota.form')
-  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -77,23 +76,14 @@ $(function() {
 			data: new FormData($('#modal-import form')[0]),
 			contentType: false,
 			processData: false,
-			beforeSend: function(){
-				// Show image container
-				$("#modal-loading").modal('show');
-			},
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				$('#file_upload').val('');
 				$('#modal-import').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', 'Berhasil import data kota.', 'success');
 			}, error: function(response) {
-				$("#modal-loading").modal('hide');
 				$('#file_uploadError').text(response.responseJSON.errors.file_upload);
 			},
-			complete: function() {
-				$("#modal-loading").modal('hide');
-			}
 		});
 	});
 
@@ -113,24 +103,16 @@ $(function() {
 			url: url,
 			type: 'POST',
 			data: $(this).serialize(),
-			beforeSend: function(){
-				$("#modal-loading").modal('show');
-			},
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				formDataReset();
 				fetch_table(page, perpage, search);
 				$('#modal-form').modal('hide');
 				Swal.fire('Success!', 'Berhasil menyimpan data.', 'success');
 			}, error: function(response) {
-				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', 'Gagal melakukan penyimpanan data. Silahkan cek pengisian form.', 'error');
 				$('#provinsi_idError').text(response.responseJSON.errors.provinsi_id);
 				$('#nama_kotaError').text(response.responseJSON.errors.nama_kota);
 				$('#statusError').text(response.responseJSON.errors.status);
-			},
-			complete: function() {
-				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -148,22 +130,13 @@ $(function() {
 			url: '{{ url("kotas") }}/'+id,
 			type: 'POST',
 			data: $(this).serialize(),
-			beforeSend: function(){
-				// Show image container
-				$("#modal-loading").modal('show');
-			},
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				formDeleteReset();
 				$('#modal-delete').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', data.message, 'success');
 			}, error: function(response) {
-				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', response.responseJSON.message, 'error');
-			},
-			complete: function() {
-				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -227,19 +200,11 @@ function fetch_table(page, perpage, search) {
 	$.ajax({
 		url: '{{ route("kotas.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
 		type: 'GET',
-		beforeSend: function(){
-			// Show image container
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			$('.table-data').html(data);
 		},
 		error: function(response) {
 			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
-		},
-		complete: function() {
-			$("#modal-loading").modal('hide');
 		}
 	});
 }
@@ -249,12 +214,7 @@ function editData(id) {
 	$.ajax({
 		url: '{{ url("kotas") }}/'+id_ku+'/edit',
 		type: 'GET',
-		beforeSend: function(){
-			// Show image container
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			save_method = 'edit';
 			$('#formAddMethod').val('PUT');
 			$('.title-form').text('Edit data: ['+data.data.id+'] -'+data.data.nama_kota);
@@ -265,12 +225,8 @@ function editData(id) {
 			$('#modal-form').modal('show');
 		},
 		error: function(response) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-			complete: function() {
-				$("#modal-loading").modal('hide');
-			}
+		}
 	});
 }
 
@@ -278,24 +234,15 @@ function confirmDelete(id) {
 	$.ajax({
 		url: '{{ url("kotas") }}/'+id+'/edit',
 		type: 'GET',
-		beforeSend: function(){
-			// Show image container
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			$('.title-delete').text('Delete data: ['+data.data.id+'] -'+data.data.nama_kota);
 			$('#kota_id_d').val(data.data.id);
 			$('#kota_name_d').text(data.data.nama_kota);
 			$('#modal-delete').modal('show');
 		},
 		error: function(response) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-			complete: function() {
-				$("#modal-loading").modal('hide');
-			}
+		}
 	});
 }
 </script>

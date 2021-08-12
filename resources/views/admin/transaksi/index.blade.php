@@ -91,6 +91,13 @@ function fetch_table(page, perpage, search) {
 		success: function(data) {
 			$('.table-data').html(data);
 		},
+    error: function (response) {
+      Swal.fire(
+        'Error!',
+        response.responseJSON.errors.message,
+        'error'
+      );
+    }
 	});
 }
 

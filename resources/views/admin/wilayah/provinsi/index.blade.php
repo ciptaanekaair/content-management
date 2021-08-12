@@ -46,7 +46,6 @@
 
 @section('formodal')
   @include('admin.wilayah.provinsi.form')
-  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -79,25 +78,16 @@ $(function() {
 			url: url,
 			type: 'POST',
 			data: $(this).serialize(),
-			beforeSend: function(){
-				// Show image container
-				$("#modal-loading").modal('show');
-			},
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				formDataReset();
 				$('#modal-form').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', 'Berhasil menyimpan data.', 'success');
 			}, error: function(response) {
-				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', 'Gagal melakukan penyimpanan data. Silahkan cek pengisian form.', 'error');
 				$('#provinsi_codeError').text(response.responseJSON.errors.provinsi_code);
 				$('#provinsi_nameError').text(response.responseJSON.errors.provinsi_name);
 				$('#statusError').text(response.responseJSON.errors.status);
-			},
-			complete: function() {
-				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -115,22 +105,13 @@ $(function() {
 			url: '{{ url("provinsis") }}/'+id,
 			type: 'POST',
 			data: $(this).serialize(),
-			beforeSend: function(){
-				// Show image container
-				$("#modal-loading").modal('show');
-			},
 			success: function(data) {
-				$("#modal-loading").modal('hide');
 				formDeleteReset();
 				$('#modal-delete').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', data.message, 'success');
 			}, error: function(response) {
-				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', response.responseJSON.message, 'error');
-			},
-			complete: function() {
-				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -199,19 +180,11 @@ function fetch_table(page, perpage, search) {
 	$.ajax({
 		url: '{{ route("provinsis.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
 		type: 'GET',
-		beforeSend: function(){
-			// Show image container
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			$('.table-data').html(data);
 		},
 		error: function(response) {
 			Swal.fire('Error!', response.responseJSON.errors.message, 'error');
-		},
-		complete: function() {
-			$("#modal-loading").modal('hide');
 		}
 	});
 }
@@ -221,12 +194,7 @@ function editData(id) {
 	$.ajax({
 		url: '{{ url("provinsis") }}/'+id_ku+'/edit',
 		type: 'GET',
-		beforeSend: function(){
-			// Show image container
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			save_method = 'edit';
 			$('#formAddMethod').val('PUT');
 			$('.title-form').text('Edit data: ['+data.data.id+'] -'+data.data.provinsi_name);
@@ -237,11 +205,7 @@ function editData(id) {
 			$('#modal-form').modal('show');
 		},
 		error: function(response) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-		complete: function() {
-			$("#modal-loading").modal('hide');
 		}
 	});
 }
@@ -250,23 +214,14 @@ function confirmDelete(id) {
 	$.ajax({
 		url: '{{ url("provinsis") }}/'+id+'/edit',
 		type: 'GET',
-		beforeSend: function(){
-			// Show image container
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
-			$("#modal-loading").modal('hide');
 			$('.title-delete').text('Delete data: ['+data.data.id+'] -'+data.data.provinsi_name);
 			$('#provinsi_id_d').val(data.data.id);
 			$('#provinsi_name_d').text(data.data.provinsi_name);
 			$('#modal-delete').modal('show');
 		},
 		error: function(response) {
-			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-		complete: function() {
-			$("#modal-loading").modal('hide');
 		}
 	});
 }

@@ -44,7 +44,6 @@
 
 @section('formodal')
   @include('admin.level.form')
-  @include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
@@ -89,11 +88,7 @@ $(function() {
       data: new FormData($('#modal-new form')[0]),
       contentType: false,
       processData: false,
-      beforeSend: function() {
-        $('#modal-loading').modal('show');
-      },
       success: function(data) {
-        $("#modal-loading").modal('hide');
         formReset();
         $('#modal-new').modal('hide');
         Swal.fire(
@@ -103,7 +98,6 @@ $(function() {
         );
         fetch_table(page, perpage, search);
       }, error: function(response) {
-        $("#modal-loading").modal('hide');
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nameError').text(response.responseJSON.errors.name);
         $('#emailError').text(response.responseJSON.errors.email);
@@ -145,9 +139,6 @@ $(function() {
       url: '{{ url("levels") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
-      beforeSend: function() {
-        $('#modal-loading').modal('show');
-      },
       success: function(data) {
         $("#modal-loading").modal('hide');
         fetch_table(page, perpage, search);
@@ -157,6 +148,13 @@ $(function() {
           'Success!',
           'Berhasil menghapus data tersebut.',
           'success'
+        );
+      },
+      error: function (response) {
+        Swal.fire(
+          'Error!',
+          response.responseJSON.errors.message,
+          'error'
         );
       }
     });
@@ -217,11 +215,7 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("levels.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
-    beforeSend: function() {
-      $('#modal-loading').modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       $('.table-data').html(data);
     }
   });
@@ -233,11 +227,7 @@ function editData(id) {
     url: '{{ url("levels") }}/'+id+'/edit',
     type: 'GET',
     dataType: 'JSON',
-    beforeSend: function() {
-      $('#modal-loading').modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       resetErrorUserForm();
       $('#formUserMethod').val('PUT');
       $('#email').attr('readonly', true);
@@ -264,11 +254,7 @@ function confirmDelete(id) {
     url: '{{ url("levels") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
-    beforeSend: function() {
-      $('#modal-loading').modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       $('.modal-title-delete').text('Delete data: '+data.data.name);
       $('#formMethodD').val('DELETE');
       $('#userid_delete').val(data.data.id);

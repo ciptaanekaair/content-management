@@ -89,18 +89,12 @@ $(function() {
       data: new FormData($('#modal-form form')[0]),
       contentType: false,
       processData: false,
-      beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
       success: function(data) {
         formReset();
-        $("#modal-loading").modal('hide');
         $('#modal-form').modal('hide');
         Swal.fire('Success!', data.message, 'success');
         fetch_table(page, perpage, search);
       }, error: function(response) {
-        $("#modal-loading").modal('hide');
         console.log(response);
         $('#category_nameError').text(response.responseJSON.errors.category_name);
         $('#category_descriptionError').text(response.responseJSON.errors.category_description);
@@ -139,10 +133,6 @@ $(function() {
     $.ajax({
       url: '{{ url("product-categories") }}/'+id,
       type: 'POST',
-      beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
       data: $(this).serialize(),
       success: function(data) {
         fetch_table(page, perpage, search);
@@ -190,13 +180,16 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("product-catetgories.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
       $("#modal-loading").modal('hide');
       $('.table-data').html(data);
+    },
+    error: function (response) {
+      Swal.fire(
+        'Error!',
+        response.responseJSON.errors.message,
+        'error'
+      );
     }
   });
 }
@@ -215,10 +208,6 @@ function editData(id) {
     url: '{{ url("product-categories") }}/'+id+'/edit',
     type: 'GET',
     dataType: 'JSON',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
       $('.modal-title').text('Edit: '+data.data.category_name);
       $('#category_id').val(data.data.id);
@@ -230,11 +219,9 @@ function editData(id) {
       $('#category_image_link').attr('href', data.data.imageurl);
       $('#btnSave').text('Update Data');
       $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
-      $("#modal-loading").modal('hide');
       $('#modal-form').modal('show');
     },
     error: function(response) {
-      $("#modal-loading").modal('hide');
       Swal.fire('Error!', response.responseJSON.errors.message, 'error');
     }
   });
@@ -246,16 +233,11 @@ function confirmDelete(id) {
     url: '{{ url("product-categories") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
       $('.modal-title-delete').text('Delete data: '+data.data.category_name);
       $('#category_id_d').val(data.data.id);
       $('#formMethodD').val('DELETE');
       $('#category_name_d').text(data.data.category_name);
-      $("#modal-loading").modal('hide');
       $('#modal-delete').modal('show');
     }
   });
