@@ -28,9 +28,10 @@ use App\Http\Controllers\Admin\KotaController;
 Route::get('/', [DashboardController::class, 'gotoLogin'])->name('welcome');
 
 Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
+Route::get('/upload-tester', [App\Http\Controllers\UploadGambarTesterController::class, 'index'])->name('uploaded.index');
+Route::post('/upload-tester', [App\Http\Controllers\UploadGambarTesterController::class, 'store'])->name('uploaded.store');
 
 Route::get('/logout', function() {
-    auth()->logout();
     Session()->flush();
 
     return Redirect::to('/login');
@@ -39,6 +40,12 @@ Route::get('/logout', function() {
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('charts', [DashboardController::class, 'grafikChartSatu'])->name('grafiksatu');
+
+    // Profile
+    Route::get('my-profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile.index');
+    Route::post('my-profile/update-password', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.update.password');
+    Route::post('my-profile/update-profile', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.update.profile');
+    Route::post('my-profile/update-detail', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.update.detail');
 
     // Product Category Route
     Route::resource('product-categories', ProductCategoryController::class);
@@ -57,10 +64,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::put('products/images/{id}', [ProductImageController::class, 'update'])->name('product-images.update');
     Route::delete('products/images/{id}/hapus', [ProductImageController::class, 'delete'])->name('product-images.delete');
     Route::get('products/{id}/images', [ProductImageController::class, 'getData'])->name('product-images.data');
-
-    // Profile Route
-    Route::get('profile/{username}', [ProfileController::class, 'getProfile'])->name('profile.show');
-    Route::patch('profile/{username}', [ProfileController::class, 'update'])->name('profile.update');
 
     // Product Route
     Route::resource('pengguna', PenggunaController::class);

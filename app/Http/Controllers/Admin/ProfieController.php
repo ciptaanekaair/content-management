@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\UserDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use Storage;
+use Validator;
 
 class ProfileController extends Controller
 {
@@ -13,7 +16,7 @@ class ProfileController extends Controller
         $user = User::where('id', auth()->user()->id)
                 ->with('userDetail')->first();
 
-        return view('admin.profile.index', compact('user'));
+        return view('admin.profile', compact('user'));
     }
 
     public function updatePassword(Request $request)
@@ -29,14 +32,5 @@ class ProfileController extends Controller
     public function updateDetail(Request $request)
     {
         // code...
-    }
-
-    public function getProfile($username)
-    {
-        $user = User::with('userDetail')
-                ->where('id', auth()->user()->id)
-                ->frist();
-
-        return view('admin.profile.index', compact('user'));
     }
 }

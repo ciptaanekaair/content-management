@@ -17,7 +17,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title text-center">{{ Auth::user()->name }}</div>
-                <a href="{{ url('profile/'.Auth::user()->username) }}" class="dropdown-item has-icon">
+                <a href="{{ url('my-profile') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a>
                 <div class="dropdown-divider"></div>
