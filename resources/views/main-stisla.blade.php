@@ -131,10 +131,8 @@ var statisticPenjualan = new Chart(ctx, {
           drawBorder: false,
         },
         ticks: {
-          callbacks: {
-            label: function(tooltipItem, data) {
-              return tooltipItem.yLabel.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-            }
+          callbacks: function(value) {
+            return addCommas(value);
           },
           beginAtZero: true
         }
