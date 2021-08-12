@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\UserDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Storage;
 use Validator;
 use Rule;
@@ -90,7 +91,29 @@ class ProfileController extends Controller
 
     public function updateDetail(Request $request)
     {
-        // code...
+        $rules = [
+            'kode_pos'  => 'numeric',
+            'telepon'   => 'numeric',
+            'handphone' => 'numeric',
+        ];
+
+        $validasi = Validator::make($request->all(), $rules);
+
+        if ($validasi->fails()) {
+            return response()->json([
+                'error'   => true,
+                'message' => $validasi->errors()
+            ], 422);
+        }
+
+        $uDetail = UserDetail::where('id', auth()->user()->id)->first();
+        $uDetail->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil mengubah data Alamat.',
+            'data'    => $uDetail
+        ]);
     }
 
     public function getProfile($username)

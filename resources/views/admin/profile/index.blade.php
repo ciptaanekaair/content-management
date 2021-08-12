@@ -186,16 +186,16 @@ function updateProfile() {
 }
 
 // Update Detail
-function updateDetail() {
-	return $.ajax({
-		url: '{{ route("profile.update.detail") }}',
-		type: 'POST',
-		data: { 
-			password: $('#password').val(),
-			password_confirmation: $('#password_confirmation').val()
-		}
-	});
-}
+// function updateDetail() {
+// 	return $.ajax({
+// 		url: '{{ route("profile.update.detail") }}',
+// 		type: 'POST',
+// 		data: { 
+// 			password: $('#password').val(),
+// 			password_confirmation: $('#password_confirmation').val()
+// 		}
+// 	});
+// }
 </script>
 
 @endsection
