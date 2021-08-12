@@ -41,10 +41,10 @@ class PaymentConfirmationController extends Controller
 
                 $rekam = new RekamJejak;
                 $rekam->user_id     = auth()->user()->id;
-                $rekam->modul_code  = '[MOD1104] products';
+                $rekam->modul_code  = '[MOD1108] Confirm Payment';
                 $rekam->action      = 'Create';
-                $rekam->description = 'User: '.auth()->user()->email.' membuat data: '.
-                                        $product->product_name.', dengan ID: '.$product->id.
+                $rekam->description = 'User: '.auth()->user()->email.' memverifikasi data payment: '.
+                                        $transaction->transaction_code.', dengan ID PaymentConfrimation: '.$id.
                                         '. Pada: '.date('Y-m-d H:i:s').'.';
                 $rekam->save();
                 
@@ -74,6 +74,15 @@ class PaymentConfirmationController extends Controller
                 $transaction->status = 2;
                 $transaction->update();
 
+                $rekam = new RekamJejak;
+                $rekam->user_id     = auth()->user()->id;
+                $rekam->modul_code  = '[MOD1108] Confirm Payment';
+                $rekam->action      = 'Create';
+                $rekam->description = 'User: '.auth()->user()->email.' merubah data payment menjadi unverify: '.
+                                        $transaction->transaction_code.', dengan ID PaymentConfrimation: '.$id.
+                                        '. Pada: '.date('Y-m-d H:i:s').'.';
+                $rekam->save();
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Berhasil non-verifikasi data pembayaran.'
@@ -99,6 +108,16 @@ class PaymentConfirmationController extends Controller
                 $transaction = Transaction::find($pConfirmation->transactions_id);
                 $transaction->status = 0;
                 $transaction->update();
+
+                $rekam = new RekamJejak;
+                $rekam->user_id     = auth()->user()->id;
+                $rekam->modul_code  = '[MOD1108] Confirm Payment';
+                $rekam->action      = 'Create';
+                $rekam->description = 'User: '.auth()->user()->email.' menolak data payment: '.
+                                        $transaction->transaction_code.', dengan ID PaymentConfrimation: '.$id.
+                                        '. Pada: '.date('Y-m-d H:i:s').'.';
+                $rekam->save();
+
 
                 return response()->json([
                     'success' => true,
