@@ -15,18 +15,24 @@
 							<p>Perubahan Password dapat di lakukan menggunakan form disamping ini.</p>
 						</div>
 						<div class="col-md-12 col-lg-6">
-						<form action="">
+						<form class="form-password">
 							<div class="form-group">
 								<label for="Password">Password</label>
-								<input type="password" class="form-control" id="password" placeholder="Password Baru">
+								<input type="password" name="password" class="form-control" id="password" placeholder="Password Baru">
+								<div class="alert-message">
+									<code id="passwordError"></code>
+								</div>
 							</div>
 							<div class="form-group">
 								<label for="password_confirmation">Confirm Password</label>
-								<input type="password" class="form-control" id="password_confirmation" placeholder="Konfirmasi Password Baru">
+								<input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Konfirmasi Password Baru">
+								<div class="alert-message">
+									<code id="password_confirmationError"></code>
+								</div>
 							</div>
 							<div class="my-4"></div>
 							<div class="float-right">
-								<button class="btn btn-primary" id="btnSavePassword">
+								<button type="submit" class="btn btn-primary" id="btnSavePassword">
 									<i class="fa fa-save"></i> Simpan
 								</button>
 							</div>
@@ -67,19 +73,28 @@
       				</table>
       			</p>
         	</div>
-	        <div class="col-md-12 col-lg-6">
-					<form action="">
+	        <div class="col-md-12 col-lg-6" id="edit-profile">
+					<form class="form-profile" enctype="multipart/form-data">
       			<div class="form-group">
       				<label for="email">Email</label>
-      				<input type="text" class="form-control" id="email" placeholder="Email" value="{{ auth()->user()->email }}" readonly>
+      				<input type="text" name="email" class="form-control" id="email" placeholder="Email" value="{{ auth()->user()->email }}" readonly>
+							<div class="alert-message">
+								<code id="emailError"></code>
+							</div>
       			</div>
       			<div class="form-group">
       				<label for="name">Name</label>
-							<input type="text" class="form-control" id="name" placeholder="Nama Lengkap" value="{{ auth()->user()->name }}">
+							<input type="text" name="name" class="form-control" id="name" placeholder="Nama Lengkap" value="{{ auth()->user()->name }}">
+							<div class="alert-message">
+								<code id="nameError"></code>
+							</div>
 						</div>
       			<div class="form-group">
       				<label for="profile_photo_path">Profile Photo</label>
-							<input type="file" class="form-control" id="profile_photo_path" placeholder="Profile Photo">
+							<input type="file" name="profile_photo_path" class="form-control" id="profile_photo_path" placeholder="Profile Photo">
+							<div class="alert-message">
+								<code id="profile_photo_pathError"></code>
+							</div>
 						</div>
 						<div class="my-4"></div>
 						<div class="float-right">
@@ -99,37 +114,88 @@
 
 @section('jq-script')
 <script type="text/javascript">
-const btnSavePassword = document.getElementById('btnSavePassword');
-const btnSaveProfile = document.getElementById('btnSaveProfile');
-const btnSavePassword = document.getElementById('btnSavePassword');
+var url;
 
-// Update Password
-function savePassword () {
-	let formData = {
-		password: document.getElementById('password').value,
-		password_confirmation: document.getElementById('password_confirmation').value
-	}
+$(function() {
+	$.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  })
 
-	fetch('{{ route("profile.update.password") }}', {
-		method: 'POST'
-		body: JSON.stringify(formData),
-		headers: {
-			'Content-type': 'application/json; charset=UTF-8',
-			'X-CSRF-TOKEN': '{{ csrf_token() }}'
-		}
-	})
-	.then(response => response.json())
-	.then(data => {
-		Swal.fire('Success!', data.message, 'success');
-	})
-	.catch(err => {
-		Swal.fire('Error!', err.message, 'error')
+	$('.form-password').on('submit', function(e){
+		e.preventDefault();
+		resetErrorForm();
+		var updatePass = updatePassword();
+		updatePass.done(function(data) {
+			Swal.fire('Success', data.message, 'success');
+			$('#password').val('');
+			$('#password_confirmation').val('');
+		});
+		updatePass.fail(function(response) {
+			Swal.fire('Error', 'Gagal mengubah password. Silahkan perhatikan error yang muncul.', 'error');
+			$('#passwordError').text(response.responseJSON.message.password);
+			$('#password_confirmationError').text(response.responseJSON.message.password_confirmation);
+		});
+	});
+
+	$('.form-profile').on('submit', function(e) {
+		e.preventDefault();
+		resetErrorForm();
+
+		var uProfile = updateProfile();
+		uProfile.done(function(data) {
+			Swal.fire('Success', data.message, 'success');
+			$('#profile_photo_path').val('');
+		});
+		uProfile.fail(function(response) {
+			Swal.fire('Error', 'Gagal mengubah data profile. Silahkan perhatikan error yang muncul.', 'error');
+			$('#nameError').text(response.responseJSON.message.name);
+			$('#emailError').text(response.responseJSON.message.email);
+			$('#profile_photo_pathError').text(response.responseJSON.message.profile_photo_path);
+		});
+	});
+});
+
+function resetErrorForm() {
+	$('#passwordError').text('');
+	$('#password_confirmationError').text('');
+	$('#nameError').text('');
+	$('#emailError').text('');
+	$('#profile_photo_pathError').text('');
+}
+
+// update password
+function updatePassword() {
+	return $.ajax({
+		url: '{{ route("profile.update.password") }}',
+		type: 'POST',
+		data: { password: $('#password').val(), password_confirmation: $('#password_confirmation').val() }
 	});
 }
 
 // Update Profile
+function updateProfile() {
+	return $.ajax({
+		url: '{{ route("profile.update.profile") }}',
+		type: 'POST',
+		data: new FormData($('#edit-profile form')[0]),
+		contentType: false,
+		processData: false,
+	});
+}
 
-// Update User Detail
+// Update Detail
+function updateDetail() {
+	return $.ajax({
+		url: '{{ route("profile.update.detail") }}',
+		type: 'POST',
+		data: { 
+			password: $('#password').val(),
+			password_confirmation: $('#password_confirmation').val()
+		}
+	});
+}
 </script>
 
 @endsection

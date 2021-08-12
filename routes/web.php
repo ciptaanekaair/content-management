@@ -44,8 +44,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Profile
     Route::get('my-profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile.index');
     Route::post('my-profile/update-password', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.update.password');
-    Route::post('my-profile/update-profile', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.update.profile');
-    Route::post('my-profile/update-detail', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.update.detail');
+    Route::post('my-profile/update-profile', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile'])->name('profile.update.profile');
+    Route::post('my-profile/update-detail', [App\Http\Controllers\Admin\ProfileController::class, 'updateDetail'])->name('profile.update.detail');
 
     // Product Category Route
     Route::resource('product-categories', ProductCategoryController::class);

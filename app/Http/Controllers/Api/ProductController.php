@@ -59,55 +59,46 @@ class ProductController extends Controller
                 ->where('status', 1)
                 ->get();
 
-        if ($produk->count() > 0) {
-            $response = [
+        if (!empty($produk)) {
+            return response([
                 'success' => true,
                 'message' => 'Produk yang sesuai dengan hasil search berhasil di tampilkan.',
                 'data'    => $produk
-            ];
-        } else {
-            $response = [
-                'success' => true,
-                'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian'
-            ];
+            ], 200);
         }
 
-        return response($response, 200);
+        return response([
+            'error'   => true,
+            'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian.'
+        ], 403);
+
     }
 
     public function searching($keyword)
     {
+        // $keyword = 
+
         if (!empty($keyword)) {
-            $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
-                    'products.product_name', 'products.slug', 'products.product_description', 
-                    'products.product_images', 'products.product_price', 'products.product_stock', 
-                    'products.status')
-                    ->where('status', 1)
+            $produk = Product::where('status', 1)
                     ->get();
         } else {
-            $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
-                    'products.product_name', 'products.slug', 'products.product_description', 
-                    'products.product_images', 'products.product_price', 'products.product_stock', 
-                    'products.status')
+            $produk = Product::where('status', 1)
                     ->where('product_name', 'LIKE', '%'.$keyword.'%')
                     ->orWhere('product_code', 'LIKE', '%'.$keyword.'%')
-                    ->where('status', 1)
                     ->get();
         }
 
-        if ($produk->count() > 0) {
-            $response = [
+        if (!empty($produk)) {
+            return response([
                 'success' => true,
                 'message' => 'Produk yang sesuai dengan hasil search berhasil di tampilkan.',
                 'data'    => $produk
-            ];
-        } else {
-            $response = [
-                'success' => true,
-                'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian'
-            ];
+            ], 200);
         }
 
-        return response($response, 200);
+        return response([
+            'error'   => true,
+            'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian.'
+        ], 403);
     }
 }

@@ -144,6 +144,7 @@ $(function() {
 			type: 'POST',
 			data: $('#form_status').serialize(),
 			success: function(data) {
+				checkStatus();
 				$('#status [value='+data.status+']').attr('selected', 'selected');
 				Swal.fire('Success!', data.message, 'success');
 			},
@@ -159,8 +160,11 @@ function fetch_payment_data(id) {
 		url: '{{ url("data-payment/transaction") }}/'+id,
 		type: 'GET',
 		success: function(data) {
-			checkStatus();
 			$('#paymentTable').html(data);
+			checkStatus();
+		},
+		error: function(response) {
+			Sal.fire('Error!', response.responseJSON.errors.message, 'error');
 		}
 	});
 }
@@ -172,6 +176,9 @@ function checkStatus() {
 		success: function(data) {
 			$('#status [value="'+data.status+'"]').attr('selected', 'selected');
 			$('#statusTransaksi').text(data.status_transaksi);
+		},
+		error: function(response) {
+			Sal.fire('Error!', response.responseJSON.errors.message, 'error');
 		}
 	});
 }
