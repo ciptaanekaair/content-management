@@ -166,15 +166,9 @@ function fetch_payment_data(id) {
 	$.ajax({
 		url: '{{ url("data-payment/transaction") }}/'+id,
 		type: 'GET',
-		beforeSend: function() {
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
 			checkStatus();
 			$('#paymentTable').html(data);
-		},
-		complete: function() {
-			$("#modal-loading").modal('hide');
 		}
 	});
 }
@@ -215,9 +209,6 @@ function unverify(key) {
 	$.ajax({
 		url: '{{ url("transaction/unverify") }}/'+key,
 		type: 'GET',
-		beforeSend: function() {
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
 			fetch_payment_data({{ $transaction->id }});
@@ -225,10 +216,7 @@ function unverify(key) {
 		},
 		error: function(e) {
 			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
-		},
-		complete: function() {
-			$("#modal-loading").modal('hide');
-		},
+		}
 	});
 }
 
@@ -236,9 +224,6 @@ function terminate(key) {
 	$.ajax({
 		url: '{{ url("transaction/terminate") }}/'+key,
 		type: 'GET',
-		beforeSend: function() {
-			$("#modal-loading").modal('show');
-		},
 		success: function(data) {
 			Swal.fire('Success!', data.message, 'success');
 			fetch_payment_data({{ $transaction->id }});
@@ -246,10 +231,7 @@ function terminate(key) {
 		},
 		error: function(e) {
 			Swal.fire('Error!', e.responseJSON.errors.message, 'error');
-		},
-		complete: function() {
-			$("#modal-loading").modal('hide');
-		},
+		}
 	});
 }
 </script>
