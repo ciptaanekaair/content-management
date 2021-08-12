@@ -98,6 +98,7 @@
                         $("#modal-loading").modal('show');
                     },
                     success: function(data) {
+                        $("#modal-loading").modal('hide');
                         formReset();
                         $('#modal-form').modal('hide');
                         Swal.fire(
@@ -107,12 +108,9 @@
                         );
                         fetch_table(page, perpage, search);
                     }, error: function(response) {
+                        $("#modal-loading").modal('hide');
                         $('#banner_nameError').text(response.responseJSON.errors.category_name);
                         $('#banner_imageError').text(response.responseJSON.errors.banner_image);
-                    },
-                    complete: function(data) {
-                        // Hide image container
-                        $("#modal-loading").modal('hide');
                     }
                 });
             }); // end submit save or update
@@ -150,6 +148,7 @@
                         $("#modal-loading").modal('show');
                     },
                     success: function(data) {
+                        $("#modal-loading").modal('hide');
                         fetch_table(page, perpage, search);
                         $('#modal-delete').modal('hide');
                         formDeleteReset();
@@ -158,10 +157,6 @@
                             'Berhasil menghapus data tersebut.',
                             'success'
                         );
-                    },
-                    complete: function(data) {
-                        // Hide image container
-                        $("#modal-loading").modal('hide');
                     }
                 });
             }); // end script delete
@@ -211,11 +206,8 @@
                     $("#modal-loading").modal('show');
                 },
                 success: function(data) {
-                    $('.table-data').html(data);
-                },
-                complete: function(data) {
-                    // Hide image container
                     $("#modal-loading").modal('hide');
+                    $('.table-data').html(data);
                 }
             });
         }
@@ -240,6 +232,7 @@
                     $("#modal-loading").modal('show');
                 },
                 success: function(data) {
+                    $("#modal-loading").modal('hide');
                     $('.modal-title').text('Edit: '+data.data.banner_name);
                     $('#banner_id').val(data.data.id);
                     $('#formMethod').val('PUT');
@@ -250,11 +243,8 @@
                     $('#modal-form').modal('show');
                 },
                 error: function(response) {
-                    Swal.fire('Error!', response.responseJSON.errors.message);
-                },
-                complete: function(data) {
-                    // Hide image container
                     $("#modal-loading").modal('hide');
+                    Swal.fire('Error!', response.responseJSON.errors.message);
                 }
             });
         }
@@ -270,15 +260,12 @@
                     $("#modal-loading").modal('show');
                 },
                 success: function(data) {
+                    $("#modal-loading").modal('hide');
                     $('.modal-title-delete').text('Delete data: '+data.data.banner_name);
                     $('#banner_id_d').val(data.data.id);
                     $('#formMethodD').val('DELETE');
                     $('#banner_name_d').text(data.data.banner_name);
                     $('#modal-delete').modal('show');
-                },
-                complete: function(data) {
-                    // Hide image container
-                    $("#modal-loading").modal('hide');
                 }
             });
         }

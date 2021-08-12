@@ -95,6 +95,7 @@ $(function() {
         $("#modal-loading").modal('show');
       },
       success: function(data) {
+        $("#modal-loading").modal('hide');
         formReset();
         $('#modal-new').modal('hide');
         Swal.fire(
@@ -104,6 +105,7 @@ $(function() {
         );
         fetch_table(page, perpage, search);
       }, error: function(response) {
+        $("#modal-loading").modal('hide');
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nameError').text(response.responseJSON.errors.name);
         $('#emailError').text(response.responseJSON.errors.email);
@@ -113,10 +115,6 @@ $(function() {
         $('#password_confirmationError').text(response.responseJSON.errors.password_confirmation);
         $('#level_idError').text(response.responseJSON.errors.level_id);
         $('#statusError').text(response.responseJSON.errors.status);
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
     });
   }); // end submit save or update
@@ -145,6 +143,7 @@ $(function() {
         $("#modal-loading").modal('show');
       },
       success: function(data) {
+        $("#modal-loading").modal('hide');
         formReset();
         $('#modal-form').modal('hide');
         Swal.fire(
@@ -154,6 +153,7 @@ $(function() {
         );
         fetch_table(page, perpage, search);
       }, error: function(response) {
+        $("#modal-loading").modal('hide');
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nama_ptError').text(response.responseJSON.errors.nama_pt);
         $('#teleponError').text(response.responseJSON.errors.telepon);
@@ -161,10 +161,6 @@ $(function() {
         $('#alamatError').text(response.responseJSON.errors.alamat);
         $('#provinsi_idError').text(response.responseJSON.errors.provinsi_id);
         $('#kode_posError').text(response.responseJSON.errors.kode_pos);
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
     });
   }); // end submit save or update
@@ -202,6 +198,7 @@ $(function() {
         $("#modal-loading").modal('show');
       },
       success: function(data) {
+        $("#modal-loading").modal('hide');
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
         formDeleteReset();
@@ -210,10 +207,6 @@ $(function() {
           'Berhasil menghapus data tersebut.',
           'success'
         );
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
     });
   }); // end script delete
@@ -285,11 +278,8 @@ function fetch_table(page, perpage, search) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
-      $('.table-data').html(data);
-    },
-    complete: function(data) {
-      // Hide image container
       $("#modal-loading").modal('hide');
+      $('.table-data').html(data);
     }
   });
 }
@@ -314,6 +304,7 @@ function editData(id) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       resetErrorUserForm();
       $('#formUserMethod').val('PUT');
       $('#email').attr('readonly', true);
@@ -329,11 +320,8 @@ function editData(id) {
       $('#modal-new').modal('show'); 
     },
     error: function(message) {
-      Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
-    },
-    complete: function(data) {
-      // Hide image container
       $("#modal-loading").modal('hide');
+      Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
     }
   });
 }
@@ -349,6 +337,7 @@ function editShipping(id) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       resetErrorUserForm();
       formReset();
       $('#formShippingMethod').val('PUT');
@@ -365,11 +354,8 @@ function editShipping(id) {
       $('#modal-form').modal('show'); 
     },
     error: function(message) {
-      Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
-    },
-    complete: function(data) {
-      // Hide image container
       $("#modal-loading").modal('hide');
+      Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
     }
   });
 }
@@ -385,15 +371,12 @@ function confirmDelete(id) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       $('.modal-title-delete').text('Delete data: '+data.data.name);
       $('#formMethodD').val('DELETE');
       $('#userid_delete').val(data.data.id);
       $('#user_name_d').text(data.data.name);
       $('#modal-delete').modal('show');
-    },
-    complete: function(data) {
-      // Hide image container
-      $("#modal-loading").modal('hide');
     }
   });
 }

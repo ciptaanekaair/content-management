@@ -207,9 +207,11 @@ $(function() {
         $("#modal-loading").modal('show');
       },
 			success: function(data) {
+				$("#modal-loading").modal('hide');
 				window.location.href = '{{ url("products") }}/'+data.data.id+'/edit';
 			},
 			error: function(response) {
+				$("#modal-loading").modal('hide');
 				$('#product_category_idError').text(response.responseJSON.errors.product_category_id);
 				$('#product_codeError').text(response.responseJSON.errors.product_code);
 				$('#product_nameError').text(response.responseJSON.errors.product_name);
@@ -221,11 +223,7 @@ $(function() {
 				$('#product_commisionError').text(response.responseJSON.errors.product_commision);
 				$('#statusError').text(response.responseJSON.errors.status);
 				$('#product_imageError').text(response.responseJSON.errors.product_image);
-			},
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
-      }
+			}
 		});
   });
 
@@ -249,19 +247,17 @@ $(function() {
         $("#modal-loading").modal('show');
       },
       success: function(data) {
+      	$("#modal-loading").modal('hide');
       	fetch_image(productID);
       	$('#images').val('');
       	$('#modal-form').modal('hide');
       	Swal.fire('Success!', 'Berhasil upload image baru', 'success');
       }, error: function(response) {
+      	$("#modal-loading").modal('hide');
       	Swal.fire('Error!', response.message, 'error');
       	$('#product_id_iError').text(response.responseJSON.errors.product_id_i);
       	$('#images_id').text(response.responseJSON.errors.images_id);
       	$('#imagesError').text(response.responseJSON.errors.images);
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
 		});
 	});
@@ -281,6 +277,7 @@ $(function() {
         $("#modal-loading").modal('show');
       },
 			success: function(data) {
+				$("#modal-loading").modal('hide');
 				$('#modal-delete').modal('hide');
 				Swal.fire(
 					'Success',
@@ -289,16 +286,13 @@ $(function() {
 				);
 				fetch_image(productID);
 			}, error: function(data) {
+				$("#modal-loading").modal('hide');
 				Swal.fire(
 					'Error!',
 					'Gagal menghapus data gambar. Silahkan ulangi atau apabila error ini lebih dari 2 kali, mohon hubungi Developer',
 					'error'
 				);
-			},
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
-      }
+			}
 		});
 	});
 });
@@ -335,12 +329,9 @@ function fetch_image(id) {
       $("#modal-loading").modal('show');
     },
 		success: function(data) {
+			$("#modal-loading").modal('hide');
 			$('.table-data').html(data);
-		},
-    complete: function(data) {
-      // Hide image container
-      $("#modal-loading").modal('hide');
-    }
+		}
 	});
 }
 
@@ -358,15 +349,12 @@ function editImage(id) {
       $("#modal-loading").modal('show');
     },
 		success: function(data) {
+			$("#modal-loading").modal('hide');
 			$('.modal-title').text('Ubah image ID: '+data.data.id);
 			$('#modalFormMethod').val('PUT');
 			$('#images_id').val(data.data.id);
 			$('#modal-form').modal('show');
-		},
-    complete: function(data) {
-      // Hide image container
-      $("#modal-loading").modal('hide');
-    }
+		}
 	});
 }
 
@@ -379,17 +367,15 @@ function deleteImage(id) {
       $("#modal-loading").modal('show');
     },
 		success: function(data) {
+			$("#modal-loading").modal('hide');
 			$('#images_id_d').val(data.data.id);
 			$('#produk_id_d').text(data.data.id);
 			$('#modal-delete').modal('show');
 		},
 		error: function(response) {
+			$("#modal-loading").modal('hide');
 			Swal.fire('error', 'Gagal load data image.', 'error');
-		},
-    complete: function(data) {
-      // Hide image container
-      $("#modal-loading").modal('hide');
-    }
+		}
 	});
 }
 

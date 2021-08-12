@@ -95,10 +95,12 @@ $(function() {
       },
       success: function(data) {
         formReset();
+        $("#modal-loading").modal('hide');
         $('#modal-form').modal('hide');
         Swal.fire('Success!', data.message, 'success');
         fetch_table(page, perpage, search);
       }, error: function(response) {
+        $("#modal-loading").modal('hide');
         console.log(response);
         $('#category_nameError').text(response.responseJSON.errors.category_name);
         $('#category_descriptionError').text(response.responseJSON.errors.category_description);
@@ -106,10 +108,6 @@ $(function() {
         $('#keywordsError').text(response.responseJSON.errors.keywords);
         $('#description_seoError').text(response.responseJSON.errors.description_seo);
         $('#statusError').text(response.responseJSON.errors.status);
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
     });
   }); // end submit save or update
@@ -148,6 +146,7 @@ $(function() {
       data: $(this).serialize(),
       success: function(data) {
         fetch_table(page, perpage, search);
+        $("#modal-loading").modal('hide');
         $('#modal-delete').modal('hide');
         formDeleteReset();
         Swal.fire(
@@ -155,10 +154,6 @@ $(function() {
           'Berhasil menghapus data tersebut.',
           'success'
         );
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
     });
   }); // end script delete
@@ -200,11 +195,8 @@ function fetch_table(page, perpage, search) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
-      $('.table-data').html(data);
-    },
-    complete: function(data) {
-      // Hide image container
       $("#modal-loading").modal('hide');
+      $('.table-data').html(data);
     }
   });
 }
@@ -238,14 +230,12 @@ function editData(id) {
       $('#category_image_link').attr('href', data.data.imageurl);
       $('#btnSave').text('Update Data');
       $('#status [value="'+data.data.status+'"]').attr('selected', 'selected');
+      $("#modal-loading").modal('hide');
       $('#modal-form').modal('show');
     },
     error: function(response) {
-      Swal.fire('Error!', response.responseJSON.errors.message, 'error');
-    },
-    complete: function(data) {
-      // Hide image container
       $("#modal-loading").modal('hide');
+      Swal.fire('Error!', response.responseJSON.errors.message, 'error');
     }
   });
 }
@@ -265,11 +255,8 @@ function confirmDelete(id) {
       $('#category_id_d').val(data.data.id);
       $('#formMethodD').val('DELETE');
       $('#category_name_d').text(data.data.category_name);
-      $('#modal-delete').modal('show');
-    },
-    complete: function(data) {
-      // Hide image container
       $("#modal-loading").modal('hide');
+      $('#modal-delete').modal('show');
     }
   });
 }

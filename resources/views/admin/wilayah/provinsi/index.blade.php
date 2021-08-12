@@ -84,19 +84,17 @@ $(function() {
 				$("#modal-loading").modal('show');
 			},
 			success: function(data) {
+				$("#modal-loading").modal('hide');
 				formDataReset();
 				$('#modal-form').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', 'Berhasil menyimpan data.', 'success');
 			}, error: function(response) {
+				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', 'Gagal melakukan penyimpanan data. Silahkan cek pengisian form.', 'error');
 				$('#provinsi_codeError').text(response.responseJSON.errors.provinsi_code);
 				$('#provinsi_nameError').text(response.responseJSON.errors.provinsi_name);
 				$('#statusError').text(response.responseJSON.errors.status);
-			},
-			complete: function(data) {
-				// Hide image container
-				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -119,16 +117,14 @@ $(function() {
 				$("#modal-loading").modal('show');
 			},
 			success: function(data) {
+				$("#modal-loading").modal('hide');
 				formDeleteReset();
 				$('#modal-delete').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', data.message, 'success');
 			}, error: function(response) {
-				Swal.fire('Error!', response.responseJSON.message, 'error');
-			},
-			complete: function(data) {
-				// Hide image container
 				$("#modal-loading").modal('hide');
+				Swal.fire('Error!', response.responseJSON.message, 'error');
 			}
 		});
 	});
@@ -202,11 +198,8 @@ function fetch_table(page, perpage, search) {
 			$("#modal-loading").modal('show');
 		},
 		success: function(data) {
-			$('.table-data').html(data);
-		},
-		complete: function(data) {
-			// Hide image container
 			$("#modal-loading").modal('hide');
+			$('.table-data').html(data);
 		}
 	});
 }
@@ -221,6 +214,7 @@ function editData(id) {
 			$("#modal-loading").modal('show');
 		},
 		success: function(data) {
+			$("#modal-loading").modal('hide');
 			save_method = 'edit';
 			$('#formAddMethod').val('PUT');
 			$('.title-form').text('Edit data: ['+data.data.id+'] -'+data.data.provinsi_name);
@@ -231,11 +225,8 @@ function editData(id) {
 			$('#modal-form').modal('show');
 		},
 		error: function(response) {
-			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-		complete: function(data) {
-			// Hide image container
 			$("#modal-loading").modal('hide');
+			Swal.fire('Error!', response.responseJSON.message, 'error');
 		}
 	});
 }
@@ -249,17 +240,15 @@ function confirmDelete(id) {
 			$("#modal-loading").modal('show');
 		},
 		success: function(data) {
+			$("#modal-loading").modal('hide');
 			$('.title-delete').text('Delete data: ['+data.data.id+'] -'+data.data.provinsi_name);
 			$('#provinsi_id_d').val(data.data.id);
 			$('#provinsi_name_d').text(data.data.provinsi_name);
 			$('#modal-delete').modal('show');
 		},
 		error: function(response) {
-			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-		complete: function(data) {
-			// Hide image container
 			$("#modal-loading").modal('hide');
+			Swal.fire('Error!', response.responseJSON.message, 'error');
 		}
 	});
 }

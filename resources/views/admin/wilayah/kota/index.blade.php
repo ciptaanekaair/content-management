@@ -82,16 +82,14 @@ $(function() {
 				$("#modal-loading").modal('show');
 			},
 			success: function(data) {
+				$("#modal-loading").modal('hide');
 				$('#file_upload').val('');
 				$('#modal-import').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', 'Berhasil import data kota.', 'success');
 			}, error: function(response) {
-				$('#file_uploadError').text(response.responseJSON.errors.file_upload);
-			},
-			complete: function(data) {
-				// Hide image container
 				$("#modal-loading").modal('hide');
+				$('#file_uploadError').text(response.responseJSON.errors.file_upload);
 			}
 		});
 	});
@@ -116,18 +114,17 @@ $(function() {
 				$("#modal-loading").modal('show');
 			},
 			success: function(data) {
+				$("#modal-loading").modal('hide');
 				formDataReset();
 				fetch_table(page, perpage, search);
 				$('#modal-form').modal('hide');
 				Swal.fire('Success!', 'Berhasil menyimpan data.', 'success');
 			}, error: function(response) {
+				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', 'Gagal melakukan penyimpanan data. Silahkan cek pengisian form.', 'error');
 				$('#provinsi_idError').text(response.responseJSON.errors.provinsi_id);
 				$('#nama_kotaError').text(response.responseJSON.errors.nama_kota);
 				$('#statusError').text(response.responseJSON.errors.status);
-			},
-			complete: function(data) {
-				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -150,16 +147,14 @@ $(function() {
 				$("#modal-loading").modal('show');
 			},
 			success: function(data) {
+				$("#modal-loading").modal('hide');
 				formDeleteReset();
 				$('#modal-delete').modal('hide');
 				fetch_table(page, perpage, search);
 				Swal.fire('Success!', data.message, 'success');
 			}, error: function(response) {
-				Swal.fire('Error!', response.responseJSON.message, 'error');
-			},
-			complete: function(data) {
-				// Hide image container
 				$("#modal-loading").modal('hide');
+				Swal.fire('Error!', response.responseJSON.message, 'error');
 			}
 		});
 	});
@@ -228,11 +223,8 @@ function fetch_table(page, perpage, search) {
 			$("#modal-loading").modal('show');
 		},
 		success: function(data) {
-			$('.table-data').html(data);
-		},
-		complete: function(data) {
-			// Hide image container
 			$("#modal-loading").modal('hide');
+			$('.table-data').html(data);
 		}
 	});
 }
@@ -247,6 +239,7 @@ function editData(id) {
 			$("#modal-loading").modal('show');
 		},
 		success: function(data) {
+			$("#modal-loading").modal('hide');
 			save_method = 'edit';
 			$('#formAddMethod').val('PUT');
 			$('.title-form').text('Edit data: ['+data.data.id+'] -'+data.data.nama_kota);
@@ -257,11 +250,8 @@ function editData(id) {
 			$('#modal-form').modal('show');
 		},
 		error: function(response) {
-			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-		complete: function(data) {
-			// Hide image container
 			$("#modal-loading").modal('hide');
+			Swal.fire('Error!', response.responseJSON.message, 'error');
 		}
 	});
 }
@@ -275,17 +265,15 @@ function confirmDelete(id) {
 			$("#modal-loading").modal('show');
 		},
 		success: function(data) {
+			$("#modal-loading").modal('hide');
 			$('.title-delete').text('Delete data: ['+data.data.id+'] -'+data.data.nama_kota);
 			$('#kota_id_d').val(data.data.id);
 			$('#kota_name_d').text(data.data.nama_kota);
 			$('#modal-delete').modal('show');
 		},
 		error: function(response) {
-			Swal.fire('Error!', response.responseJSON.message, 'error');
-		},
-		complete: function(data) {
-			// Hide image container
 			$("#modal-loading").modal('hide');
+			Swal.fire('Error!', response.responseJSON.message, 'error');
 		}
 	});
 }

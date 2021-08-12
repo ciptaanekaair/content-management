@@ -93,14 +93,11 @@ $(function() {
         $("#modal-loading").modal('show');
       },
       success: function(data) {
+        $("#modal-loading").modal('hide');
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
         formDeleteReset();
         Swal.fire('Success!', 'Berhasil menghapus data tersebut.', 'success');
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
     });
   }); // end script delete
@@ -133,11 +130,8 @@ function fetch_table(page, perpage, search) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
-      $('.table-data').html(data);
-    },
-    complete: function(data) {
-      // Hide image container
       $("#modal-loading").modal('hide');
+      $('.table-data').html(data);
     }
   });
 }
@@ -157,15 +151,12 @@ function confirmDelete(id) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       $('.modal-title-delete').text('Delete data: '+data.data.nama_pembayaran);
       $('#peyment_method_id_d').val(data.data.id);
       $('#formMethodD').val('DELETE');
       $('#payment_method_name_d').text(data.data.nama_pembayaran);
       $('#modal-delete').modal('show');
-    },
-    complete: function(data) {
-      // Hide image container
-      $("#modal-loading").modal('hide');
     }
   });
 }

@@ -88,15 +88,9 @@ function fetch_table(page, perpage, search) {
 	$.ajax({
 		url: '{{ route("transactions.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
 		type: 'GET',
-		beforeSend: function() {
-			$('#modal-loading').modal('show');
-		},
 		success: function(data) {
 			$('.table-data').html(data);
 		},
-		complete: function() {
-			$('#modal-loading').modal('hide');
-		}
 	});
 }
 

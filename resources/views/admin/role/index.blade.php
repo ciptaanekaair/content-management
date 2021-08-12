@@ -103,6 +103,7 @@ $(function() {
         $("#modal-loading").modal('show');
       },
       success: function(data) {
+        $("#modal-loading").modal('hide');
         formReset();
         $('#modal-form').modal('hide');
         Swal.fire(
@@ -112,13 +113,10 @@ $(function() {
         );
         fetch_table(page, perpage, search);
       }, error: function(response) {
+        $("#modal-loading").modal('hide');
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nama_roleError').text(response.responseJSON.errors.nama_role);
         $('#statusError').text(response.responseJSON.errors.status);
-      },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
       }
     });
   }); // end submit save or update
@@ -151,6 +149,10 @@ $(function() {
       url: '{{ url("roles") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
+      beforeSend: function(){
+        // Show image container
+        $("#modal-loading").modal('show');
+      },
       success: function(data) {
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
@@ -227,15 +229,13 @@ function fetch_table(page, perpage, search) {
       $("#modal-loading").modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       $('.table-data').html(data);
     },
     error: function(response) {
+      $("#modal-loading").modal('hide');
       Swal.fire('Error!', response.responseJSON.errors.message);
-    },
-      complete: function(data) {
-        // Hide image container
-        $("#modal-loading").modal('hide');
-      }
+    }
   });
 }
 
@@ -281,11 +281,17 @@ function attachingRole() {
     url: '{{ url("roles/attach") }}',
     type: 'POST',
     data: $('#form-attachment').serialize(),
+    beforeSend: function(){
+      // Show image container
+      $("#modal-loading").modal('show');
+    },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       $('input[type=checkbox]').prop('checked',false);
       $('#levels').prop('selectedIndex',0);
       Swal.fire('Berhasil!', 'Berhasil attach level dengan role yang dipilih.', 'success');
     }, error: function(response) {
+      $("#modal-loading").modal('hide');
       Swal.fire('Error!', 'gagal attach level dengan role yang di pilih.', 'error');
     }
   });

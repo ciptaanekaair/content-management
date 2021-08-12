@@ -93,6 +93,7 @@ $(function() {
         $('#modal-loading').modal('show');
       },
       success: function(data) {
+        $("#modal-loading").modal('hide');
         formReset();
         $('#modal-new').modal('hide');
         Swal.fire(
@@ -102,6 +103,7 @@ $(function() {
         );
         fetch_table(page, perpage, search);
       }, error: function(response) {
+        $("#modal-loading").modal('hide');
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nameError').text(response.responseJSON.errors.name);
         $('#emailError').text(response.responseJSON.errors.email);
@@ -111,10 +113,7 @@ $(function() {
         $('#password_confirmationError').text(response.responseJSON.errors.password_confirmation);
         $('#level_idError').text(response.responseJSON.errors.level_id);
         $('#statusError').text(response.responseJSON.errors.status);
-      },
-      complete: function() {
-        $('#modal-loading').modal('hide');
-      },
+      }
     });
   }); // end submit save or update
 
@@ -150,6 +149,7 @@ $(function() {
         $('#modal-loading').modal('show');
       },
       success: function(data) {
+        $("#modal-loading").modal('hide');
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');
         formDeleteReset();
@@ -158,9 +158,6 @@ $(function() {
           'Berhasil menghapus data tersebut.',
           'success'
         );
-      },
-      complete: function() {
-        $('#modal-loading').modal('hide');
       }
     });
   }); // end script delete
@@ -224,10 +221,8 @@ function fetch_table(page, perpage, search) {
       $('#modal-loading').modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       $('.table-data').html(data);
-    },
-    complete: function() {
-      $('#modal-loading').modal('hide');
     }
   });
 }
@@ -242,6 +237,7 @@ function editData(id) {
       $('#modal-loading').modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       resetErrorUserForm();
       $('#formUserMethod').val('PUT');
       $('#email').attr('readonly', true);
@@ -256,10 +252,8 @@ function editData(id) {
       $('#modal-new').modal('show'); 
     },
     error: function(message) {
+      $("#modal-loading").modal('hide');
       Swal.fire('Error!', 'Gagal mengambil data user.', 'error');
-    },
-    complete: function() {
-      $('#modal-loading').modal('hide');
     }
   });
 }
@@ -274,14 +268,12 @@ function confirmDelete(id) {
       $('#modal-loading').modal('show');
     },
     success: function(data) {
+      $("#modal-loading").modal('hide');
       $('.modal-title-delete').text('Delete data: '+data.data.name);
       $('#formMethodD').val('DELETE');
       $('#userid_delete').val(data.data.id);
       $('#user_name_d').text(data.data.name);
       $('#modal-delete').modal('show');
-    },
-    complete: function() {
-      $('#modal-loading').modal('hide');
     }
   });
 }
