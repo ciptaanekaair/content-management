@@ -90,6 +90,9 @@ $(function() {
 			}, error: function(response) {
 				$("#modal-loading").modal('hide');
 				$('#file_uploadError').text(response.responseJSON.errors.file_upload);
+			},
+			complete: function() {
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -125,6 +128,9 @@ $(function() {
 				$('#provinsi_idError').text(response.responseJSON.errors.provinsi_id);
 				$('#nama_kotaError').text(response.responseJSON.errors.nama_kota);
 				$('#statusError').text(response.responseJSON.errors.status);
+			},
+			complete: function() {
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -155,6 +161,9 @@ $(function() {
 			}, error: function(response) {
 				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', response.responseJSON.message, 'error');
+			},
+			complete: function() {
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -225,7 +234,10 @@ function fetch_table(page, perpage, search) {
 		success: function(data) {
 			$("#modal-loading").modal('hide');
 			$('.table-data').html(data);
-		}
+		},
+			complete: function() {
+				$("#modal-loading").modal('hide');
+			}
 	});
 }
 
@@ -252,7 +264,10 @@ function editData(id) {
 		error: function(response) {
 			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		}
+		},
+			complete: function() {
+				$("#modal-loading").modal('hide');
+			}
 	});
 }
 
@@ -274,7 +289,10 @@ function confirmDelete(id) {
 		error: function(response) {
 			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		}
+		},
+			complete: function() {
+				$("#modal-loading").modal('hide');
+			}
 	});
 }
 </script>

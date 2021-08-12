@@ -95,6 +95,9 @@ $(function() {
 				$('#provinsi_codeError').text(response.responseJSON.errors.provinsi_code);
 				$('#provinsi_nameError').text(response.responseJSON.errors.provinsi_name);
 				$('#statusError').text(response.responseJSON.errors.status);
+			},
+			complete: function() {
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -125,6 +128,9 @@ $(function() {
 			}, error: function(response) {
 				$("#modal-loading").modal('hide');
 				Swal.fire('Error!', response.responseJSON.message, 'error');
+			},
+			complete: function() {
+				$("#modal-loading").modal('hide');
 			}
 		});
 	});
@@ -200,7 +206,10 @@ function fetch_table(page, perpage, search) {
 		success: function(data) {
 			$("#modal-loading").modal('hide');
 			$('.table-data').html(data);
-		}
+		},
+			complete: function() {
+				$("#modal-loading").modal('hide');
+			}
 	});
 }
 
@@ -227,7 +236,10 @@ function editData(id) {
 		error: function(response) {
 			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		}
+		},
+			complete: function() {
+				$("#modal-loading").modal('hide');
+			}
 	});
 }
 
@@ -249,7 +261,10 @@ function confirmDelete(id) {
 		error: function(response) {
 			$("#modal-loading").modal('hide');
 			Swal.fire('Error!', response.responseJSON.message, 'error');
-		}
+		},
+			complete: function() {
+				$("#modal-loading").modal('hide');
+			}
 	});
 }
 
