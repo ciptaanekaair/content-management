@@ -61,6 +61,16 @@
                     </li>
                 </ul>
             </li>
+            <li class="dropdown {{ request()->routeIs('shippings*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-cart-arrow-down"></i> <span>Pengiriman</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('shippings.index') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('shippings.index') }}">List Pengiriman</a>
+                    </li>
+                </ul>
+            </li>
             <li class="dropdown {{ request()->routeIs('report*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-file"></i> <span>Laporan Transaksi</span>

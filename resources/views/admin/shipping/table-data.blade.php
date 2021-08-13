@@ -11,10 +11,10 @@
       </tr>
     </thead>
     <tbody>
-      @forelse($transactions as $index => $item)
+      @forelse($shippings as $index => $item)
         <tr>
           <td>
-            {{ $transactions->firstItem() + $index }}
+            {{ $shippings->firstItem() + $index }}
           </td>
           <td>{{ $item->transaction_code }}</td>
           <td>{{ $item->transaction_date }}</td>
@@ -51,7 +51,6 @@
           </div>
         </td>
       </tr>
-    @endif
     </tbody>
   </table>
 </div>

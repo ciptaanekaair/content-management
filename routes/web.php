@@ -97,6 +97,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('transaction/unverify/{id}', [App\Http\Controllers\Admin\PaymentConfirmationController::class, 'unverify'])->name('payment.unverify');
     Route::get('transaction/terminate/{id}', [App\Http\Controllers\Admin\PaymentConfirmationController::class, 'terminated'])->name('payment.terminated');
 
+    // Shipping
+    Route::resource('shippings', App\Http\Controllers\Admin\ShippingController::class);
+    Route::get('data/shippings', [App\Http\Controllers\Admin\ShippingController::class, 'getData'])->name('shippings.data');
+
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
     Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');
     Route::get('user-histories/{id}', [RekamJejakController::class, 'getUser'])->name('user-histories.user');

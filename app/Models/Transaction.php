@@ -70,4 +70,9 @@ class Transaction extends Model
     {
         return $this->hasMany(PaymentConfirmation::class, 'transactions_id', 'id');
     }
+
+    public function shipping()
+    {
+        return $this->hasMany(Shipping::class);
+    }
 }
