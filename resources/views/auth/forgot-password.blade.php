@@ -1,34 +1,47 @@
-<x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
+@extends('layouts.app-auth')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@section('title')
+Lupa Password - FILTERPEDIA
+@endsection
+
+@section('content')
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                <div class="text-center my-2">
+                    <img src="{{ asset('logo.png') }}" alt="logo" width="50%">
+                </div>
+                <div class="card card-primary">
+                    <div class="card-header"><h4>Lupa Password</h4></div>
+                    <div class="card-body">
+                        <div class="isi-form">
+                            <form method="POST" action="{{ route('forgetpassword.sendToken') }}" id="forget-form" class="needs-validation" novalidate="">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="email" class="form-control" name="email" tabindex="1" value="{{ old('email') }}" placeholder="Email yang terdaftar" required autofocus>
+                                    <div class="invalid-feedback" id="invalid-feedback">
+                                        Please fill in your email
+                                    </div>
+                                    @error('email')
+                                    <div class="invalid-feedback" id="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                        Request Token
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="simple-footer">
+                    Copyright &copy; Stisla 2018
+                </div>
+            </div>
         </div>
-
-        @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
-        @endif
-
-        <x-jet-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <div class="block">
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
-</x-guest-layout>
+    </div>
+@endsection

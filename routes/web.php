@@ -28,6 +28,14 @@ use App\Http\Controllers\Admin\KotaController;
 Route::get('/', [DashboardController::class, 'gotoLogin'])->name('welcome');
 
 Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
+
+// Forget Password
+Route::get('/forget-password', [App\Http\Controllers\Admin\ForgetPasswordController::class, 'index'])->name('forgetpassword.index');
+Route::post('/forget-password', [App\Http\Controllers\Admin\ForgetPasswordController::class, 'sendToken'])->name('forgetpassword.sendToken');
+Route::get('/reset-password', [App\Http\Controllers\Admin\ForgetPasswordController::class, 'indexResetPass'])->name('forgetpassword.indexResetPass');
+Route::post('/reset-password', [App\Http\Controllers\Admin\ForgetPasswordController::class, 'resetPassword'])->name('forgetpassword.resetPassword');
+
+// Tester Upload menggunakan watermark. Hapus saat berhasil.
 Route::get('/upload-tester', [App\Http\Controllers\UploadGambarTesterController::class, 'index'])->name('uploaded.index');
 Route::post('/upload-tester', [App\Http\Controllers\UploadGambarTesterController::class, 'store'])->name('uploaded.store');
 

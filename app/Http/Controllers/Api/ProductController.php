@@ -46,8 +46,10 @@ class ProductController extends Controller
         }
     }
 
-    public function searching($keyword)
+    public function searching(Request $request)
     {
+        $keyword = $request->get('katakunci');
+
         if ($keyword == '') {
             $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
                 'products.product_name', 'products.slug', 'products.product_description', 
