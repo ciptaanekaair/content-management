@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 use Storage;
 use File;
 use Image;
+use Input;
 
 class UploadGambarTesterController extends Controller
 {
+    public function index()
+    {
+        return view('testerupload');
+    }
+
     public function store(Request $request)
     {
         $rules = [
@@ -18,17 +24,30 @@ class UploadGambarTesterController extends Controller
         $this->validate($request, $rules);
 
         if ($request->hasFile('gambar')) {
-            $gambar    = $request->file('gambar');
-            $ext       = $gambar->getClientOriginalExtension();
-            $rename    = rand('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '1234567890').'.'.$ext;
-            $watermark = $gambar->insert('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
-            $simpan    = $gambar->move('public/storage/'.$rename);
+            $gambar  = $request->file('gambar');
+            $ext     = $gambar->getClientOriginalExtension();
+            $rename  = 'product-images/'.rand('111', '999').'.'.$ext;
+            $buatImg = Image::make($gambar->getRealPath());
+
+            // insert watermark
+            $watermark = $buatImg->insert('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
+
+            // Simpan di storage
+            $simpan  = Storage::putFile('public/'.$rename);
+            $simpans = Storage::url($simpan);
 
             if (!$simpan) {
-                return 'false';
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Gagal upload file.'
+                ],403);
             }
 
-            return 'true';
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil upload file',
+                'data'    => $simpans
+            ], 200);
         }
     }
 }

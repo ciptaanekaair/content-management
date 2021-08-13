@@ -46,49 +46,27 @@ class ProductController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function searching($keyword)
     {
-        $keyword = $request->search;
-
-        $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
+        if ($keyword == '') {
+            $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
                 'products.product_name', 'products.slug', 'products.product_description', 
                 'products.product_images', 'products.product_price', 'products.product_stock', 
                 'products.status')
-                ->where('product_name', 'LIKE', '%'.$keyword.'%')
-                ->orWhere('product_code', 'LIKE', '%'.$keyword.'%')
-                ->where('status', 1)
-                ->get();
-
-        if (!empty($produk)) {
-            return response([
-                'success' => true,
-                'message' => 'Produk yang sesuai dengan hasil search berhasil di tampilkan.',
-                'data'    => $produk
-            ], 200);
-        }
-
-        return response([
-            'error'   => true,
-            'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian.'
-        ], 403);
-
-    }
-
-    public function searching($keyword)
-    {
-        // $keyword = 
-
-        if (!empty($keyword)) {
-            $produk = Product::where('status', 1)
+                    ->where('status', 1)
                     ->get();
         } else {
-            $produk = Product::where('status', 1)
+            $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
+                'products.product_name', 'products.slug', 'products.product_description', 
+                'products.product_images', 'products.product_price', 'products.product_stock', 
+                'products.status')
                     ->where('product_name', 'LIKE', '%'.$keyword.'%')
                     ->orWhere('product_code', 'LIKE', '%'.$keyword.'%')
+                    ->where('status', 1)
                     ->get();
         }
 
-        if (!empty($produk)) {
+        if ($produk->count() > 0) {
             return response([
                 'success' => true,
                 'message' => 'Produk yang sesuai dengan hasil search berhasil di tampilkan.',
@@ -99,6 +77,35 @@ class ProductController extends Controller
         return response([
             'error'   => true,
             'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian.'
-        ], 403);
+        ], 404);
     }
+
+    // POST method untuk search
+    // public function search(Request $request)
+    // {
+    //     $keyword = $request->search;
+
+    //     $produk = Product::select('products.id', 'products.product_category_id', 'products.product_code', 
+    //             'products.product_name', 'products.slug', 'products.product_description', 
+    //             'products.product_images', 'products.product_price', 'products.product_stock', 
+    //             'products.status')
+    //             ->where('product_name', 'LIKE', '%'.$keyword.'%')
+    //             ->orWhere('product_code', 'LIKE', '%'.$keyword.'%')
+    //             ->where('status', 1)
+    //             ->get();
+
+    //     if (!empty($produk)) {
+    //         return response([
+    //             'success' => true,
+    //             'message' => 'Produk yang sesuai dengan hasil search berhasil di tampilkan.',
+    //             'data'    => $produk
+    //         ], 200);
+    //     }
+
+    //     return response([
+    //         'error'   => true,
+    //         'message' => 'Pencarian tidak membuahkan hasil, silahkan ganti kata kunci pencarian.'
+    //     ], 403);
+
+    // }
 }
