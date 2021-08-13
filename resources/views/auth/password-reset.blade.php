@@ -73,8 +73,15 @@ $(function() {
             window.location.href = '{{ route("login") }}';
         });
         sendRequest.fail(function(response) {
-            Swal.fire('Error', 'Gagal mengubah password. Silahkan perhatikan error yang muncul.', 'error');
-            console.log(response);
+            if(response.responseJSON.message.token){
+                Swal.fire('Error', response.responseJSON.message.token, 'error');
+            } else {
+                Swal.fire('Error', 'Gagal mengubah password. Silahkan perhatikan error yang muncul.', 'error');
+                $('#invalid-email').text(response.responseJSON.message.email);
+                $('#invalid-token').text(response.responseJSON.message.token);
+                $('#invalid-password').text(response.responseJSON.message.password);
+                $('#invalid-password_confirmation').text(response.responseJSON.message.password_confirmation);
+            }
         });
     })
 })
