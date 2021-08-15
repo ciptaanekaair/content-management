@@ -48,7 +48,7 @@
 
 @section('jq-script')
 <script type="text/javascript">
-
+const loadingModal = $('#modal-loading');
 var save_method, page, perpage, search, url, data;
 
 $(function() {
@@ -85,19 +85,22 @@ function cariData(search) {
 }
 
 function fetch_table(page, perpage, search) {
+	loadingModal.modal('show');
 	$.ajax({
 		url: '{{ route("transactions.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
-		type: 'GET',
-		success: function(data) {
-			$('.table-data').html(data);
-		},
-    error: function (response) {
-      Swal.fire(
-        'Error!',
-        response.responseJSON.errors.message,
-        'error'
-      );
-    }
+		type: 'GET'
+	})
+	.done(response => {
+		loadingModal.modal('hide');
+		$('.table-data').html(response);
+	})
+	.fail(error => {
+		loadingModal.modal('hide');
+		Swal.fire(
+      'Error!',
+      response.responseJSON.errors.message,
+      'error'
+    );
 	});
 }
 

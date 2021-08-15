@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Shipping;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -16,38 +17,56 @@ class ShippingController extends Controller
      */
     public function index()
     {
-        $shippings = Transaction::where('status', '!=', 9)
-                    ->orderBy('id', 'DESC')
-                    ->paginate(10);
+        if ($this->authorize('MOD1208-read')) {
+            $shippings = Transaction::where('status', '!=', 9)
+                        ->where('status', '!=', 0)
+                        ->where('status', '!=', 2)
+                        ->where('status', '!=', 6)
+                        ->where('status', '!=', 7)
+                        ->orderBy('id', 'DESC')
+                        ->paginate(10);
 
-        return view('admin.shipping.index', compact('shippings'));
+            return view('admin.shipping.index', compact('shippings'));
+        }
     }
 
     public function getData(Request $request)
     {
-        $search       = $request->get('search');
-        $list_perpage = $request->get('list_perpage');
+        if ($this->authorize('MOD1208-read')) {
+            $search       = $request->get('search');
+            $list_perpage = $request->get('list_perpage');
 
-        if (!empty($search)) {
-            $shippings = Shipping::where('status', '!=', 9)
-                        ->where('status', '!=', 0)
-                        ->where('status', '!=', 2)
-                        ->where('status', '!=', 6)
-                        ->where('transaction_code', 'LIKE', '%'.$search.'%')
-                        ->with('shipping')
-                        ->orderBy('id', 'DESC')
-                        ->paginate(10);
-        } else {
-            $shippings = Shipping::where('status', '!=', 9)
-                        ->where('status', '!=', 0)
-                        ->where('status', '!=', 2)
-                        ->where('status', '!=', 6)
-                        ->with('shipping')
-                        ->orderBy('id', 'DESC')
-                        ->paginate(10);
+            if (!empty($search)) {
+                $shippings = Transaction::where('status', 1)
+                            ->where('status', 3)
+                            ->where('status', 4)
+                            ->where('status', 5)
+                            ->where('transaction_code', 'LIKE', '%'.$search.'%')
+                            ->with('shipping')
+                            ->orderBy('id', 'DESC')
+                            ->paginate($list_perpage);
+            } else {
+                $shippings = Transaction::where('status', 3)
+                            // ->with('shipping')
+                            ->orderBy('id', 'DESC')
+                            ->paginate($list_perpage);
+            }
+
+            return view('admin.shipping.table-data', compact('shippings'));
         }
+    }
 
-        return view('admin.shipping.table-data', compact('shippings'));
+    public function getKurir()
+    {
+        $kurir = User::where('status', '!=', 9)
+                ->where('level_id', 6)
+                ->orderBy('name', 'ASC')
+                ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $kurir
+        ], 200);
     }
 
     /**
@@ -68,7 +87,41 @@ class ShippingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($this->authorize('MOD1208-create')) {
+            $rules = [
+                'transaction_id' => 'required',
+                'user_id'        => 'required',
+                'tanggal_kirim'  => 'required|date',
+            ];
+
+            $pesan = [
+                'transaction_id.required' => 'Data transaksi tidak ada. Silahkan refresh table.',
+                'user_id.required'        => 'Anda wajib memilih Kurir.',
+                'tanggal_kirim.required'  => 'Tanggal Pengiriman wajib di isi.',
+                'tanggal_kirim.date'      => 'Tanggal Pengiriman menggunakan format YYYY-MM-DD.'
+            ];
+
+            $validasi = Validator::make($request->all(), $rules, $pesan);
+
+            if ($validasi->fails()) {
+                return response()->json([
+                    'error'   => true,
+                    'message' => $validasi->errors()
+                ], 422);
+            }
+
+            $shipping = Shipping::create([
+                'transaction_id' => $request->transaction_id,
+                'user_id'        => $request->user_id,
+                'tanggal_kirim'  => $request->tanggal_kirim->toDateString()
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil melakukan penambahan data pengiriman Barang.',
+                'data'    => $shipping
+            ], 200);
+        }
     }
 
     /**
@@ -79,7 +132,9 @@ class ShippingController extends Controller
      */
     public function show($id)
     {
-        //
+        if ($this->authorize('MOD1208-read')) {
+            // code...
+        }
     }
 
     /**
@@ -90,7 +145,9 @@ class ShippingController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ($this->authorize('MOD1208-edit')) {
+            // code...
+        }
     }
 
     /**
@@ -102,7 +159,9 @@ class ShippingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($this->authorize('MOD1208-update')) {
+            // code...
+        }        
     }
 
     /**
@@ -113,6 +172,8 @@ class ShippingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($this->authorize('MOD1208-delete')) {
+            // code...
+        }
     }
 }

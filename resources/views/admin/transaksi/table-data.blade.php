@@ -1,7 +1,7 @@
 <div class="table-responsive">
 	<table class="table table-stripped table-hover table-bordered">
 		<thead>
-			<tr>
+			<tr align="center">
 				<th>No</th>
 				<th>ID</th>
 				<th>Tanggal</th>
@@ -14,12 +14,12 @@
 		<tbody>
 			@forelse($transactions as $index => $item)
 			<tr>
-				<td>{{ $transactions->firstItem() + $index }}</td>
-				<td>{{ $item->transaction_code }}</td>
-				<td>{{ $item->transaction_date }}</td>
-				<td>{{ $item->total_item }}</td>
-				<td>{{ number_format($item->sub_total_price) }}</td>
-				<td>
+				<td align="center">{{ $transactions->firstItem() + $index }}</td>
+				<td align="center">{{ $item->transaction_code }}</td>
+				<td align="center">{{ $item->transaction_date }}</td>
+				<td align="center">{{ $item->total_item }}</td>
+				<td align="center">{{ number_format($item->sub_total_price) }}</td>
+				<td align="center">
 					@if($item->status == 0)
 					<div class="badge badge-warning">{{ $item->status_transaksi }}</div>
 					@elseif($item->status == 1)
@@ -38,7 +38,7 @@
 					<div class="badge badge-warning">{{ $item->status_transaksi }}</div>
 					@endif
 				</td>
-				<td>
+				<td align="center">
 					<div class="dropdown">
 						<botton class="btn btn-primary" type="button" id="actionMenu{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Aksi

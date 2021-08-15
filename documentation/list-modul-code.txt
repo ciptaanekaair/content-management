@@ -14,6 +14,8 @@ MOD1007 = Payment Codes.
 
 MOD1008 = Transaction.
 MOD1108 = Payment Transaction. [need input]
+MOD1208 = Shipping. [need input]
+MOD1308 = Master Kurir. [need input]
 MOD1300 = Provinsi Modul.
 MOD1301 = Kota Modul.
 MOD2001 = Laporan Transaksi.
@@ -30,3 +32,6 @@ dan hanya akan dapat di baca oleh pemilik role access: 'spesial'. Berikut ini ad
 1 = active.
 5 = Banned.
 9 = sudah terhapus (softdelete).
+
+
+Kurir = 

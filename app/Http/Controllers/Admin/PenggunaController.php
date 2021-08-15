@@ -50,7 +50,7 @@ class PenggunaController extends Controller
                     ['name', 'LIKE', '%'.$search.'%']
                 ])
                 ->orWhere('email', 'LIKE', '%'.$search.'%')
-                ->orderBy('id', 'ASC')
+                ->orderBy('id', 'DESC')
                 ->paginate($list_perpage);
             } else {
 
@@ -58,7 +58,7 @@ class PenggunaController extends Controller
                     ['status', '!=', 9],
                     ['level_id', '!=', 4]
                 ])
-                ->orderBy('id', 'ASC')
+                ->orderBy('id', 'DESC')
                 ->paginate($list_perpage);
             }
 

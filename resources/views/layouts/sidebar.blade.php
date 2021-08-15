@@ -56,6 +56,11 @@
                     <i class="fas fa-cart-arrow-down"></i> <span>Transaksi</span>
                 </a>
                 <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('payment-methodes*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('payment-methodes.index') }}">Payment Method</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
                     <li class="{{ request()->routeIs('transactions.index') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('transactions.index') }}">List Transaksi</a>
                     </li>
@@ -63,7 +68,7 @@
             </li>
             <li class="dropdown {{ request()->routeIs('shippings*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fas fa-cart-arrow-down"></i> <span>Pengiriman</span>
+                    <i class="fas fa-truck"></i> <span>Pengiriman</span>
                 </a>
                 <ul class="dropdown-menu">
                     <li class="{{ request()->routeIs('shippings.index') ? 'active' : '' }}">
@@ -107,16 +112,6 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown {{ request()->routeIs('payment-methodes*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fa fa-gears"></i> <span>Payment Method</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('payment-methodes*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('payment-methodes.index') }}">Payment Method</a>
-                    </li>
-                </ul>
-            </li>
             <li class="dropdown {{ request()->routeIs('levels*') ? 'active' : '' }}
                 {{ request()->routeIs('roles*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
@@ -142,6 +137,11 @@
                         <a class="nav-link" href="{{ route('banners.index') }}">Banner</a>
                     </li>
                 </ul>
+            </li>
+            <li class="dropdown {{ request()->routeIs('payment-methodes*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fa fa-gear"></i> <span>Website Setting</span>
+                </a>
             </li>
         </ul>
     </aside>

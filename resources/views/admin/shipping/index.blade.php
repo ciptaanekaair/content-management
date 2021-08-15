@@ -7,8 +7,8 @@
 @section('content')
 <div class="row mb-3">
 	<div class="col-12">
-		<button onclick="newData()" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp Tambah Data</button> &nbsp&nbsp
-		<a href="{{ route('product-categories.data.export') }}" target="_blank" class="btn btn-warning">
+		<button onclick="refresh()" class="btn btn-success"><i class="fa fa-refresh"></i> &nbsp Refresh</button> &nbsp&nbsp
+		<a href="" target="_blank" class="btn btn-warning">
 			<i class="fa fa-file-excel-o"></i> &nbsp Export Data
 		</a>
 	</div>
@@ -34,9 +34,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="card-body p-0">
+			<div class="card-body">
 				<div class="table-data">
-					@include('admin.shipping.table-data')
 				</div>
 				<input type="hidden" name="perpage" id="posisi_page">
 			</div>
@@ -46,15 +45,17 @@
 @endsection
 
 @section('formodal')
-	@include('admin.shipping.form')
 	@include('admin.modal-loading')
 @endsection
 
 @section('jq-script')
 <script type="text/javascript">
+const loadingModal = $('#modal-loading');
 let table, save_method, page, perpage, search, url, data;
 
 $(function() {
+	fetch_table(1, 10, '');
+
 	$('#perpage').on('change', function() {
 		perpage = $(this).val();
 		search  = $('#pencarian').val();
@@ -95,23 +96,24 @@ function newData() {
 
 
 function fetch_table(page, perpage, search) {
+	loadingModal.modal('show');
 	$.ajax({
-		url: '{{ route("product-catetgories.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
-		type: 'GET',
-		success: function(data) {
-			$("#modal-loading").modal('hide');
-			$('.table-data').html(data);
-		},
-		error: function (response) {
-			Swal.fire(
-				'Error!',
-				response.responseJSON.errors.message,
-				'error'
-			);
-		}
+		url: '{{ route("shippings.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
+		type: 'GET'
+	})
+	.done(response => {
+		loadingModal.modal('hide');
+		$('.table-data').html(response);
+	})
+	.fail(error => {
+		loadingModal.modal('hide');
+		// 
 	});
 }
 
+function refresh() {
+	fetch_table(1, 10, '');
+}
 
 function formDeleteReset() {
 	$('#modal-delete form')[0].reset();
@@ -121,6 +123,10 @@ function formReset() {
 	$('#modal-form form')[0].reset();
 }
 
+// Insert
 
+// Update
+
+// Delete
 </script>
 @endsection

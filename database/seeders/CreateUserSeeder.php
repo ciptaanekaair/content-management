@@ -47,6 +47,12 @@ class CreateUserSeeder extends Seeder
             'status'       => 1
         ]);
         Level::create([
+            'id'           => 6,
+            'nama_level'   => 'Kurir',
+            'detail_level' => 'User khusus untuk para staff pengiriman barang.',
+            'status'       => 1
+        ]);
+        Level::create([
             'id'           => 9,
             'nama_level'   => 'Banned User',
             'detail_level' => 'User dengan hak akses ini, merupakan user yang di blok/banned oleh Admin.',

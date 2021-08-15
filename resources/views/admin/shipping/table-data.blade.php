@@ -4,8 +4,8 @@
       <tr>
         <th width="100">No</th>
         <th>No. Transaksi</th>
-        <th>Tgl Transansaksi</th>
-        <th>Jumlah Item</th>
+        <th><center>Tgl Transansaksi</center></th>
+        <th><center>Jumlah Item</center></th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -17,29 +17,31 @@
             {{ $shippings->firstItem() + $index }}
           </td>
           <td>{{ $item->transaction_code }}</td>
-          <td>{{ $item->transaction_date }}</td>
-          <td>{{ $item->total_item }}</td>
-          <td>
-            @if ($item->status == 1)
-              <div class="badge badge-success">active</div>
-            @else
-              <div class="badge badge-warning">draft</div>
-            @endif
+          <td align="center">{{ $item->transaction_date }}</td>
+          <td align="center">{{ $item->total_item }}</td>
+          <td align="center">
+            <div class="badge badge-info">{{ $item->status_transaksi }}</div>
           </td>
           <td>
+            @if(empty($item->shipping))
               <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-primary">
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-truck"></i>
               </button>
-              <button onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger">
-                <i class="fa fa-trash"></i>
+            @elseif($item->shipping->status == 0)
+              <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-primary">
+                <i class="fa fa-truck"></i>
+              </button>
+            @endif
+              <button onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-primary">
+                <i class="fa fa-eye"></i>
               </button>
           </td>
         </tr>
         @empty
         <tr>
           <td colspan="6">
-            <span style="font-weight: bold; text-align: center;">
-              Belum ada data transaksi yang siap untuk proses pengiriman.
+            <span style="font-weight: bold;">
+              <center>Belum ada data transaksi yang siap untuk proses pengiriman.</center>
             </span>
           </td>
         </tr>
@@ -47,7 +49,7 @@
       <tr>
         <td colspan="5">
           <div class="text-center">
-            {{ $pCategory->links() }}
+            {{ $shippings->links() }}
           </div>
         </td>
       </tr>
