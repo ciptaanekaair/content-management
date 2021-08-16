@@ -46,6 +46,7 @@
 
 @section('formodal')
 	@include('admin.modal-loading')
+	@include('admin.shipping.form')
 @endsection
 
 @section('jq-script')
@@ -62,6 +63,11 @@ $(function() {
 		page    = $('#posisi_page').val();
 
 		fetch_table(page, perpage, search);
+	});
+
+	$('#shipping_form').on('submit', function(e) {
+		e.preventDefault();
+		createShipping();
 	});
 
 	$('body').on('click', '.inline-flex a', function(e) {
@@ -94,6 +100,19 @@ function newData() {
 	$('#modal-form').modal('show');
 }
 
+function addShipping (id) {
+	$.ajax({
+		url: '{{ url("data/shippings/transaction") }}/'+id,
+		type: 'GET'
+	})
+	.done(data => {
+		$('#shipping-form-title').text('Pengiriman untuk transaksi: '+data.data.id);
+		$('#transaction_id').val(data.data.id);
+		$('#transaction_code').val(data.data.transaction_code);
+		$('#modal-shipping').modal('show');
+	})
+	.fail(response => {});
+}
 
 function fetch_table(page, perpage, search) {
 	loadingModal.modal('show');
@@ -120,10 +139,30 @@ function formDeleteReset() {
 }
 
 function formReset() {
-	$('#modal-form form')[0].reset();
+	$('#modal-shipping form')[0].reset();
 }
 
 // Insert
+function createShipping() {
+	perpage = $('#perpage').val();
+	search  = $('#pencarian').val();
+	page    = $('#posisi_page').val();
+
+	$.ajax({
+		url: '{{ route("shippings.store") }}',
+		type: 'POST',
+		data: $('#shipping_form').serialize(),
+	})
+	.done(data => {
+		Swal.fire('Success', data.message, 'success');
+		formReset();
+		$('#modal-shipping').modal('hide');
+		fetch_table(1, perpage, search);
+	})
+	.fail(response => {
+		console.log(response);
+	})
+}
 
 // Update
 

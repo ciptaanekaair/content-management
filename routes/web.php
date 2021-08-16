@@ -99,6 +99,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // Shipping
     Route::resource('shippings', App\Http\Controllers\Admin\ShippingController::class);
+    Route::get('data/shippings/transaction/{id}', [App\Http\Controllers\Admin\ShippingController::class, 'getTransactions'])->name('shippings.getTransactions');
     Route::get('data/shippings', [App\Http\Controllers\Admin\ShippingController::class, 'getData'])->name('shippings.data');
 
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');

@@ -23,16 +23,10 @@
             <div class="badge badge-info">{{ $item->status_transaksi }}</div>
           </td>
           <td>
-            @if(empty($item->shipping))
-              <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-primary">
+              <button onclick="addShipping({{ $item->id }})" class="btn btn-sm btn-primary">
                 <i class="fa fa-truck"></i>
               </button>
-            @elseif($item->shipping->status == 0)
-              <button onclick="editData({{ $item->id }})" class="btn btn-sm btn-primary">
-                <i class="fa fa-truck"></i>
-              </button>
-            @endif
-              <button onclick="confirmDelete({{ $item->id }})" class="btn btn-sm btn-primary">
+              <button onclick="seeDetail({{ $item->id }})" class="btn btn-sm btn-primary">
                 <i class="fa fa-eye"></i>
               </button>
           </td>

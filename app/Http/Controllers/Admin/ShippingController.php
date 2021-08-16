@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Validator;
 
 class ShippingController extends Controller
 {
@@ -18,15 +19,12 @@ class ShippingController extends Controller
     public function index()
     {
         if ($this->authorize('MOD1208-read')) {
-            $shippings = Transaction::where('status', '!=', 9)
-                        ->where('status', '!=', 0)
-                        ->where('status', '!=', 2)
-                        ->where('status', '!=', 6)
-                        ->where('status', '!=', 7)
-                        ->orderBy('id', 'DESC')
-                        ->paginate(10);
+            $kurirs = User::where('status', '!=', 9)
+                    ->where('level_id', 6)
+                    ->orderBy('name', 'ASC')
+                    ->get();
 
-            return view('admin.shipping.index', compact('shippings'));
+            return view('admin.shipping.index', compact('kurirs'));
         }
     }
 
@@ -67,6 +65,23 @@ class ShippingController extends Controller
             'success' => true,
             'data' => $kurir
         ], 200);
+    }
+
+    public function getTransactions($id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!empty($transaction)) {
+            return response()->json([
+                'success' => true,
+                'data' => $transaction
+            ], 200);
+        }
+
+        return response()->json([
+            'error'   => true,
+            'message' => 'Gagal mengambil data transaksi dari database. Silahkan refresh table.'
+        ], 404);
     }
 
     /**
@@ -113,8 +128,14 @@ class ShippingController extends Controller
             $shipping = Shipping::create([
                 'transaction_id' => $request->transaction_id,
                 'user_id'        => $request->user_id,
-                'tanggal_kirim'  => $request->tanggal_kirim->toDateString()
+                'tanggal_kirim'  => $request->tanggal_kirim,
+                'keterangan'     => $request->keterangan,
+                'status'         => $request->status
             ]);
+
+            $transaksi = Transaction::find($request->transaction_id);
+            $transaksi->status = 4;
+            $transaksi->update();
 
             return response()->json([
                 'success' => true,

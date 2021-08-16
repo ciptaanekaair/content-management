@@ -13,7 +13,7 @@ class Shipping extends Model
         'transaction_id',
         'tanggal_kirim',
         'tanggal_sampai',
-        'kurir_id',
+        'user_id',
         'keterangan',
         'status'
     ];
