@@ -63,24 +63,29 @@
               <canvas id="statisticPenjualan" height="182"></canvas>
               <div class="statistic-details mt-sm-4">
                 <div class="statistic-details-item">
-                  <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 7%</span>
-                  <div class="detail-value">$243</div>
-                  <div class="detail-name">Today's Sales</div>
+                  <span class="text-muted"></span>
+                  <div class="detail-value-1"></div>
+                  <div class="detail-name-1"></div>
                 </div>
                 <div class="statistic-details-item">
-                  <span class="text-muted"><span class="text-danger"><i class="fas fa-caret-down"></i></span> 23%</span>
-                  <div class="detail-value">$2,902</div>
-                  <div class="detail-name">This Week's Sales</div>
+                  <span class="text-muted"></span>
+                  <div class="detail-value-2"></div>
+                  <div class="detail-name-2"></div>
                 </div>
                 <div class="statistic-details-item">
-                  <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span>9%</span>
-                  <div class="detail-value">$12,821</div>
-                  <div class="detail-name">This Month's Sales</div>
+                  <span class="text-muted"></span>
+                  <div class="detail-value-3"></div>
+                  <div class="detail-name-3"></div>
                 </div>
                 <div class="statistic-details-item">
-                  <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 19%</span>
-                  <div class="detail-value">$92,142</div>
-                  <div class="detail-name">This Year's Sales</div>
+                  <span class="text-muted"></span>
+                  <div class="detail-value-4"></div>
+                  <div class="detail-name-4"></div>
+                </div>
+                <div class="statistic-details-item">
+                  <span class="text-muted"></span>
+                  <div class="detail-value-5"></div>
+                  <div class="detail-name-5"></div>
                 </div>
               </div>
             </div>
@@ -132,7 +137,7 @@ var statisticPenjualan = new Chart(ctx, {
         },
         ticks: {
           callbacks: function(value) {
-            return addCommas(value);
+            return numberWithCommas(value);
           },
           beginAtZero: true
         }
@@ -157,6 +162,16 @@ var updateChart = function() {
     success: function(data) {
       statisticPenjualan.data.labels = data.old_month_word;
       statisticPenjualan.data.datasets[0].data = data.total_transaksi;
+      $('.detail-name-1').text(data.old_month_word[0]);
+      $('.detail-value-1').text('Rp. '+numberWithCommas(data.total_transaksi[0]));
+      $('.detail-name-2').text(data.old_month_word[1]);
+      $('.detail-value-2').text('Rp. '+numberWithCommas(data.total_transaksi[1]));
+      $('.detail-name-3').text(data.old_month_word[2]);
+      $('.detail-value-3').text('Rp. '+numberWithCommas(data.total_transaksi[2]));
+      $('.detail-name-4').text(data.old_month_word[3]);
+      $('.detail-value-4').text('Rp. '+numberWithCommas(data.total_transaksi[3]));
+      $('.detail-name-5').text(data.old_month_word[4]);
+      $('.detail-value-5').text('Rp. '+numberWithCommas(data.total_transaksi[4]));
       statisticPenjualan.update();
     },
     error: function(data){
@@ -167,17 +182,8 @@ var updateChart = function() {
 
 updateChart();
 
-function addCommas(nStr)
-{
-    nStr += '';
-    x = nStr.split('.');
-    x1 = x[0];
-    x2 = x.length > 1 ? '.' + x[1] : '';
-    var rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-        x1 = x1.replace(rgx, '$1' + ',' + '$2');
-    }
-    return x1 + x2;
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 </script>
 
