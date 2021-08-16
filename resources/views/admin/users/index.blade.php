@@ -16,14 +16,20 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <div class="col-lg-3 col-md-12">
+          <div class="col-lg-2 col-md-12">
             <select name="perpage" id="perpage" class="form-control">
               <option value="10" selected>10</option>
               <option value="50">50</option>
               <option value="100">100</option>
             </select>
           </div>
-          <div class="col-lg-9 col-md-12">
+          <div class="col-lg-4 col-md-12">
+            <select name="jenis_akun" id="jenis_akun" class="form-control">
+              <option value="0" selected>Perorangan</option>
+              <option value="1">Perusahaan</option>
+            </select>
+          </div>
+          <div class="col-lg-6 col-md-12">
             <div class="card-header-form">
               <div class="float-right">
                 <form id="form-search">
@@ -65,8 +71,18 @@ $(function() {
     perpage = $(this).val();
     search  = $('#pencarian').val();
     page    = $('#posisi_page').val();
+    jenis_akun = $('#jenis_akun').val();
 
-    fetch_table(page, perpage, search);
+    fetch_table(page, perpage, search, jenis_akun);
+  });
+
+  $('#jenis_akun').on('change', function() {
+    jenis_akun = $(this).val();
+    search     = $('#pencarian').val();
+    page       = $('#posisi_page').val();
+    perpage    = $('#perpage').val();
+
+    fetch_table(page, perpage, search, jenis_akun);
   });
 
   $('#user_form').on('submit', function(e){
@@ -76,9 +92,10 @@ $(function() {
 
     var id = $('#user_id').val();
 
-    perpage = $('#perpage').val();
-    search  = $('#pencarian').val();
-    page    = $('#posisi_page').val();
+    perpage    = $('#perpage').val();
+    search     = $('#pencarian').val();
+    page       = $('#posisi_page').val();
+    jenis_akun = $('#jenis_akun').val();
 
     if (save_method == "update") url = "{{ url('pengguna') }}/"+id;
     else url = "{{ route('pengguna.store') }}";
@@ -97,7 +114,7 @@ $(function() {
           data.message,
           'success'
         );
-        fetch_table(page, perpage, search);
+        fetch_table(page, perpage, search, jenis_akun);
       }, error: function(response) {
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nameError').text(response.responseJSON.errors.name);
@@ -119,9 +136,10 @@ $(function() {
 
     var id = $('#detail_id').val();
 
-    perpage = $('#perpage').val();
-    search  = $('#pencarian').val();
-    page    = $('#posisi_page').val();
+    perpage    = $('#perpage').val();
+    search     = $('#pencarian').val();
+    page       = $('#posisi_page').val();
+    jenis_akun = $('#jenis_akun').val();
 
     url = "{{ url('pengguna-detail') }}/"+id;
 
@@ -139,7 +157,7 @@ $(function() {
           data.message,
           'success'
         );
-        fetch_table(page, perpage, search);
+        fetch_table(page, perpage, search, jenis_akun);
       }, error: function(response) {
         Swal.fire('Error!', 'Silahkan cek kembali pengisian form anda!', 'error');
         $('#nama_ptError').text(response.responseJSON.errors.nama_pt);
@@ -154,12 +172,14 @@ $(function() {
 
   // start script pencarian
   $('input[name="pencarian"]').bind('change paste', function(){
-    search = $(this).val();
-    perpage = $('#perpage').val();
-    page    = 1;
+    search     = $(this).val();
+    perpage    = $('#perpage').val();
+    page       = 1;
+    jenis_akun = $('#jenis_akun').val();
 
-    fetch_table(page, perpage, search);
-  }); // end pencarian
+    fetch_table(page, perpage, search, jenis_akun);
+  });
+  // end pencarian
 
   // start script delete
   $('#user_delete_form').on('submit', function(e) {
@@ -168,10 +188,11 @@ $(function() {
     var id         = $('#userid_delete').val();
     var total_data = "{{ $users->total() }}";
 
-      perpage = $('#perpage').val();
-      search  = $('#pencarian').val();
+      perpage    = $('#perpage').val();
+      search     = $('#pencarian').val();
+      jenis_akun = $('#jenis_akun').val();
     if (total_data <= 10) {
-      page    = $('#posisi_page').val(1);
+      page = $('#posisi_page').val(1);
     } else {
       page = $('#posisi_page').val();
     }
@@ -181,7 +202,7 @@ $(function() {
       type: 'POST',
       data: $(this).serialize(),
       success: function(data) {
-        fetch_table(page, perpage, search);
+        fetch_table(page, perpage, search, jenis_akun);
         $('#modal-delete').modal('hide');
         formDeleteReset();
         Swal.fire(
@@ -203,13 +224,14 @@ $(function() {
   $('body').on('click', '.paginasi a', function(e) {
     e.preventDefault();
 
-    page    = $(this).attr('href').split('page=')[1];
-    search  = $('#pencarian').val();
-    perpage = $('#perpage').val();
+    page       = $(this).attr('href').split('page=')[1];
+    search     = $('#pencarian').val();
+    perpage    = $('#perpage').val();
+    jenis_akun = $('#jenis_akun').val();
 
     $('#posisi_page').val(page);
 
-    fetch_table(page, perpage, search);
+    fetch_table(page, perpage, search, jenis_akun);
    });
 });
 
@@ -234,17 +256,19 @@ function resetErrorShippingForm() {
 
 function refresh() {
   $('#pencarian').val('');
-  perpage = $('#perpage').val();
-  search  = '';
-  page    = 1;
+  perpage    = $('#perpage').val();
+  search     = '';
+  page       = 1;
+  jenis_akun = $('#jenis_akun').val();
 
-  fetch_table(page, perpage, search);
+  fetch_table(page, perpage, search, jenis_akun);
 }
 
 function cariData(data) {
-  perpage = $('#perpage').val();
+  perpage    = $('#perpage').val();
+  jenis_akun = $('#jenis_akun').val();
   
-  fetch_table(1, perpage, data);
+  fetch_table(1, perpage, data, jenis_akun);
 }
 
 function newUserData() {
@@ -258,9 +282,9 @@ function newUserData() {
   $('#modal-new').modal('show');
 }
 
-function fetch_table(page, perpage, search) {
+function fetch_table(page, perpage, search, jenis_akun) {
   $.ajax({
-    url: '{{ route("pengguna.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
+    url: '{{ route("pengguna.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search+'&jenis_akun='+jenis_akun,
     type: 'GET',
     success: function(data) {
       $('.table-data').html(data);

@@ -14,14 +14,14 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<div class="col-lg-3 col-md-12">
+				<div class="col-lg-2 col-md-12">
 					<select name="perpage" id="perpage" class="form-control">
 						<option value="10" selected>10</option>
 						<option value="50">50</option>
 						<option value="100">100</option>
 					</select>
 				</div>
-				<div class="col-lg-3 col-md-12">
+				<div class="col-lg-4 col-md-12">
 					<select name="jenis_transaksi" id="jenis_transaksi" class="form-control">
 						<option value="0" selected>Unpaid</option>
 						<option value="2">Pembayaran Belum terverifikasi</option>

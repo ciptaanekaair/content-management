@@ -42,11 +42,13 @@ class PenggunaController extends Controller
 
             $list_perpage = $request->get('list_perpage');
             $search       = $request->get('search');
+            $jenis_akun   = $request->get('jenis_akun');
 
             if (!empty($search)) {
                 $users = User::where([
                     ['status', '!=', 9],
-                    ['level_id', '!=', 4],
+                    ['company', $jenis_akun],
+                    ['level_id', 1],
                     ['name', 'LIKE', '%'.$search.'%']
                 ])
                 ->orWhere('email', 'LIKE', '%'.$search.'%')
@@ -56,7 +58,8 @@ class PenggunaController extends Controller
 
                 $users = User::where([
                     ['status', '!=', 9],
-                    ['level_id', '!=', 4]
+                    ['company', $jenis_akun],
+                    ['level_id', 1]
                 ])
                 ->orderBy('id', 'DESC')
                 ->paginate($list_perpage);
