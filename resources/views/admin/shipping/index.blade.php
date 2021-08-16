@@ -202,7 +202,7 @@ function formReset() {
 	$('#modal-shipping form')[0].reset();
 }
 
-// Insert
+// Insert & Update
 function createShipping() {
 	let id = $('#shipping_id').val();
 
@@ -228,9 +228,5 @@ function createShipping() {
 		Swal.fire('Error', response.message, 'error');
 	})
 }
-
-// Update
-
-// Delete
 </script>
 @endsection

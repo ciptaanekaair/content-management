@@ -14,12 +14,12 @@ class CreateGeneralSettingsTable extends Migration
     {
         Schema::create('general_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('website_title');
-            $table->string('website_logo');
-            $table->text('keywords');
-            $table->longText('website_description');
-            $table->string('midtrans_client_token');
-            $table->string('midtrans_server_token');
+            $table->string('website_title')->nullable();
+            $table->string('website_logo')->nullable();
+            $table->text('keywords')->nullable();
+            $table->longText('website_description')->nullable();
+            $table->string('midtrans_client_token')->nullable();
+            $table->string('midtrans_server_token')->nullable();
             $table->integer('status')->default(1); // active; 1, maintenance: 2, construction 3.
             $table->timestamps();
         });

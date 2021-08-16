@@ -138,9 +138,9 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown {{ request()->routeIs('payment-methodes*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fa fa-gear"></i> <span>Website Setting</span>
+            <li >
+                <a href="{{ url('general-settings') }}" class="nav-link">
+                    <i class="fa fa-gear"></i> <span>General Setting</span>
                 </a>
             </li>
         </ul>

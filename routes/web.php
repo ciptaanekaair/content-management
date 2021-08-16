@@ -135,6 +135,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::resource('banners', App\Http\Controllers\Admin\BannerController::class);
     Route::get('data/banners', [App\Http\Controllers\Admin\BannerController::class, 'getData'])->name('banners.data');
 
+    // Roles
     Route::post('roles/attach', [App\Http\Controllers\Admin\AttachingLevelController::class, 'attachLevel'])->name('roles.attach'); // attaching level
     Route::post('roles/unattach', [App\Http\Controllers\Admin\AttachingLevelController::class, 'unattachLevel'])->name('roles.unattach'); // unattaching level
+
+    // Website Settings
+    Route::get('general-settings', [App\Http\Controllers\Admin\GeneralSettingController::class, 'index'])->name('general-settings.index');
+    Route::post('general-settings/setting', [App\Http\Controllers\Admin\GeneralSettingController::class, 'simpanSetting'])->name('general-settings.simpanSetting');
+    Route::post('general-settings/seo', [App\Http\Controllers\Admin\GeneralSettingController::class, 'simpanSeo'])->name('general-settings.simpanSeo');
+    Route::post('general-settings/midtrans', [App\Http\Controllers\Admin\GeneralSettingController::class, 'simpanMidtrans'])->name('general-settings.simpanMidtrans');
 });
