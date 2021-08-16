@@ -121,7 +121,7 @@ function cariData(data) {
 
 
 function newData() {
-	save_method = 'create';
+	save_method = 'add';
 	formReset();
 	$('.modal-title').text('Tambah data baru');
 	$('#formMethod').val('POST');
@@ -131,7 +131,7 @@ function newData() {
 
 function addShipping (id) {
 	$.ajax({
-		url: '{{ url("data/shippings/transaction") }}',
+		url: '{{ url("data/shippings/transaction") }}/'+id,
 		type: 'GET'
 	})
 	.done(data => {
