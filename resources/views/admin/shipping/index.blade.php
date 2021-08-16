@@ -131,7 +131,7 @@ function newData() {
 
 function addShipping (id) {
 	$.ajax({
-		url: '{{ url("data/shippings/transaction") }}/'+id,
+		url: '{{ url("data/shippings/transaction") }}',
 		type: 'GET'
 	})
 	.done(data => {
