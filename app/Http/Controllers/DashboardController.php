@@ -20,9 +20,12 @@ class DashboardController extends Controller
         {
             if ($this->authorize('MOD1001-read')) {
     
-                $userCount    = User::where('status', '!=', 0)->count();
-                $productCount = Product::where('status', '!=', 0)->count();
-                $trnsctCount  = Transaction::where('status', 1)->count();
+                $userCount       = User::where('status', '!=', 0)->count();
+                $productCount    = Product::where('status', '!=', 0)->count();
+                $trnsctCount     = Transaction::where('status', 1)->count();
+                $verifikasiBayar = Transaction::where('status', 2)->count();
+                $pengemasan      = Transaction::where('status', 3)->count();
+                $pengiriman      = Transaction::where('status', 3)->count();
 
                 $currentDateTime = Carbon::now();
 
@@ -34,7 +37,16 @@ class DashboardController extends Controller
                     $oldMonthWord[]   = Carbon::now()->subMonths($i)->format('M');
                 }
     
-                return view('main-stisla', compact('userCount', 'productCount', 'trnsctCount', 'oldMonthNumber', 'oldMonthWord'));
+                return view('main-stisla', compact(
+                    'userCount', 
+                    'productCount', 
+                    'trnsctCount', 
+                    'verifikasiBayar', 
+                    'pengemasan', 
+                    'pengiriman', 
+                    'oldMonthNumber', 
+                    'oldMonthWord'
+                ));
             }
         }
 
@@ -58,7 +70,7 @@ class DashboardController extends Controller
         $oldMonthWord   = array();
         $totalTransaksi = array();
 
-        for ($i=4; $i > 0; $i--) {
+        for ($i=2; $i > 0; $i--) {
             $oldMonth         = Carbon::now()->subMonths($i)->format('m');
             $totalTransaksi[] = Transaction::whereYear('transaction_date', $currentYear)
                                 ->whereMonth('transaction_date', $oldMonth)
@@ -71,8 +83,8 @@ class DashboardController extends Controller
             $oldMonthWord[]   = Carbon::now()->subMonths($i)->format('M');
         }
 
-        $oldMonthWord[4]       = Carbon::now()->subMonths($i)->format('M');
-        $totalTransaksi[4]  = Transaction::whereYear('transaction_date', $currentYear)
+        $oldMonthWord[2]       = Carbon::now()->subMonths($i)->format('M');
+        $totalTransaksi[2]  = Transaction::whereYear('transaction_date', $currentYear)
                                 ->whereMonth('transaction_date', $currentMonth)
                                 ->where('status', '!=', 9)
                                 ->where('status', '!=', 0)

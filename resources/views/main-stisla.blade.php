@@ -23,7 +23,7 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 col-12">
               <div class="card card-statistic-1">
-                <div class="card-icon bg-success">
+                <div class="card-icon bg-primary">
                   <i class="fas fa-box"></i>
                 </div>
                 <div class="card-wrap">
@@ -38,7 +38,7 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 col-12">
               <div class="card card-statistic-1">
-                <div class="card-icon bg-warning">
+                <div class="card-icon bg-primary">
                   <i class="far fa-file"></i>
                 </div>
                 <div class="card-wrap">
@@ -51,47 +51,112 @@
                 </div>
               </div>
             </div>
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h4>Statistics Penjualan</h4>
-              <div class="card-header-action">
-                <a class="btn btn-primary">Monthly</a>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1">
+                <div class="card-icon {{ $verifikasiBayar == 0 ? 'bg-primary' : 'bg-warning' }}">
+                  <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Verifikasi Pembayaran</h4>
+                  </div>
+                  <div class="card-body">
+                    {{ $verifikasiBayar }}
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="card-body">
-              <canvas id="statisticPenjualan" height="182"></canvas>
-              <div class="statistic-details mt-sm-4">
-                <div class="statistic-details-item">
-                  <span class="text-muted"></span>
-                  <div class="detail-value-1"></div>
-                  <div class="detail-name-1"></div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1">
+                <div class="card-icon {{ $pengemasan == 0 ? 'bg-primary' : 'bg-warning' }}">
+                  <i class="fas fa-box"></i>
                 </div>
-                <div class="statistic-details-item">
-                  <span class="text-muted"></span>
-                  <div class="detail-value-2"></div>
-                  <div class="detail-name-2"></div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Pengemasan</h4>
+                  </div>
+                  <div class="card-body">
+                    {{ $pengemasan }}
+                  </div>
                 </div>
-                <div class="statistic-details-item">
-                  <span class="text-muted"></span>
-                  <div class="detail-value-3"></div>
-                  <div class="detail-name-3"></div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1">
+                <div class="card-icon {{ $pengiriman == 0 ? 'bg-primary' : 'bg-warning' }}">
+                  <i class="fas fa-truck"></i>
                 </div>
-                <div class="statistic-details-item">
-                  <span class="text-muted"></span>
-                  <div class="detail-value-4"></div>
-                  <div class="detail-name-4"></div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Sedang Dikirim</h4>
+                  </div>
+                  <div class="card-body">
+                    {{ $pengiriman }}
+                  </div>
                 </div>
-                <div class="statistic-details-item">
-                  <span class="text-muted"></span>
-                  <div class="detail-value-5"></div>
-                  <div class="detail-name-5"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Statistics Penjualan</h4>
+                  <div class="card-header-action">
+                    <a class="btn btn-primary">Monthly</a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="statisticPenjualan" height="182"></canvas>
+                  <div class="statistic-details mt-sm-4">
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="detail-value-1"></div>
+                      <div class="detail-name-1"></div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="detail-value-2"></div>
+                      <div class="detail-name-2"></div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="detail-value-3"></div>
+                      <div class="detail-name-3"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Statistics Visitors</h4>
+                  <div class="card-header-action">
+                    <a class="btn btn-primary">Weekly</a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="statisticVisitor" height="182"></canvas>
+                  <div class="statistic-details mt-sm-4">
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="detail-value-1"></div>
+                      <div class="detail-name-1"></div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="detail-value-2"></div>
+                      <div class="detail-name-2"></div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="detail-value-3"></div>
+                      <div class="detail-name-3"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
 @endsection
 
@@ -139,7 +204,7 @@ var statisticPenjualan = new Chart(ctx, {
           callbacks: function(value) {
             return numberWithCommas(value);
           },
-          beginAtZero: true
+          stepSize: 50000
         }
       }],
       xAxes: [{
@@ -169,10 +234,6 @@ var updateChart = function() {
       $('.detail-value-2').text('Rp. '+numberWithCommas(data.total_transaksi[1]));
       $('.detail-name-3').text(data.old_month_word[2]);
       $('.detail-value-3').text('Rp. '+numberWithCommas(data.total_transaksi[2]));
-      $('.detail-name-4').text(data.old_month_word[3]);
-      $('.detail-value-4').text('Rp. '+numberWithCommas(data.total_transaksi[3]));
-      $('.detail-name-5').text(data.old_month_word[4]);
-      $('.detail-value-5').text('Rp. '+numberWithCommas(data.total_transaksi[4]));
     },
     error: function(data){
       console.log(data);
