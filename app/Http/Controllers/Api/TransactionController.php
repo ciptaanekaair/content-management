@@ -205,7 +205,8 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::where('user_id', auth()->user()->id)
                         ->where('status', 1)
-                        ->with('paymentMethod', 'transactionDetail.products')
+                        ->orWhere('status', 5)
+                        ->with('paymentMethod', 'shipping.UserData', 'transactionDetail.products')
                         ->get();
 
         if (!empty($transaction)) {

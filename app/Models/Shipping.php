@@ -18,4 +18,14 @@ class Shipping extends Model
         'status'
     ];
 
+    public function TransactionData()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
+
+    public function UserData()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
