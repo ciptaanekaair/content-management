@@ -162,6 +162,7 @@ var updateChart = function() {
     success: function(data) {
       statisticPenjualan.data.labels = data.old_month_word;
       statisticPenjualan.data.datasets[0].data = data.total_transaksi;
+      statisticPenjualan.update();
       $('.detail-name-1').text(data.old_month_word[0]);
       $('.detail-value-1').text('Rp. '+numberWithCommas(data.total_transaksi[0]));
       $('.detail-name-2').text(data.old_month_word[1]);
@@ -171,8 +172,7 @@ var updateChart = function() {
       $('.detail-name-4').text(data.old_month_word[3]);
       $('.detail-value-4').text('Rp. '+numberWithCommas(data.total_transaksi[3]));
       $('.detail-name-5').text(data.old_month_word[4]);
-      $('.detail-value-5').text('Rp. '+numberWithCommas(data.total_transaksi[4]));
-      statisticPenjualan.update();
+      $('.detail-value-5').text('Rp. <b>'+numberWithCommas(data.total_transaksi[4])+'</b>');
     },
     error: function(data){
       console.log(data);

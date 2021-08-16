@@ -24,16 +24,17 @@ class TransaksiController extends Controller
     public function getData(Request $request)
     {
         if ($this->authorize('MOD1008-read')) {
-            $search  = $request->get('search');
-            $perpage = $request->get('list_perpage');
+            $search          = $request->get('search');
+            $perpage         = $request->get('list_perpage');
+            $jenis_transaksi = $request->get('jenis_transaksi');
 
             if (!empty($search)) {
-                $transactions = Transaction::where('status', '!=', 9)
+                $transactions = Transaction::where('status', $jenis_transaksi)
                                 ->where('transaction_code', 'LIKE', '%'.$search.'%')
                                 ->orderBy('id', 'DESC')
                                 ->paginate($perpage);
             } else {
-                $transactions = Transaction::where('status', '!=', 9)
+                $transactions = Transaction::where('status', $jenis_transaksi)
                                 ->orderBy('id', 'DESC')
                                 ->paginate($perpage);
             }
