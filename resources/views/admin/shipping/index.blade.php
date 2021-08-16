@@ -17,14 +17,14 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<div class="col-lg-3 col-md-12">
+				<div class="col-lg-2 col-md-12">
 					<select name="perpage" id="perpage" class="form-control">
 						<option value="10" selected>10</option>
 						<option value="50">50</option>
 						<option value="100">100</option>
 					</select>
 				</div>
-				<div class="col-lg-3 col-md-12">
+				<div class="col-lg-4 col-md-12">
 					<select name="jenis_transaksi" id="jenis_transaksi" class="form-control">
 						<option value="3" selected>Pengemasan</option>
 						<option value="4">Pengiriman</option>
@@ -141,7 +141,9 @@ function addShipping (id) {
 		$('#transaction_code').val(data.data.transaction_code);
 		$('#modal-shipping').modal('show');
 	})
-	.fail(response => {});
+	.fail(response => {
+		Swal.fire('Error', response.message, 'error');
+	});
 }
 
 function editShipping(id) {
@@ -182,7 +184,7 @@ function fetch_table(page, perpage, search, jenis_transaksi) {
 		$('.table-data').html(response);
 	})
 	.fail(error => {
-		// 
+		Swal.fire('Error', response.message, 'error');
 	});
 }
 
@@ -222,7 +224,7 @@ function createShipping() {
 		fetch_table(1, perpage, search, jenis_transaksi);
 	})
 	.fail(response => {
-		console.log(response);
+		Swal.fire('Error', response.message, 'error');
 	})
 }
 
