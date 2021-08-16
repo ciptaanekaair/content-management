@@ -204,7 +204,6 @@ var statisticPenjualan = new Chart(ctx, {
           callbacks: function(value) {
             return numberWithCommas(value);
           },
-          stepSize: 50000
         }
       }],
       xAxes: [{
