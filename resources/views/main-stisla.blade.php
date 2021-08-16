@@ -172,7 +172,7 @@ var updateChart = function() {
       $('.detail-name-4').text(data.old_month_word[3]);
       $('.detail-value-4').text('Rp. '+numberWithCommas(data.total_transaksi[3]));
       $('.detail-name-5').text(data.old_month_word[4]);
-      $('.detail-value-5').text('Rp. <b>'+numberWithCommas(data.total_transaksi[4])+'</b>');
+      $('.detail-value-5').text('Rp. '+numberWithCommas(data.total_transaksi[4]));
     },
     error: function(data){
       console.log(data);

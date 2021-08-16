@@ -135,6 +135,7 @@ function addShipping (id) {
 		type: 'GET'
 	})
 	.done(data => {
+		save_method = 'add';
 		$('#formMethod').val('POST');
 		$('#shipping-form-title').text('Pengiriman untuk transaksi: '+data.data.transaction_code);
 		$('#transaction_id').val(data.data.id);
@@ -205,7 +206,7 @@ function formReset() {
 function createShipping() {
 	let id = $('#shipping_id').val();
 
-	if (save_method == 'add') url = '{{ url("shippings") }}';
+	if (save_method == 'add') url = '{{ route("shippings.store") }}';
 	else url = '{{ url("shippings") }}/'+id;
 
 	perpage         = $('#perpage').val();
