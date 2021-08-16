@@ -11,10 +11,10 @@
       </tr>
     </thead>
     <tbody>
-      @forelse($shippings as $index => $item)
+      @forelse($transactions as $index => $item)
         <tr>
           <td>
-            {{ $shippings->firstItem() + $index }}
+            {{ $transactions->firstItem() + $index }}
           </td>
           <td>{{ $item->transaction_code }}</td>
           <td align="center">{{ $item->transaction_date }}</td>
@@ -23,19 +23,25 @@
             <div class="badge badge-info">{{ $item->status_transaksi }}</div>
           </td>
           <td>
+            @if($item->shipping_status == 99)
               <button onclick="addShipping({{ $item->id }})" class="btn btn-sm btn-primary">
                 <i class="fa fa-truck"></i>
               </button>
-              <button onclick="seeDetail({{ $item->id }})" class="btn btn-sm btn-primary">
-                <i class="fa fa-eye"></i>
+            @else
+              <button onclick="editShipping({{ $item->id }})" class="btn btn-sm btn-warning">
+                <i class="fa fa-truck"></i>
               </button>
+            @endif
+             <!-- <button onclick="seeDetail({{ $item->id }})" class="btn btn-sm btn-primary">
+                <i class="fa fa-eye"></i>
+              </button> -->
           </td>
         </tr>
         @empty
         <tr>
           <td colspan="6">
             <span style="font-weight: bold;">
-              <center>Belum ada data transaksi yang siap untuk proses pengiriman.</center>
+              <center>Belum ada data transaksi.</center>
             </span>
           </td>
         </tr>
@@ -43,7 +49,7 @@
       <tr>
         <td colspan="5">
           <div class="text-center">
-            {{ $shippings->links() }}
+            {{ $transactions->links() }}
           </div>
         </td>
       </tr>

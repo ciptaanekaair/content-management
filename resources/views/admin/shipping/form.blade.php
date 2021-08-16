@@ -10,8 +10,8 @@
 			<form method="POST" id="shipping_form" name="shipping_form">
 				@csrf
 				<div class="modal-body">
-					<input type="hidden" name="shipping_id" id="shipping_id">
 					<input type="hidden" name="_method" id="formMethod">
+					<input type="hidden" name="shipping_id" id="shipping_id">
 	                <input type="hidden" name="transaction_id" id="transaction_id">
 					<div class="row">
 	                    <div class="col-lg-12">
@@ -22,6 +22,10 @@
 	                        <div class="form-group">
 	                            <label for="tanggal_kirim">Tanggal Pengiriman</label>
 	                            <input type="date" name="tanggal_kirim" id="tanggal_kirim" class="form-control">
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="tanggal_sampai">Tanggal Sampai</label>
+	                            <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control">
 	                        </div>
 							<div class="form-group">
 								<label for="user_id">Kurir</label>

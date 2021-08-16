@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $appends = ['status_transaksi'];
+    protected $appends = ['status_transaksi', 'shipping_status'];
 
     public function getStatusTransaksiAttribute()
     {
@@ -41,6 +41,25 @@ class Transaction extends Model
         return $status_transaksi;
     }
 
+    public function shipping()
+    {
+        return $this->hasMany(Shipping::class);
+    }
+
+    public function getShippingStatusAttribute()
+    {
+        $data = $this->shipping()->where('transaction_id', $this->id)->first();
+
+        if (!empty($data)) {
+            $status = $data->status;
+        } else {
+            //  buat status yang menerangkan bahwa tidak ada data shipping.
+            $status = 99;
+        }
+
+        return $status;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -69,10 +88,5 @@ class Transaction extends Model
     public function paymentConfirmation()
     {
         return $this->hasMany(PaymentConfirmation::class, 'transactions_id', 'id');
-    }
-
-    public function shipping()
-    {
-        return $this->hasMany(Shipping::class);
     }
 }

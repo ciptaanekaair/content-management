@@ -31,26 +31,24 @@ class ShippingController extends Controller
     public function getData(Request $request)
     {
         if ($this->authorize('MOD1208-read')) {
-            $search       = $request->get('search');
-            $list_perpage = $request->get('list_perpage');
+            $search          = $request->get('search');
+            $list_perpage    = $request->get('list_perpage');
+            $jenis_transaksi = $request->get('jenis_transaksi');
 
             if (!empty($search)) {
-                $shippings = Transaction::where('status', 1)
-                            ->where('status', 3)
-                            ->where('status', 4)
-                            ->where('status', 5)
+                $transactions = Transaction::where('status', $jenis_transaksi)
                             ->where('transaction_code', 'LIKE', '%'.$search.'%')
                             ->with('shipping')
                             ->orderBy('id', 'DESC')
                             ->paginate($list_perpage);
             } else {
-                $shippings = Transaction::where('status', 3)
+                $transactions = Transaction::where('status', $jenis_transaksi)
                             // ->with('shipping')
                             ->orderBy('id', 'DESC')
                             ->paginate($list_perpage);
             }
 
-            return view('admin.shipping.table-data', compact('shippings'));
+            return view('admin.shipping.table-data', compact('transactions'));
         }
     }
 
@@ -69,7 +67,7 @@ class ShippingController extends Controller
 
     public function getTransactions($id)
     {
-        $transaction = Transaction::find($id);
+        $transaction = Transaction::where('id', $id)->with('shipping')->first();
 
         if (!empty($transaction)) {
             return response()->json([
@@ -181,7 +179,51 @@ class ShippingController extends Controller
     public function update(Request $request, $id)
     {
         if ($this->authorize('MOD1208-update')) {
-            // code...
+            $rules = [
+                'shipping_id'    => 'required',
+                'transaction_id' => 'required',
+                'user_id'        => 'required',
+                'tanggal_kirim'  => 'required',
+            ];
+
+            $pesan = [
+                'shipping_id.required'    => 'Data Shipping tidak ada. silahkan refresh table.',
+                'transaction_id.required' => 'Data transaksi tidak ada. Silahkan refresh table.',
+                'user_id.required'        => 'Anda wajib memilih Kurir.',
+                'tanggal_kirim.required'  => 'Tanggal Pengiriman wajib di isi.'
+            ];
+
+            $validasi = Validator::make($request->all(), $rules, $pesan);
+
+            if ($validasi->fails()) {
+                return response()->json([
+                    'error'   => true,
+                    'message' => $validasi->errors()
+                ], 422);
+            }
+
+            $shipping = Shipping::find($request->shipping_id)->update([
+                'user_id'        => $request->user_id,
+                'tanggal_kirim'  => $request->tanggal_kirim,
+                'keterangan'     => $request->keterangan,
+                'status'         => $request->status
+            ]);
+
+            if ($request->status == 1) {
+                $transaksi = Transaction::find($request->transaction_id);
+                $transaksi->status = 5;
+                $transaksi->update();
+            } else {
+                $transaksi = Transaction::find($request->transaction_id);
+                $transaksi->status = 4;
+                $transaksi->update();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil melakukan perubahan data pengiriman Barang.',
+                'data'    => $shipping
+            ], 200);
         }        
     }
 
