@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\KotaController;
 */
 
 Route::get('/', [DashboardController::class, 'gotoLogin'])->name('welcome');
+Route::get('/google-stats', [DashboardController::class, 'grafikChartDua'])->name('google-stats');
 
 Route::view('/contoh-invoice', 'contoh-invoice')->name('contoh-invoice');
 

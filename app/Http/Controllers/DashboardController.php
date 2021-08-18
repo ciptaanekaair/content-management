@@ -105,7 +105,22 @@ class DashboardController extends Controller
 
     public function grafikChartDua()
     {
-        // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        // // last periode
+        // $periode1End   = Carbon::now();
+        // $periode1Start = Carbon::now()->subDays(6);
+        // // periode 2
+        // $periode2End   = Carbon::now()->subDays(7);
+        // $periode2Start = Carbon::now()->subDays(16);
+        // // periode 3
+        // $periode3End   = Carbon::now()->subDays(17);
+        // $periode3Start = Carbon::now()->subDays(23);
+        // // periode 3
+        // $periode4End   = Carbon::now()->subDays(17);
+        // $periode4Start = Carbon::now()->subDays(23);
+
+        $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+
+        return response()->json(['data' => $analyticsData]);
         // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
     }
 }
