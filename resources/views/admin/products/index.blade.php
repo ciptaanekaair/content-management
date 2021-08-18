@@ -95,12 +95,8 @@ $(function() {
       type: 'POST',
       data: $(this).serialize(),
       beforeSend: function(){
-        // Show image container
-        $("#modal-loading").modal('show');
-      },
       success: function(data) {
         fetch_table(page, perpage, search);
-        $("#modal-loading").modal('hide');
         $('#modal-delete').modal('hide');
         formDeleteReset();
         Swal.fire(
@@ -153,12 +149,7 @@ function fetch_table(page, perpage, search) {
   $.ajax({
     url: '{{ route("product.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search,
     type: 'GET',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       $('.table-data').html(data);
     }
   });
@@ -175,12 +166,7 @@ function seeDetail(id) {
     url: '{{ url("products/detail") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       $('#detail-title').text('Data Product: '+data.data.product_name);
       $('#product_name_text').text(data.data.product_name);
       $('#product_code_text').text(data.data.product_code);
@@ -198,12 +184,7 @@ function confirmDelete(id) {
     url: '{{ url("products") }}/'+id,
     type: 'GET',
     dataType: 'JSON',
-    beforeSend: function(){
-      // Show image container
-      $("#modal-loading").modal('show');
-    },
     success: function(data) {
-      $("#modal-loading").modal('hide');
       $('.modal-title-delete').text('Delete data: '+data.data.product_name);
       $('#product_id').val(data.data.id);
       $('#formMethodD').val('DELETE');

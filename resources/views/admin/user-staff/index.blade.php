@@ -25,8 +25,9 @@
           </div>
           <div class="col-lg-4 col-md-12">
             <select name="jenis_akun" id="jenis_akun" class="form-control">
-              <option value="0" selected>Perorangan</option>
-              <option value="1">Perusahaan</option>
+              <option value="2" selected>Admin Level 1</option>
+              <option value="3">Admin Level 2</option>
+              <option value="6">Kurir</option>
             </select>
           </div>
           <div class="col-lg-6 col-md-12">
