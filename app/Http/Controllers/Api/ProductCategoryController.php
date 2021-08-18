@@ -28,7 +28,9 @@ class ProductCategoryController extends Controller
 
     public function show($slug)
     {
-        $pCategory = ProductCategory::where('slug', $slug)->first();
+        $pCategory = ProductCategory::with('products')
+                    ->where('slug', $slug)
+                    ->first();
 
         if ($pCategory->count() < 1) {
             $response = ['error' => true, 'message' => 'Error! Category yang di pilih tidak terdapat di dalam database. Harap segera hubungi Admin.'];

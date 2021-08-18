@@ -13,7 +13,7 @@
     <ul class="navbar-nav navbar-right">
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="rounded-circle mr-1 d-lg-inline-block">
+                    {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title text-center">{{ Auth::user()->name }}</div>

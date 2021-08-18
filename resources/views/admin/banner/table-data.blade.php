@@ -39,7 +39,7 @@
         </tr>
         @empty
         <tr>
-          <td colspan="5" align="center">
+          <td colspan="6" align="center">
             <b><i>
               Belum ada data Banner, silahkan hubungi IT.
             </i></b>
@@ -47,7 +47,7 @@
         </tr>
       @endforelse
         <tr>
-          <td colspan="5">
+          <td colspan="6">
             <div class="text-center">
               {{ $banners->links('vendor.pagination.simple-tailwind') }}
             </div>

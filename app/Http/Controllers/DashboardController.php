@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Spatie\Analytics\Period;
 use Auth;
 use Response;
 use Redirect;
@@ -100,5 +101,11 @@ class DashboardController extends Controller
             'transaksi_max'   => $maxValue
         ]);
 
+    }
+
+    public function grafikChartDua()
+    {
+        // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
     }
 }

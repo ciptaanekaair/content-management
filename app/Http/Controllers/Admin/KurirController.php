@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Storage;
 
-class KurirController extends Controller
+class UserStaffController extends Controller
 {
     public function index()
     {
@@ -21,7 +21,7 @@ class KurirController extends Controller
         $search       = $request->get('search');
         $list_perpage = $request->get('list_perpage');
 
-        if (!empty()) {
+        if (!empty($search)) {
             $kurirs = User::with('userDetail')
                     ->where('status', '!=', 9)
                     ->where('level_id', 6)

@@ -17,4 +17,9 @@ class ProductCategory extends Model
 
         return $productpicurl;
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
