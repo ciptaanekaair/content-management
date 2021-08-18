@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Analytics;
 use Spatie\Analytics\Period;
 use Auth;
 use Response;
