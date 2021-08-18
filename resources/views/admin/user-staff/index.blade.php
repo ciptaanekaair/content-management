@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('header')
-  <h1>User Management</h1>
+  <h1>User Staff</h1>
 @endsection
 
 @section('content')
@@ -50,7 +50,7 @@
 @endsection
 
 @section('formodal')
-  @include('admin.kurir.form')
+  @include('admin.user-staff.form')
 @endsection
 
 @section('jq-script')

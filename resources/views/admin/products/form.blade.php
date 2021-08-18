@@ -39,8 +39,8 @@
 							</div>
 							<div class="col-md-12 col-lg-6">
 								<div class="form-group">
-									<label for="product_code">Part Code *</label>
-									<input type="text" name="product_code" class="form-control" placeholder="Kode Part" value="{{ old('product_code', $product->product_code) }}">
+									<label for="product_code">Part Number / Part Code *</label>
+									<input type="text" name="product_code" class="form-control" placeholder="Part Number / Part Code" value="{{ old('product_code', $product->product_code) }}">
 									<div class="alert-message">
 										<code id="product_codeError"></code>
 									</div>

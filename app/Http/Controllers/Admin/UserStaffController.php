@@ -20,11 +20,12 @@ class UserStaffController extends Controller
     {
         $search       = $request->get('search');
         $list_perpage = $request->get('list_perpage');
+        $jenis_akun   = $request->get('jenis_akun');
 
         if (!empty($search)) {
             $kurirs = User::with('userDetail')
                     ->where('status', '!=', 9)
-                    ->where('level_id', 6)
+                    ->where('level_id', $jenis_akun)
                     ->where('name', 'LIKE', '%'.$search.'%')
                     ->orWhere('email', 'LIKE', '%'.$search.'%')
                     ->orderBy('id', 'DESC')
@@ -32,7 +33,7 @@ class UserStaffController extends Controller
         } else {
             $kurirs = User::with('userDetail')
                     ->where('status', '!=', 9)
-                    ->where('level_id', 6)
+                    ->where('level_id', $jenis_akun)
                     ->where('name', 'LIKE', '%'.$search.'%')
                     ->orWhere('email', 'LIKE', '%'.$search.'%')
                     ->orderBy('id', 'DESC')
@@ -44,12 +45,12 @@ class UserStaffController extends Controller
 
     public function create()
     {
-        //
+        // 
     }
 
     public function store(Request $request)
     {
-        //
+        // 
     }
 
     public function show($id)
