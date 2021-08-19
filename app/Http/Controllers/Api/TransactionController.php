@@ -17,6 +17,7 @@ class TransactionController extends Controller
                         ->where('status', '!=', 9)
                         ->where('status', '!=', 3)
                         ->where('status', '!=', 4)
+                        ->where('status', '!=', 5)
                         ->where('status', '!=', 1)
                         ->with('transactionDetail.products')
                         ->orderBy('id', 'DESC')
