@@ -105,6 +105,13 @@
                   </div>
                   <div class="card-body">
                     {{ $pengemasan }}
+                    @if($pengemasan > 0)
+                      <small>
+                        <a href="{{ route('shippings.index') }}" class="text-primary">
+                          Lihat Shipping
+                        </a>
+                      </small>
+                    @endif
                   </div>
                 </div>
               </div>
