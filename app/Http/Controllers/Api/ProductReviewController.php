@@ -11,6 +11,19 @@ use Storage;
 
 class ProductReviewController extends Controller
 {
+    public function index()
+    {
+        $review = ProductReview::where('user_id', auth()->user()->id)
+                ->with('transaction.transactionDetail.products')
+                ->get();
+
+        return response([
+            'success' => true,
+            'message' => 'Berhasil mengambil data dari database.',
+            'data'    => $review
+        ]);
+    }
+
     public function store(Request $request)
     {
         $rules = [

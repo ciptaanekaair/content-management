@@ -16,6 +16,11 @@ class ProductReview extends Model
         'detail_review', 
         'status'
     ];
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
 }
 
 
