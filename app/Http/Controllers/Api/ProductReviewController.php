@@ -44,7 +44,6 @@ class ProductReviewController extends Controller
         $review = ProductReview::create([
             'user_id'        => auth()->user()->id,
             'transaction_id' => $request->transaction_id,
-            'product_id'     => $request->product_id,
             'stars'          => $request->stars,
             'detail_review'  => $request->detail_review,
             'status'         => 0
