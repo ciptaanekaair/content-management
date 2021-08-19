@@ -15,13 +15,11 @@ class ProductReviewController extends Controller
     {
         $rules = [
             'transaction_id' => 'required',
-            'product_id'     => 'required',
             'stars'          => 'required'
         ];
 
         $pesan = [
             'transaction_id.required' => 'Sepertinya Anda belum pernah bertransaksi product ini.',
-            'product_id.required'     => 'Anda harus memilih produk.',
             'stars.required'          => 'Anda harus memberikan rating bintang.'
         ];
 
