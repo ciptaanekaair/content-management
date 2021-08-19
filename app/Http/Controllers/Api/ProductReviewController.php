@@ -47,6 +47,10 @@ class ProductReviewController extends Controller
             'status'         => 0
         ]);
 
+        $transaksi = Transaction::find($request->transaction_id);
+        $transaksi->status = 1;
+        $transaksi->update();
+
         return response([
             'success' => true,
             'message' => 'Berhasil melakukan review.',
