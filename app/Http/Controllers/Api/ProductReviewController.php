@@ -30,7 +30,7 @@ class ProductReviewController extends Controller
         if ($validasi->fails()) {
             return response([
                 'error'   => true,
-                'message' => $validasi->fails()
+                'message' => $validasi->errors()
             ], 422);
         }
 
