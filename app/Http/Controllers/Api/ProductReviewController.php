@@ -32,7 +32,7 @@ class ProductReviewController extends Controller
             ], 422);
         }
 
-        if ($this->checkReview($request->transaction_id, $request->product_id) == false) {
+        if ($this->checkReview($request->transaction_id) == false) {
             return response([
                 'error'   => true,
                 'message' => 'Anda sudah pernah melakukan review untuk transaksi ini.'
@@ -54,11 +54,10 @@ class ProductReviewController extends Controller
         ], 200);
     }
 
-    private function checkReview($transaction_id, $product_id)
+    private function checkReview($transaction_id)
     {
         $check = ProductReview::where('user_id', auth()->user()->id)
                             ->where('transaction_id', $transaction_id)
-                            ->where('product_id', $product_id)
                             ->first();
 
         if (!empty($check)) {
