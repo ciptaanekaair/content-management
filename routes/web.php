@@ -49,6 +49,7 @@ Route::get('/logout', function() {
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('charts', [DashboardController::class, 'grafikChartSatu'])->name('grafiksatu');
+    Route::get('check/transaction/verify', [DashboardController::class, 'checkNeedFerify'])->name('checkNeedFerify');
 
     // Profile
     Route::get('my-profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile.index');

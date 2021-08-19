@@ -32,6 +32,7 @@
                       </div>
 
                       <div class="section-body">
+                        <div id="warning"></div>
                         @yield('content')
                       </div>
                     </section>
@@ -57,6 +58,31 @@
         <script src="{{ asset('stisla/js/scripts.js') }}"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="{{ asset('js/jquery.fancybox.min.js') }}" defer></script>
+        <script type="text/javascript">
+            $(function() {
+                cekNeedVerify();
+            });
+
+            function cekNeedVerify() {
+                $.get({
+                    url: '{{ route("checkNeedFerify") }}',
+                    dataType: 'JSON'
+                })
+                .done(data => {
+                    $('#warning').html(`
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>PERHATIAN!</strong> Ada <b>${data.countTransaksi}</b> transaksi yang butuh di verifikasi. <a href="{{ route('transactions.index') }}" class="text-decoration-none font-italic">Lihat Transaksi</a>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    `);
+                })
+                .fail(response => {
+
+                })
+            }
+        </script>
         @yield('jq-script')
     </body>
 </html>

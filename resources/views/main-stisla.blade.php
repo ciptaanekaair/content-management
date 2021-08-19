@@ -13,10 +13,17 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Total Users</h4>
+                    <h4>Total Customer</h4>
                   </div>
                   <div class="card-body">
                     {{ $userCount }}
+                    @if($userCount > 0)
+                      <small>
+                        <a href="{{ route('pengguna.index') }}" class="text-primary">
+                          Lihat User
+                        </a>
+                      </small>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -32,6 +39,13 @@
                   </div>
                   <div class="card-body">
                     {{ $productCount }}
+                    @if($productCount > 0)
+                      <small>
+                        <a href="{{ route('products.index') }}" class="text-primary">
+                          Lihat Product
+                        </a>
+                      </small>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -47,6 +61,13 @@
                   </div>
                   <div class="card-body">
                     {{ $trnsctCount }}
+                    @if($trnsctCount > 0)
+                      <small>
+                        <a href="{{ route('transactions.index') }}" class="text-primary">
+                          Lihat Transaksi
+                        </a>
+                      </small>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -62,6 +83,13 @@
                   </div>
                   <div class="card-body">
                     {{ $verifikasiBayar }}
+                    @if($verifikasiBayar > 0)
+                      <small>
+                        <a href="{{ route('transactions.index') }}" class="text-warning">
+                          Lihat Transaksi
+                        </a>
+                      </small>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -92,6 +120,13 @@
                   </div>
                   <div class="card-body">
                     {{ $pengiriman }}
+                    @if($pengemasan > 0)
+                      <small>
+                        <a href="{{ route('shippings.index') }}" class="text-primary">
+                          Lihat Shipping
+                        </a>
+                      </small>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -139,18 +174,18 @@
                   <div class="statistic-details mt-sm-4">
                     <div class="statistic-details-item">
                       <span class="text-muted"></span>
-                      <div class="detail-value-1"></div>
-                      <div class="detail-name-1"></div>
+                      <div class="visitor-value-1"></div>
+                      <div class="visitor-name-1">2 Minggu Lalu</div>
                     </div>
                     <div class="statistic-details-item">
                       <span class="text-muted"></span>
-                      <div class="detail-value-2"></div>
-                      <div class="detail-name-2"></div>
+                      <div class="visitor-value-2"></div>
+                      <div class="visitor-name-2">1 Minggu Lalu</div>
                     </div>
                     <div class="statistic-details-item">
                       <span class="text-muted"></span>
-                      <div class="detail-value-3"></div>
-                      <div class="detail-name-3"></div>
+                      <div class="visitor-value-3"></div>
+                      <div class="visitor-name-3">Minggu Ini</div>
                     </div>
                   </div>
                 </div>

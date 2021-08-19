@@ -31,14 +31,14 @@ class ProductReviewController extends Controller
             return response([
                 'error'   => true,
                 'message' => $validasi->fails()
-            ]);
+            ], 422);
         }
 
         if ($this->checkReview($request->transaction_id, $request->product_id) == false) {
             return response([
                 'error'   => true,
                 'message' => 'Anda sudah pernah melakukan review untuk transaksi ini.'
-            ]);
+            ], 403);
         }
 
         $review = ProductReview::create([
@@ -53,7 +53,7 @@ class ProductReviewController extends Controller
             'success' => true,
             'message' => 'Berhasil melakukan review.',
             'data'    => $review
-        ]);
+        ], 200);
     }
 
     private function checkReview($transaction_id, $product_id)

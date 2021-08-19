@@ -22,7 +22,7 @@ class DashboardController extends Controller
         {
             if ($this->authorize('MOD1001-read')) {
     
-                $userCount       = User::where('status', '!=', 0)->count();
+                $userCount       = User::where('level_id', 1)->where('status', '!=', 0)->count();
                 $productCount    = Product::where('status', '!=', 0)->count();
                 $trnsctCount     = Transaction::where('status', 1)->count();
                 $verifikasiBayar = Transaction::where('status', 2)->count();
@@ -123,5 +123,12 @@ class DashboardController extends Controller
 
         return response()->json(['data' => $analyticsData]);
         // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+    }
+
+    public function checkNeedFerify()
+    {
+        $countTransaksi = Transaction::where('status', 2)->count();
+
+        return response()->json(['countTransaksi' => $countTransaksi]);
     }
 }
