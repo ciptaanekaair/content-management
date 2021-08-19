@@ -94,7 +94,6 @@ $(function() {
       url: '{{ url("products") }}/'+id,
       type: 'POST',
       data: $(this).serialize(),
-      beforeSend: function(){
       success: function(data) {
         fetch_table(page, perpage, search);
         $('#modal-delete').modal('hide');

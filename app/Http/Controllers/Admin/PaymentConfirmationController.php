@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\PaymentConfirmation;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
+use App\Models\Product;
 use App\Models\RekamJejak;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -38,6 +40,14 @@ class PaymentConfirmationController extends Controller
                 $transaction = Transaction::find($pConfirmation->transactions_id);
                 $transaction->status = 7;
                 $transaction->update();
+
+                $tDetail = TransactionDetail::where('transactions_id', $pConfirmation->transactions_id)->get();
+
+                foreach ($tDetail as $item) {
+                    $product = Product::find($item->product_id);
+                    $product->product_stock = ($product->product_stock - $item->qty);
+                    $product->update();
+                }
 
                 $rekam = new RekamJejak;
                 $rekam->user_id     = auth()->user()->id;
