@@ -89,4 +89,9 @@ class Transaction extends Model
     {
         return $this->hasMany(PaymentConfirmation::class, 'transactions_id', 'id');
     }
+
+    public function productReview()
+    {
+        return $this->hasOne(ProductReview::class);
+    }
 }
