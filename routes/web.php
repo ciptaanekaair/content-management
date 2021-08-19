@@ -111,15 +111,18 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('data/levels', [LevelController::class, 'getData'])->name('levels.data');
     Route::resource('roles', RoleController::class);
     Route::get('data/roles', [RoleController::class, 'getData'])->name('roles.data');
+
     // Modul Provinsi
     Route::resource('provinsis', App\Http\Controllers\Admin\ProvinsiController::class)->except(['create', 'show']);
     Route::get('data/provinsis', [App\Http\Controllers\Admin\ProvinsiController::class, 'getData'])->name('provinsis.data');
     Route::get('data/provinsis/import', [App\Http\Controllers\Admin\ProvinsiController::class, 'importData'])->name('provinsis.import');
+
     // Modul Kota
     Route::resource('kotas', KotaController::class)->except(['create']);
     Route::get('data/kotas', [KotaController::class, 'getData'])->name('kotas.data');
     Route::post('data/kotas/import', [KotaController::class, 'importData'])->name('kotas.import');
-    // Modul Kota
+
+    // Modul Kecamatan
     Route::resource('kecamatans', App\Http\Controllers\Admin\KecamatanController::class)->except(['create']);
     Route::get('data/kecamatans', [App\Http\Controllers\Admin\KecamatanController::class, 'getData'])->name('kecamatans.data');
     Route::post('data/kecamatans/import', [App\Http\Controllers\Admin\KecamatanController::class, 'importData'])->name('kecamatans.import');

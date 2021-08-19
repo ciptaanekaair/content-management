@@ -93,6 +93,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('metode-pembayaran', [CheckoutController::class, 'getMetodeBayar'])->name('api_get_metodebayar');// load metode pembayaran
 
+    // Product Review
+    Route::post('review/transaction', [App\Http\Controllers\Api\ProductReviewController::class, 'store'])->name('product-review.index');
+
     Route::post('confirm-payment', [App\Http\Controllers\Api\PaymentConfirmationController::class, 'store'])->name('api_payment_confrimation'); // Payment Confirmation
     
     // Logout route
