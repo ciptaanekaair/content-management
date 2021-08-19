@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('header')
-  <h1>User Management</h1>
+  <h1>Customer Management</h1>
 @endsection
 
 @section('content')

@@ -34,13 +34,18 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown {{ request()->routeIs('users*') ? 'active' : '' }}">
+            <li class="dropdown {{ request()->routeIs('pengguna*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-users"></i> <span>Users</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('pengguna.index') }}">List User</a>
+                    <li class="{{ request()->routeIs('pengguna*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('pengguna.index') }}">User Customer</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('pengguna-staff*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('pengguna-staff.index') }}">User Staff</a>
                     </li>
                 </ul>
                 @if(auth()->user()->hasAccess('spesial'))

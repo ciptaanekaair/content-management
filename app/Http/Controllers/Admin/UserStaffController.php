@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\user;
 use App\Models\UserDetail;
+use App\Models\Level;
+use App\Models\Provinsi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
@@ -13,7 +15,14 @@ class UserStaffController extends Controller
 {
     public function index()
     {
-        return view('admin.kurir.index');
+        $users = User::with('userDetail')
+                ->where('status', '!=', 9)
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
+        $levels    = Level::orderBy('id', 'ASC')->get();
+        $provinsis = Provinsi::where('status', '!=', 9)->orderBy('provinsi_name', 'ASC')->get();
+
+        return view('admin.user-staff.index', compact('users', 'levels', 'provinsis'));
     }
 
     public function getData(Request $request)
@@ -23,7 +32,7 @@ class UserStaffController extends Controller
         $jenis_akun   = $request->get('jenis_akun');
 
         if (!empty($search)) {
-            $kurirs = User::with('userDetail')
+            $users = User::with('userDetail')
                     ->where('status', '!=', 9)
                     ->where('level_id', $jenis_akun)
                     ->where('name', 'LIKE', '%'.$search.'%')
@@ -31,16 +40,14 @@ class UserStaffController extends Controller
                     ->orderBy('id', 'DESC')
                     ->paginate($list_perpage);
         } else {
-            $kurirs = User::with('userDetail')
+            $users = User::with('userDetail')
                     ->where('status', '!=', 9)
                     ->where('level_id', $jenis_akun)
-                    ->where('name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('email', 'LIKE', '%'.$search.'%')
                     ->orderBy('id', 'DESC')
                     ->paginate($list_perpage);
         }
 
-        return view('admin.kurir.table-data', compact('kurirs'));
+        return view('admin.user-staff.table-data', compact('users'));
     }
 
     public function create()

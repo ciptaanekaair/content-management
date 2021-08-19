@@ -83,6 +83,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('pengguna-detail/{id}/edit', [PenggunaDetailController::class, 'edit']);
     Route::put('pengguna-detail/{id}', [PenggunaDetailController::class, 'update']);
 
+    Route::get('pengguna-staff', [App\Http\Controllers\Admin\UserStaffController::class, 'index'])->name('pengguna-staff.index');
+    Route::get('data/pengguna-staff', [App\Http\Controllers\Admin\UserStaffController::class, 'getData'])->name('pengguna-staff.data');
+
     // Modul Transaksi
     Route::resource('transactions', TransaksiController::class);
     Route::get('data/transactions', [TransaksiController::class, 'getData'])->name('transactions.data');

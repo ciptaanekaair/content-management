@@ -60,7 +60,7 @@ var save_method, page, perpage, search, url, data;
 
 $(function() {
 
-  fetch_table(1, 10, '');
+  fetch_table(1, 10, '', $('#jenis_akun').val());
 
   $.ajaxSetup({
       headers: {
@@ -285,7 +285,7 @@ function newUserData() {
 
 function fetch_table(page, perpage, search, jenis_akun) {
   $.ajax({
-    url: '{{ route("pengguna.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search+'&jenis_akun='+jenis_akun,
+    url: '{{ route("pengguna-staff.data") }}?page='+page+'&list_perpage='+perpage+'&search='+search+'&jenis_akun='+jenis_akun,
     type: 'GET',
     success: function(data) {
       $('.table-data').html(data);
