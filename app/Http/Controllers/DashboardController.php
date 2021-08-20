@@ -119,9 +119,15 @@ class DashboardController extends Controller
         // $periode4End   = Carbon::now()->subDays(17);
         // $periode4Start = Carbon::now()->subDays(23);
 
-        $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        $analyticsData = Analytics::performQuery(
+                    Period::days(7),
+                    'ga:pageviews', [
+                        'metrics' => 'ga:pageviews',
+                        'dimensions' => 'ga:pagePath,ga:pagetitle', 
+                    ]
+                );
 
-        return response()->json(['data' => $analyticsData]);
+        return response()->json(['data' => $analyticsData->rows]);
         // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
     }
 
