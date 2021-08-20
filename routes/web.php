@@ -107,9 +107,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('data/shippings/transaction/{id}', [App\Http\Controllers\Admin\ShippingController::class, 'getTransactions'])->name('shippings.getTransactions');
     Route::get('data/shippings', [App\Http\Controllers\Admin\ShippingController::class, 'getData'])->name('shippings.data');
 
+    // User Histories
     Route::get('user-histories', [RekamJejakController::class, 'index'])->name('user-histories.index');
     Route::get('data/user-histories', [RekamJejakController::class, 'getData'])->name('user-histories.data');
-    Route::get('user-histories/{id}', [RekamJejakController::class, 'getUser'])->name('user-histories.user');
+    Route::get('user-histories/{id}', [RekamJejakController::class, 'show'])->name('user-histories.user');
 
     Route::resource('levels', LevelController::class);
     Route::get('data/levels', [LevelController::class, 'getData'])->name('levels.data');
