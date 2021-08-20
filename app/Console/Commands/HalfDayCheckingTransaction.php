@@ -41,13 +41,13 @@ class HalfDayCheckingTransaction extends Command
     {
         $oldDays = Carbon::now()->subDays(3);
 
-        $transaksi = Transaction::where('status', 5)
-                    ->where('updated_at', $oldDays)
+        $check_transactions = Transaction::where('status', 5)
+                    ->whereDate('updated_at', '=', $oldDays)
                     ->get();
 
-        foreach ($transaksi as $item) {
-            $item->status = 1;
-            $item->update();
+        foreach ($check_transactions as $check_transaction) {
+            $check_transaction->status = 1;
+            $check_transaction->update();
         }
 
         $this->info('Sukses merubah semua status transaksi yang sudah diterima, menjadi selesai.');
