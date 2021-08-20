@@ -42,7 +42,7 @@ class HalfDayCheckingTransaction extends Command
         $oldDays = Carbon::now()->subDays(3);
 
         $check_transactions = Transaction::where('status', 5)
-                    ->whereDate('updated_at', '=', $oldDays)
+                    ->whereDay('updated_at', '=', $oldDays)
                     ->get();
 
         foreach ($check_transactions as $check_transaction) {
