@@ -138,7 +138,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
                   <h4>Statistics Penjualan</h4>
@@ -163,6 +163,36 @@
                       <span class="text-muted"></span>
                       <div class="detail-value-3"></div>
                       <div class="detail-name-3"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Statistics Visitors</h4>
+                  <div class="card-header-action">
+                    <a class="btn btn-primary">Weekly</a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="statisticVisitor" height="182"></canvas>
+                  <div class="statistic-details mt-sm-4">
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="visitor-value-1"></div>
+                      <div class="visitor-name-1">2 Minggu Lalu</div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="visitor-value-2"></div>
+                      <div class="visitor-name-2">1 Minggu Lalu</div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <span class="text-muted"></span>
+                      <div class="visitor-value-3"></div>
+                      <div class="visitor-name-3">Minggu Ini</div>
                     </div>
                   </div>
                 </div>
