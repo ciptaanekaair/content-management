@@ -119,16 +119,18 @@ class DashboardController extends Controller
         $periode4End   = Carbon::now()->subDays(21);
         $periode4Start = Carbon::now()->subDays(27);
 
-        $analyticsData = Analytics::performQuery(
-                    Period::create($periode1End, $periode1Start),
-                    'ga:pageviews', [
-                        'metrics' => 'ga:pageviews',
-                        'dimensions' => 'ga:pagePath,ga:pagetitle', 
-                    ]
-                );
-
-        return response()->json(['data' => $analyticsData->rows]);
+        // $analyticsData = Analytics::performQuery(
+        //             Period::create($periode1Start, $periode1End),
+        //             'ga:pageviews', [
+        //                 'metrics'    => 'ga:pageviews',
+        //                 'dimensions' => 'ga:pagePath,ga:pagetitle', 
+        //             ]
+        //         );
         // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+
+        $analyticsData = Analytics::fetchMostVisitedPages(Period::create($periode1Start, $periode1End), 5);
+
+        return response()->json($analyticsData);
     }
 
     public function checkNeedFerify()

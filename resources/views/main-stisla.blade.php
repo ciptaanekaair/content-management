@@ -201,30 +201,22 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-header">
-                  <h4>Statistics Visitors</h4>
+                  <h4>Most Visited in 7 Days.</h4>
                   <div class="card-header-action">
                     <a class="btn btn-primary">Weekly</a>
                   </div>
                 </div>
                 <div class="card-body">
-                  <canvas id="statisticVisitor" height="182"></canvas>
-                  <div class="statistic-details mt-sm-4">
-                    <div class="statistic-details-item">
-                      <span class="text-muted"></span>
-                      <div class="visitor-value-1"></div>
-                      <div class="visitor-name-1">2 Minggu Lalu</div>
-                    </div>
-                    <div class="statistic-details-item">
-                      <span class="text-muted"></span>
-                      <div class="visitor-value-2"></div>
-                      <div class="visitor-name-2">1 Minggu Lalu</div>
-                    </div>
-                    <div class="statistic-details-item">
-                      <span class="text-muted"></span>
-                      <div class="visitor-value-3"></div>
-                      <div class="visitor-name-3">Minggu Ini</div>
-                    </div>
-                  </div>
+                  <table class="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th width="10">Visitor</th>
+                      </tr>
+                    </thead>
+                    <tbody id="mostvisitor-table">
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -234,18 +226,11 @@
 
 @section('jq-script')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6DHNBQ2KFN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-6DHNBQ2KFN');
-</script>
 <script type="text/javascript">
 
 "use strict";
+
+getTopArtikel();
 
 var ctx = $('#statisticPenjualan');
 
@@ -325,6 +310,30 @@ updateChart();
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function getTopArtikel() {
+  $.ajax({
+    url: '{{ url("google-stats") }}',
+    type: 'GET',
+    dataType: 'JSON'
+  })
+  .done(data => {
+    let html = '';
+    $.each(data, function(i, item) {
+      $('#mostvisitor-table').append(
+        `
+          <tr>
+            <td>${item.pageTitle}</td>
+            <td>${item.pageViews}</td>
+          </tr>
+        `
+      );
+    })
+  })
+  .fail(response => {
+
+  })
 }
 </script>
 
