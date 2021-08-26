@@ -23,6 +23,9 @@ Route::post('/login', [AutentikasiController::class, 'login'])->name('api_login'
 Route::get('/login/{service}', [SocialLoginController::class, 'redirect']);
 Route::get('/login/{service}/callback', [SocialLoginController::class, 'callback']);
 
+// General Settings.
+Route::get('general-setting', [App\Http\Controllers\Api\GeneralSettingController::class, 'index']);
+
 // Banner
 Route::get('banner-positions/{id}', [App\Http\Controllers\Api\BannerPositionController::class, 'getData'])->name('api_banner_position');
 
