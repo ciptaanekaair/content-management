@@ -107,8 +107,8 @@ class DashboardController extends Controller
     public function grafikChartDua()
     {
         // // last periode
-        // $periode1End   = Carbon::now();
-        // $periode1Start = Carbon::now()->subDays(6);
+        $periode1End   = Carbon::now();
+        $periode1Start = Carbon::now()->subDays(6);
         // // periode 2
         // $periode2End   = Carbon::now()->subDays(7);
         // $periode2Start = Carbon::now()->subDays(13);
