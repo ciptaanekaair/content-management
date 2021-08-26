@@ -47,11 +47,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
-    Route::get('charts', [DashboardController::class, 'grafikChartSatu'])->name('grafiksatu');
-
     // Charts & Analytics
     Route::get('analytics-top-article', [DashboardController::class, 'grafikChartDua'])->name('google-stats');
     Route::get('analytics-grafik-visitors', [DashboardController::class, 'grafikChartTiga'])->name('google-stats');
+    Route::get('charts', [DashboardController::class, 'grafikChartSatu'])->name('grafiksatu');
+
     Route::get('check/transaction/verify', [DashboardController::class, 'checkNeedFerify'])->name('checkNeedFerify');
 
     // Profile

@@ -150,19 +150,19 @@
                   <canvas id="statisticPenjualan" height="182"></canvas>
                   <div class="statistic-details mt-sm-4">
                     <div class="statistic-details-item">
-                      <span class="text-muted"></span>
-                      <div class="detail-value-1"></div>
-                      <div class="detail-name-1"></div>
+                      <span class="text-muted">Total</span>
+                      <div class="detail-value" id="detail-value-1"></div>
+                      <div class="detail-name" id="detail-name-1"></div>
                     </div>
                     <div class="statistic-details-item">
-                      <span class="text-muted"></span>
-                      <div class="detail-value-2"></div>
-                      <div class="detail-name-2"></div>
+                      <span class="text-muted">Total</span>
+                      <div class="detail-value" id="detail-value-2"></div>
+                      <div class="detail-name" id="detail-name-2"></div>
                     </div>
                     <div class="statistic-details-item">
-                      <span class="text-muted"></span>
-                      <div class="detail-value-3"></div>
-                      <div class="detail-name-3"></div>
+                      <span class="text-muted">Total</span>
+                      <div class="detail-value" id="detail-value-3"></div>
+                      <div class="detail-name" id="detail-name-3"></div>
                     </div>
                   </div>
                 </div>
@@ -180,24 +180,24 @@
                   <canvas id="statisticVisitor" height="182"></canvas>
                   <div class="statistic-details mt-sm-4">
                     <div class="statistic-details-item">
-                      <span class="text-muted"></span>
-                      <div class="visitor-value-1">Minggu 1</div>
-                      <div class="visitor-name-1">Visitors</div>
+                      <span class="text-muted">Minggu 1</span>
+                      <div class="detail-value" id="visitor-value-1"></div>
+                      <div class="detail-name">Visitors</div>
                     </div>
                     <div class="statistic-details-item">
                       <span class="text-muted">Minggu 2</span>
-                      <div class="visitor-value-2"></div>
-                      <div class="visitor-name-2">Visitors</div>
+                      <div class="detail-value" id="visitor-value-2"></div>
+                      <div class="detail-name">Visitors</div>
                     </div>
                     <div class="statistic-details-item">
                       <span class="text-muted">Minggu 3</span>
-                      <div class="visitor-value-3"></div>
-                      <div class="visitor-name-3">Visitors</div>
+                      <div class="detail-value" id="visitor-value-3"></div>
+                      <div class="detail-name">Visitors</div>
                     </div>
                     <div class="statistic-details-item">
                       <span class="text-muted">Minggu Ini</span>
-                      <div class="visitor-value-4"></div>
-                      <div class="visitor-name-4">Visitors</div>
+                      <div class="detail-value" id="visitor-value-4"></div>
+                      <div class="detail-name">Visitors</div>
                     </div>
                   </div>
                 </div>
@@ -329,12 +329,12 @@ let updateChart = function() {
       statisticPenjualan.data.labels = data.old_month_word;
       statisticPenjualan.data.datasets[0].data = data.total_transaksi;
       statisticPenjualan.update();
-      $('.detail-name-1').text(data.old_month_word[0]);
-      $('.detail-value-1').text('Rp. '+numberWithCommas(data.total_transaksi[0]));
-      $('.detail-name-2').text(data.old_month_word[1]);
-      $('.detail-value-2').text('Rp. '+numberWithCommas(data.total_transaksi[1]));
-      $('.detail-name-3').text(data.old_month_word[2]);
-      $('.detail-value-3').text('Rp. '+numberWithCommas(data.total_transaksi[2]));
+      $('#detail-name-1').text(data.old_month_word[0]);
+      $('#detail-value-1').text('Rp. '+numberWithCommas(data.total_transaksi[0]));
+      $('#detail-name-2').text(data.old_month_word[1]);
+      $('#detail-value-2').text('Rp. '+numberWithCommas(data.total_transaksi[1]));
+      $('#detail-name-3').text(data.old_month_word[2]);
+      $('#detail-value-3').text('Rp. '+numberWithCommas(data.total_transaksi[2]));
     },
     error: function(data){
       Swal.fire('Gagal!', 'Gagal mengambil data analytics transaksi.', 'error');
@@ -351,6 +351,10 @@ function getAnalyticsData() {
   .done(data => {
       statisticVisitors.data.datasets[0].data = data.data;
       statisticVisitors.update();
+      $('#visitor-value-1').text(data.data[0]);
+      $('#visitor-value-2').text(data.data[1]);
+      $('#visitor-value-3').text(data.data[2]);
+      $('#visitor-value-4').text(data.data[3]);
   })
   .fail(response => {
     Swal.fire('Gagal!', 'Gagal mengambil data analytics visitor.', 'error');
