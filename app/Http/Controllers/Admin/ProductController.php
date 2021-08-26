@@ -118,16 +118,24 @@ class ProductController extends Controller
 
             $validasi = $this->validate($request, $rules);
 
-            $simpan = '';
-
             if ($request->hasFile('product_images')) {
-                // $gambar    = $request->file('product_images');
-                // $ext       = $gambar->getClientOriginalExtension();
-                // $rename    = rand('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '1234567890').'.'.$ext;
-                // $watermark = $gambar->insert('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
-                // $simpan    = $gambar->move('public/storage/'.$rename);
+                // Proses upload image.
+                $image  = $request->file('images');
+                $ext    = $image->getClientOriginalExtension();
+                $name   = md5(rand(111111111111, 999999999999).'-'.date('Ymd'));
+                $rename = $name.'.'.$ext;
 
-                $simpan = $request->product_images->store('product-images', 'public');
+                // Persiapkan path. Path di pisah karena path2 akan ikut masuk ke record database. [$path2.$rename]
+                $path1  = 'storage/';
+                $path2  = 'product-images/';
+
+                // Buat persiapan gambar.
+                $thmbn  = Image::make($image->getRealPath());
+
+                // Gambar asli
+                $moving = $image->move($path1.$path2, $rename);
+                $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                            ->save($path1.$path2.$rename);
             }
 
             $product = new Product;
@@ -136,7 +144,7 @@ class ProductController extends Controller
             $product->product_name        = $request->product_name;
             $product->slug                = Str::slug($request->product_name);
             $product->product_description = $request->product_description;
-            $product->product_images      = $simpan == '' ? 'product-images/blank_product.png' : $simpan;
+            $product->product_images      = $simpan == '' ? 'product-images/blank_product.png' : $path2.$rename;
             $product->keywords            = $request->keywords;
             $product->description_seo     = $request->description_seo;
             $product->product_price       = $request->product_price;
@@ -225,8 +233,25 @@ class ProductController extends Controller
                     Storage::delete('/public/'.$product->product_images);
                 }
 
-                $simpan = $request->product_images->store('product-images', 'public');
-                $product->product_images = $simpan;
+                // Proses upload image.
+                $image  = $request->file('images');
+                $ext    = $image->getClientOriginalExtension();
+                $name   = md5(rand(111111111111, 999999999999).'-'.date('Ymd'));
+                $rename = $name.'.'.$ext;
+
+                // Persiapkan path. Path di pisah karena path2 akan ikut masuk ke record database. [$path2.$rename]
+                $path1  = 'storage/';
+                $path2  = 'product-images/';
+
+                // Buat persiapan gambar.
+                $thmbn  = Image::make($image->getRealPath());
+
+                // Gambar asli
+                $moving = $image->move($path1.$path2, $rename);
+                $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                            ->save($path1.$path2.$rename);
+
+                $product->product_images = $path2.$rename;
             }
 
             $product->product_category_id = $request->product_category_id;

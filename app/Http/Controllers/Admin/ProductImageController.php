@@ -31,13 +31,27 @@ class ProductImageController extends Controller
 
         $validasi = $this->validate($request, $rules);
 
-        if ($request->hasFile('images')) {
-            $simpan = $request->images->store('product-images', 'public');
-        }
+        // Proses upload image.
+        $image  = $request->file('images');
+        $ext    = $image->getClientOriginalExtension();
+        $name   = md5(rand(111111111111, 999999999999).'-'.date('Ymd'));
+        $rename = $name.'.'.$ext;
+
+        // Persiapkan path. Path di pisah karena path2 akan ikut masuk ke record database. [$path2.$rename]
+        $path1  = 'storage/';
+        $path2  = 'product-images/';
+
+        // Buat persiapan gambar.
+        $thmbn  = Image::make($image->getRealPath());
+
+        // Gambar asli
+        $moving = $image->move($path1.$path2, $rename);
+        $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                    ->save($path1.$path2.$rename);
 
         $images = new ProductImage;
         $images->product_id = $request->product_id_i;
-        $images->images     = $simpan;
+        $images->images     = $path2.$rename;
         $images->save();
 
         $rekam = new RekamJejak;
@@ -85,15 +99,29 @@ class ProductImageController extends Controller
 
         $data = ProductImage::find($id);
 
-        if ($request->hasFile('images')) {
-            if (Storage::exists('/public/'.$data->images)) {
-                Storage::delete('/public/'.$data->images);
-
-                $simpan = $request->images->store('product-images', 'public');
-            }
+        if (Storage::exists('/public/'.$data->images)) {
+            Storage::delete('/public/'.$data->images);
         }
 
-        $data->images = $simpan;
+        // Proses upload image.
+        $image  = $request->file('images');
+        $ext    = $image->getClientOriginalExtension();
+        $name   = md5(rand(111111111111, 999999999999).'-'.date('Ymd'));
+        $rename = $name.'.'.$ext;
+
+        // Persiapkan path. Path di pisah karena path2 akan ikut masuk ke record database. [$path2.$rename]
+        $path1  = 'storage/';
+        $path2  = 'product-images/';
+
+        // Buat persiapan gambar.
+        $thmbn  = Image::make($image->getRealPath());
+
+        // Gambar asli
+        $moving = $image->move($path1.$path2, $rename);
+        $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                    ->save($path1.$path2.$rename);
+
+        $data->images = $path2.$rename;
         $data->update();
 
         $rekam = new RekamJejak;

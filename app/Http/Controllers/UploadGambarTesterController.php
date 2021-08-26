@@ -23,31 +23,44 @@ class UploadGambarTesterController extends Controller
 
         $this->validate($request, $rules);
 
-        if ($request->hasFile('gambar')) {
-            $gambar  = $request->file('gambar');
-            $ext     = $gambar->getClientOriginalExtension();
-            $rename  = 'product-images/'.rand('111', '999').'.'.$ext;
-            $buatImg = Image::make($gambar->getRealPath());
+        // $gambar  = $request->file('gambar');
+        // $ext     = $gambar->getClientOriginalExtension();
+        // $rename  = 'product-images/'.rand('111', '999').'.'.$ext;
+        // $buatImg = Image::make($gambar->move('public/tmp/'.$rename));
 
-            // insert watermark
-            $watermark = $buatImg->insert('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
+        // // insert watermark
+        // $watermark = $buatImg->text('Copy Right @'.date('Y').' PT. Cipta Aneka Air.', 'center');
 
-            // Simpan di storage
-            $simpan  = Storage::putFile('public/'.$rename);
-            $simpans = Storage::url($simpan);
+        // Simpan di storage
+        // $simpan  = Storage::putFile('public/'.$rename);
+        // $simpans = Storage::url($simpan);
+        // $move = Storage::move($file, 'public/')
 
-            if (!$simpan) {
-                return response()->json([
-                    'error' => true,
-                    'message' => 'Gagal upload file.'
-                ],403);
-            }
 
+        $image  = $request->file('gambar');
+        $ext    = $image->getClientOriginalExtension();
+        $rename = rand(111111111, 999999999).'-'.date('Ymd').'.'.$ext;
+
+        $path   = 'storage/product-images/';
+
+        // Buat image thumbnail
+        $thmbn  = Image::make($image->getRealPath());
+
+        // Gambar asli
+        $moving = $image->move($path, $rename);
+        $upload = $thmbn->insert('logo.png', 'center')
+                    ->save($path.$rename);
+
+        if (!$upload) {
             return response()->json([
-                'success' => true,
-                'message' => 'Berhasil upload file',
-                'data'    => $simpans
-            ], 200);
+                'error' => true,
+                'message' => 'Gagal upload file.'
+            ],403);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil upload file',
+        ], 200);
     }
 }

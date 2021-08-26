@@ -325,7 +325,7 @@ function getTopArtikel() {
         `
           <tr>
             <td>${item.pageTitle}</td>
-            <td>${item.pageViews}</td>
+            <td align="center">${item.pageViews}</td>
           </tr>
         `
       );

@@ -107,17 +107,17 @@ class DashboardController extends Controller
     public function grafikChartDua()
     {
         // // last periode
-        $periode1End   = Carbon::now();
-        $periode1Start = Carbon::now()->subDays(6);
+        // $periode1End   = Carbon::now();
+        // $periode1Start = Carbon::now()->subDays(6);
         // // periode 2
-        $periode2End   = Carbon::now()->subDays(7);
-        $periode2Start = Carbon::now()->subDays(13);
+        // $periode2End   = Carbon::now()->subDays(7);
+        // $periode2Start = Carbon::now()->subDays(13);
         // // periode 3
-        $periode3End   = Carbon::now()->subDays(14);
-        $periode3Start = Carbon::now()->subDays(20);
+        // $periode3End   = Carbon::now()->subDays(14);
+        // $periode3Start = Carbon::now()->subDays(20);
         // // periode 3
-        $periode4End   = Carbon::now()->subDays(21);
-        $periode4Start = Carbon::now()->subDays(27);
+        // $periode4End   = Carbon::now()->subDays(21);
+        // $periode4Start = Carbon::now()->subDays(27);
 
         // $analyticsData = Analytics::performQuery(
         //             Period::create($periode1Start, $periode1End),
@@ -126,6 +126,8 @@ class DashboardController extends Controller
         //                 'dimensions' => 'ga:pagePath,ga:pagetitle', 
         //             ]
         //         );
+
+        // $analyticsData = Analytics::fetchTotalVisitorAndPageViews(Periode::days(7));
         // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
 
         $analyticsData = Analytics::fetchMostVisitedPages(Period::create($periode1Start, $periode1End), 5);
