@@ -104,15 +104,6 @@
 							</div>
 							<div class="col-md-12 col-lg-6">
 								<div class="form-group">
-									<label for="product_commision">Commision</label>
-									<input type="text" name="product_commision" id="product_commision" class="form-control" value="{{ old('product_commision', $product->product_commision) }}" placeholder="Komisi. (Tidak wajib di isi)">
-									<div class="alert-massage">
-										<code id="product_commisionError"></code>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12 col-lg-6">
-								<div class="form-group">
 									<label for="status">Status Product</label>
 									<select name="status" id="status" class="form-control">
 										<option value="Pilih Status Product" {{ $product->status = '' ? 'active' : '' }}>Pilih Status Product</option>
@@ -128,17 +119,15 @@
 								<div class="form-group">
 									<label for="product_images">Gambar Utama Product</label>
 									<input type="file" name="product_images" id="product_images" class="form-control" value="{{ old('product_images', $product->product_images) }}" placeholder="Komisi. (Tidak wajib di isi)">
+									@if(isset($product->product_images))
+										<a href="{{ old('imageurl', $product->imageurl) }}" class="pl-3" data-fancybox target="_blank">
+											<i class="fa fa-eye"></i> &nbsp Lihat Gambar
+										</a>
+									@endif
 									<div class="alert-massage">
 										<code id="product_imagesError"></code>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-12 col-lg-6">
-								<a href="{{ old('imageurl', $product->imageurl) }}" data-fancybox target="_blank">
-									<button class="btn btn-primary">
-										<i class="fa fa-eye"></i> &nbsp Lihat Gambar
-									</button>
-								</a>
 							</div>
 							<div class="col-12">
 								<a href="{{ url('products') }}" class="btn btn-secondary"><i class="fa fa-arrow-circle-left"></i> Kembali</a>

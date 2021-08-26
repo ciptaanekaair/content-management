@@ -111,7 +111,6 @@ class ProductController extends Controller
                 'product_description' => 'required',
                 'product_images'      => 'image|mimes:jpg, jpeg, png, gif, bmp',
                 'product_price'       => 'required|numeric',
-                'product_commision'   => 'required|numeric',
                 'product_stock'       => 'required|numeric',
                 'status'              => 'numeric'
             ];
@@ -144,11 +143,10 @@ class ProductController extends Controller
             $product->product_name        = $request->product_name;
             $product->slug                = Str::slug($request->product_name);
             $product->product_description = $request->product_description;
-            $product->product_images      = $simpan == '' ? 'product-images/blank_product.png' : $path2.$rename;
+            $product->product_images      = $request->product_images == '' ? '' : $path2.$rename;
             $product->keywords            = $request->keywords;
             $product->description_seo     = $request->description_seo;
             $product->product_price       = $request->product_price;
-            $product->product_commision   = $request->product_commision;
             $product->product_stock       = $request->product_stock;
             $product->status              = $request->status;
             $product->save();
@@ -218,7 +216,6 @@ class ProductController extends Controller
                 'product_description' => 'required',
                 'product_images'      => 'image|mimes:jpg, jpeg, png, gif, bmp',
                 'product_price'       => 'required|numeric',
-                'product_commision'   => 'required|numeric',
                 'product_stock'       => 'required|numeric',
                 'status'              => 'numeric'
             ];
@@ -226,7 +223,6 @@ class ProductController extends Controller
             $validasi = $this->validate($request, $rules);
 
             $product = Product::find($id);
-            $simpan  = '';
 
             if ($request->hasFile('product_images')) {
                 if (Storage::exists('/public/'.$product->product_images)) {
@@ -262,7 +258,6 @@ class ProductController extends Controller
             $product->keywords            = $request->keywords;
             $product->description_seo     = $request->description_seo;
             $product->product_price       = $request->product_price;
-            $product->product_commision   = $request->product_commision;
             $product->product_stock       = $request->product_stock;
             $product->status              = $request->status;
             $product->update();
