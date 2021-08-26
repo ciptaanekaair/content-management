@@ -181,18 +181,23 @@
                   <div class="statistic-details mt-sm-4">
                     <div class="statistic-details-item">
                       <span class="text-muted"></span>
-                      <div class="visitor-value-1"></div>
-                      <div class="visitor-name-1">2 Minggu Lalu</div>
+                      <div class="visitor-value-1">Minggu 1</div>
+                      <div class="visitor-name-1">Visitors</div>
                     </div>
                     <div class="statistic-details-item">
-                      <span class="text-muted"></span>
+                      <span class="text-muted">Minggu 2</span>
                       <div class="visitor-value-2"></div>
-                      <div class="visitor-name-2">1 Minggu Lalu</div>
+                      <div class="visitor-name-2">Visitors</div>
                     </div>
                     <div class="statistic-details-item">
-                      <span class="text-muted"></span>
+                      <span class="text-muted">Minggu 3</span>
                       <div class="visitor-value-3"></div>
-                      <div class="visitor-name-3">Minggu Ini</div>
+                      <div class="visitor-name-3">Visitors</div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <span class="text-muted">Minggu Ini</span>
+                      <div class="visitor-value-4"></div>
+                      <div class="visitor-name-4">Visitors</div>
                     </div>
                   </div>
                 </div>
@@ -231,10 +236,11 @@
 "use strict";
 
 getTopArtikel();
+getAnalyticsData();
 
-var ctx = $('#statisticPenjualan');
+let ctx = $('#statisticPenjualan');
 
-var statisticPenjualan = new Chart(ctx, {
+let statisticPenjualan = new Chart(ctx, {
   type: 'line',
   data: {
     labels: [],
@@ -281,7 +287,37 @@ var statisticPenjualan = new Chart(ctx, {
     },
   }
 });
-var updateChart = function() {
+
+let ctr = document.getElementById('statisticVisitor').getContext('2d');
+let statisticVisitors = new Chart(ctr, {
+  type: 'pie',
+  data: {
+    datasets: [{
+      data: [],
+      backgroundColor: [
+        '#FFDAB9',
+        '#FA8072',
+        '#0F52BA',
+        '#002366'
+      ],
+      label: 'Dataset 1'
+    }],
+    labels: [
+      'Week 1',
+      'Week 2',
+      'Week 3',
+      'This Week'
+    ],
+  },
+  options: {
+    responsive: true,
+    legend: {
+      position: 'bottom',
+    },
+  }
+});
+
+let updateChart = function() {
   $.ajax({
     url: "{{ route('grafiksatu') }}",
     type: 'GET',
@@ -301,9 +337,24 @@ var updateChart = function() {
       $('.detail-value-3').text('Rp. '+numberWithCommas(data.total_transaksi[2]));
     },
     error: function(data){
-      console.log(data);
+      Swal.fire('Gagal!', 'Gagal mengambil data analytics transaksi.', 'error');
     }
   });
+}
+
+function getAnalyticsData() {
+  $.ajax({
+    url: '{{ url("analytics-grafik-visitors") }}',
+    type: 'GET',
+    dataType: 'JSON'
+  })
+  .done(data => {
+      statisticVisitors.data.datasets[0].data = data.data;
+      statisticVisitors.update();
+  })
+  .fail(response => {
+    Swal.fire('Gagal!', 'Gagal mengambil data analytics visitor.', 'error');
+  })
 }
 
 updateChart();
@@ -314,7 +365,7 @@ function numberWithCommas(x) {
 
 function getTopArtikel() {
   $.ajax({
-    url: '{{ url("google-stats") }}',
+    url: '{{ url("analytics-top-article") }}',
     type: 'GET',
     dataType: 'JSON'
   })
@@ -332,7 +383,7 @@ function getTopArtikel() {
     })
   })
   .fail(response => {
-
+    Swal.fire('Gagal!', 'Gagal mengambil data analytics 5 halaman paling banyak di kunjungi.', 'error');
   })
 }
 </script>

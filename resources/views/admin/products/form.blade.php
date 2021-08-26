@@ -191,6 +191,7 @@ $(function() {
 			contentType: false,
 			processData: false,
 			success: function(data) {
+				Swal.fire('Sukses!', data.message, 'success');
 				window.location.href = '{{ url("products") }}/'+data.data.id+'/edit';
 			},
 			error: function(response) {
