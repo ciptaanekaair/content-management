@@ -120,7 +120,7 @@ class ProductController extends Controller
 
             if ($request->hasFile('product_images')) {
                 // Proses upload image.
-                $image  = $request->file('images');
+                $image  = $request->file('product_images');
                 $ext    = $image->getClientOriginalExtension();
                 $name   = md5(rand(111111111111, 999999999999).'-'.date('Ymd'));
                 $rename = $name.'.'.$ext;
@@ -234,7 +234,7 @@ class ProductController extends Controller
                 }
 
                 // Proses upload image.
-                $image  = $request->file('images');
+                $image  = $request->file('product_images');
                 $ext    = $image->getClientOriginalExtension();
                 $name   = md5(rand(111111111111, 999999999999).'-'.date('Ymd'));
                 $rename = $name.'.'.$ext;
