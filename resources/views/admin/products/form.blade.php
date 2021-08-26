@@ -168,7 +168,7 @@
 @endsection
 
 @section('formodal')
-  @include('admin.products.modal-form')
+ @include('admin.products.modal-image')
 @endsection
 
 @section('jq-script')
