@@ -69,14 +69,16 @@
                     dataType: 'JSON'
                 })
                 .done(data => {
-                    $('#warning').html(`
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>PERHATIAN!</strong> Ada <b>${data.countTransaksi}</b> transaksi yang butuh di verifikasi. <a href="{{ route('transactions.index') }}" class="text-decoration-none font-italic">Lihat Transaksi</a>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    `);
+                    if(data.countTransaksi > 0) {
+                        $('#warning').html(`
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>PERHATIAN!</strong> Ada <b>${data.countTransaksi}</b> transaksi yang butuh di verifikasi. <a href="{{ route('transactions.index') }}" class="text-decoration-none font-italic">Lihat Transaksi</a>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        `);
+                    }
                 })
                 .fail(response => {
 
@@ -84,15 +86,6 @@
             }
         </script>
         @yield('jq-script')
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-205495987-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'UA-205495987-1');
-        </script>
 
     </body>
 </html>
