@@ -10,6 +10,7 @@ use Str;
 use Validator;
 use Image;
 use Storage;
+use App\Models\GeneralSetting;
 use App\Exports\ProductDataExport;
 use App\Models\ProductCategory;
 use App\Models\Product;
@@ -130,11 +131,26 @@ class ProductController extends Controller
 
                 // Buat persiapan gambar.
                 $thmbn  = Image::make($image->getRealPath());
-
-                // Gambar asli
                 $moving = $image->move($path1.$path2, $rename);
-                $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
-                            ->save($path1.$path2.$rename);
+
+                $gSetting = GeneralSetting::find(1);
+
+                if (!empty($gSetting)) {
+                    // Gambar dinamis
+                    if (isset($gSetting->website_logo)) {
+                        $upload = $thmbn->insert('storage/'.$gSetting->website_logo, 'bottom-right', 30, 30)
+                                    ->save($path1.$path2.$rename);
+                    } else {
+                        // Gambar asli
+                        $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                                ->save($path1.$path2.$rename);
+                    }
+                } else {
+                    // Gambar asli
+                    $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                                ->save($path1.$path2.$rename);
+                }
+
             }
 
             $product = new Product;
@@ -241,11 +257,27 @@ class ProductController extends Controller
 
                 // Buat persiapan gambar.
                 $thmbn  = Image::make($image->getRealPath());
-
                 // Gambar asli
                 $moving = $image->move($path1.$path2, $rename);
-                $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
-                            ->save($path1.$path2.$rename);
+
+
+                $gSetting = GeneralSetting::find(1);
+
+                if (!empty($gSetting)) {
+                    // Gambar dinamis
+                    if (isset($gSetting->website_logo)) {
+                        $upload = $thmbn->insert('storage/'.$gSetting->website_logo, 'bottom-right', 30, 30)
+                                    ->save($path1.$path2.$rename);
+                    } else {
+                        // Gambar asli
+                        $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                                ->save($path1.$path2.$rename);
+                    }
+                } else {
+                    // Gambar asli
+                    $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                                ->save($path1.$path2.$rename);
+                }
 
                 $product->product_images = $path2.$rename;
             }
