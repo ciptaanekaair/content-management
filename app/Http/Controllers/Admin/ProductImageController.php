@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Image;
 use Storage;
+use App\Models\GeneralSetting;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\RekamJejak;
@@ -43,11 +44,26 @@ class ProductImageController extends Controller
 
         // Buat persiapan gambar.
         $thmbn  = Image::make($image->getRealPath());
-
         // Gambar asli
         $moving = $image->move($path1.$path2, $rename);
-        $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
-                    ->save($path1.$path2.$rename);
+
+        $gSetting = GeneralSetting::find(1);
+
+        if (!empty($gSetting)) {
+            // Gambar dinamis
+            if (isset($gSetting->website_logo)) {
+                $upload = $thmbn->insert('storage/'.$gSetting->website_logo, 'bottom-right', 30, 30)
+                            ->save($path1.$path2.$rename);
+            } else {
+                // Gambar asli
+                $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                        ->save($path1.$path2.$rename);
+            }
+        } else {
+            // Gambar asli
+            $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                        ->save($path1.$path2.$rename);
+        }
 
         $images = new ProductImage;
         $images->product_id = $request->product_id_i;
@@ -115,11 +131,26 @@ class ProductImageController extends Controller
 
         // Buat persiapan gambar.
         $thmbn  = Image::make($image->getRealPath());
-
         // Gambar asli
         $moving = $image->move($path1.$path2, $rename);
-        $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
-                    ->save($path1.$path2.$rename);
+
+        $gSetting = GeneralSetting::find(1);
+
+        if (!empty($gSetting)) {
+            // Gambar dinamis
+            if (isset($gSetting->website_logo)) {
+                $upload = $thmbn->insert('storage/'.$gSetting->website_logo, 'bottom-right', 30, 30)
+                            ->save($path1.$path2.$rename);
+            } else {
+                // Gambar asli
+                $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                        ->save($path1.$path2.$rename);
+            }
+        } else {
+            // Gambar asli
+            $upload = $thmbn->insert('watermark-logo-big.png', 'bottom-right', 30, 30)
+                        ->save($path1.$path2.$rename);
+        }
 
         $data->images = $path2.$rename;
         $data->update();
