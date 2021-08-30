@@ -76,7 +76,7 @@ class BannerController extends Controller
             $rules = [
                 'banner_position_id' => 'required|numeric',
                 'banner_name'        => 'required',
-                'banner_image'       => 'required|image|mimes:jpg,jpeg,png|max:2048'
+                'banner_image'       => 'required|image|mimes:jpg,jpeg,png|max:5140'
             ];
 
             $pesan = [
@@ -181,7 +181,7 @@ class BannerController extends Controller
             $rules = [
                 'banner_position_id'  => 'required|numeric',
                 'banner_name'  => 'required',
-                'banner_image' => 'image|mimes:jpg,jpeg,png|max:2048'
+                'banner_image' => 'image|mimes:jpg,jpeg,png|max:5140'
             ];
 
             $pesan = [
