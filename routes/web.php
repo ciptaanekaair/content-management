@@ -139,13 +139,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::resource('banner-positions', App\Http\Controllers\Admin\BannerPositionController::class);
     Route::get('data/banner-positions', [App\Http\Controllers\Admin\BannerPositionController::class, 'getData'])->name('banner-positions.data');
 
-    // Payment Method
-    Route::resource('payment-methodes', App\Http\Controllers\Admin\PaymentCodeController::class);
-    Route::get('data/payment-methodes', [App\Http\Controllers\Admin\PaymentCodeController::class, 'getData'])->name('payment-methodes.data');
-
     // Product Banner
     Route::resource('banners', App\Http\Controllers\Admin\BannerController::class);
     Route::get('data/banners', [App\Http\Controllers\Admin\BannerController::class, 'getData'])->name('banners.data');
+
+    // Payment Method
+    Route::resource('payment-methodes', App\Http\Controllers\Admin\PaymentCodeController::class);
+    Route::get('data/payment-methodes', [App\Http\Controllers\Admin\PaymentCodeController::class, 'getData'])->name('payment-methodes.data');
 
     // Roles
     Route::post('roles/attach', [App\Http\Controllers\Admin\AttachingLevelController::class, 'attachLevel'])->name('roles.attach'); // attaching level

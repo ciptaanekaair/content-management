@@ -242,6 +242,19 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $banner = Banner::find($id);
+
+        if (!empty($banner)) {
+            if (Storage::exists('/public/'.$banner->banner_image)) {
+                Storage::delete('/public/'.$banner->banner_image);
+            }
+        }
+
+        $banner->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil hapus data banner.'
+        ]);
     }
 }
