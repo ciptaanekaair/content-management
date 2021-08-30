@@ -37,3 +37,35 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modal-delete" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title-delete"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form type="POST" id="form_product_delete">
+				<div class="modal-body">
+					<input type="hidden" name="product_id" id="product_id">
+					<input type="hidden" name="_method" id="formMethodD" value="DELETE">
+					<p align="center">
+						Anda akan menghapus gambar product: <span id="modalProductName"></span>
+						<br>
+						<code>Note: Gambar akan terhapus secara permanen.</code>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-dismiss="modal">
+						Close
+					</button>
+					<button type="submit" class="btn btn-danger" id="btnDelete">
+						<i class="fa fa-trash"></i> &nbsp Delete
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
