@@ -106,9 +106,9 @@
 								<div class="form-group">
 									<label for="status">Status Product</label>
 									<select name="status" id="status" class="form-control">
-										<option value="Pilih Status Product" {{ $product->status = '' ? 'active' : '' }}>Pilih Status Product</option>
-										<option value="0" {{ $product->status === 0 ? 'selected' : '' }}>Draft</option>
-										<option value="1" {{ $product->status === 1 ? 'selected' : '' }}>Active / Publish</option>
+										<option value="Pilih Status Product" {{ $product->status = '' ? 'selected' : '' }}>Pilih Status Product</option>
+										<option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Draft</option>
+										<option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Active / Publish</option>
 									</select>
 									<div class="alert-massage">
 										<code id="statusError"></code>
