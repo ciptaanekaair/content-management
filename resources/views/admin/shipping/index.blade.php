@@ -7,10 +7,7 @@
 @section('content')
 <div class="row mb-3">
 	<div class="col-12">
-		<button onclick="refresh()" class="btn btn-success"><i class="fa fa-refresh"></i> &nbsp Refresh</button> &nbsp&nbsp
-		<a href="" target="_blank" class="btn btn-warning">
-			<i class="fa fa-file-excel-o"></i> &nbsp Export Data
-		</a>
+		<button onclick="refresh()" class="btn btn-success"><i class="fa fa-refresh"></i> &nbsp Refresh</button>
 	</div>
 </div>
 <div class="row">
