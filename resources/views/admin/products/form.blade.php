@@ -339,7 +339,8 @@ function deleteImage(id) {
 		type: 'GET',
 		success: function(data) {
 			$('#images_id_d').val(data.data.id);
-			$('#produk_id_d').text(data.data.id);
+			$('#produk_id_d').text(data.data.product_id);
+			$('#modalProductName').text(data.data.id);
 			$('#modal-delete').modal('show');
 		},
 		error: function(response) {

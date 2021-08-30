@@ -47,9 +47,10 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form type="POST" id="form_product_delete">
+			<form type="POST" id="form_images_delete">
 				<div class="modal-body">
 					<input type="hidden" name="product_id" id="product_id">
+					<input type="hidden" name="images_id_d" id="images_id_d">
 					<input type="hidden" name="_method" id="formMethodD" value="DELETE">
 					<p align="center">
 						Anda akan menghapus gambar product: <span id="modalProductName"></span>
