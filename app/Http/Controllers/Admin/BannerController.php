@@ -191,7 +191,7 @@ class BannerController extends Controller
                 'banner_image.required'       => 'Wajib menyertakan Gambar Banner.',
                 'banner_image.image'          => 'File haruslah berupa gambar.',
                 'banner_image.mimes'          => 'File haruslah berupa gambar, dengan ekstensi: JPG/JPEG/PNG.',
-                'banner_image.max'            => 'File harus tidak melebihi 2MB'
+                'banner_image.max'            => 'File harus tidak melebihi 5MB'
             ];
 
             $validasi = Validator::make($request->all(), $rules, $pesan);
