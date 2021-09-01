@@ -27,7 +27,7 @@ Route::get('/login/{service}/callback', [SocialLoginController::class, 'callback
 Route::get('general-setting', [App\Http\Controllers\Api\GeneralSettingController::class, 'index']);
 
 // Banner
-Route::get('banner-positions/{id}', [App\Http\Controllers\Api\BannerPositionController::class, 'getData'])->name('api_banner_position');
+Route::get('banner-positions/{posisi}', [App\Http\Controllers\Api\BannerPositionController::class, 'getData'])->name('api_banner_position');
 
 // Forget Password
 Route::post('forget-password', [App\Http\Controllers\Api\ForgetPasswordController::class, 'forgetPassword'])->name('api_forget_password'); // Ferivy Token Forget Password

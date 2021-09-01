@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class BannerPositionController extends Controller
 {
-    public function getData($id)
+    public function getData($posisi)
     {
         $position = BannerPosition::with('banners')
-                    ->where('id', $id)
+                    ->where('position_name', $posisi)
                     ->first();
 
         if (!empty($position)) {

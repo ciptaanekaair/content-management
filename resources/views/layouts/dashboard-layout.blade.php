@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'FilterPedia') }}</title>
+        <title>{{ config('app.name', 'Cipta Aneka Air') }}</title>
         <!-- Styles -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap.min.css') }}">
@@ -58,33 +58,6 @@
         <script src="{{ asset('stisla/js/scripts.js') }}"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="{{ asset('js/jquery.fancybox.min.js') }}" defer></script>
-        <script type="text/javascript">
-            $(function() {
-                cekNeedVerify();
-            });
-
-            function cekNeedVerify() {
-                $.get({
-                    url: '{{ route("checkNeedFerify") }}',
-                    dataType: 'JSON'
-                })
-                .done(data => {
-                    if(data.countTransaksi > 0) {
-                        $('#warning').html(`
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>PERHATIAN!</strong> Ada <b>${data.countTransaksi}</b> transaksi yang butuh di verifikasi. <a href="{{ route('transactions.index') }}" class="text-decoration-none font-italic">Lihat Transaksi</a>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        `);
-                    }
-                })
-                .fail(response => {
-                    console.log(response);
-                })
-            }
-        </script>
         @yield('jq-script')
 
     </body>
