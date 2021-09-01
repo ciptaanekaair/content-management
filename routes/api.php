@@ -27,6 +27,7 @@ Route::get('/login/{service}/callback', [SocialLoginController::class, 'callback
 Route::get('general-setting', [App\Http\Controllers\Api\GeneralSettingController::class, 'index']);
 
 // Banner
+Route::get('data/banner-positions', [App\Http\Controllers\Api\BannerPositionController::class, 'index'])->name('api_index_banner_position');
 Route::get('banner-positions/{posisi}', [App\Http\Controllers\Api\BannerPositionController::class, 'getData'])->name('api_banner_position');
 
 // Forget Password
