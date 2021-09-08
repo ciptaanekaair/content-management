@@ -7,6 +7,7 @@
         <th>Part Code</th>
         <th>Product Name</th>
         <th>Price</th>
+        <th>Discount</th>
         <th>Stock</th>
         <th>Status</th>
         <th>Action</th>
@@ -31,6 +32,13 @@
           <td>{{ $item->product_code }}</td>
           <td>{{ $item->product_name }}</td>
           <td>Rp. {{ number_format($item->product_price) }}</td>
+          <td>
+            @if(isset($item->Discount->discount))
+            {{ $item->Discount->disount }}
+            @else
+            -
+            @endif
+          </td>
           <td>{{ $item->product_stock }}</td>
           <td>
             @if ($item->status == 1)

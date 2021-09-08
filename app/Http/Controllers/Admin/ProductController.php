@@ -15,6 +15,7 @@ use App\Exports\ProductDataExport;
 use App\Models\ProductCategory;
 use App\Models\Product;
 use App\Models\RekamJejak;
+use App\Models\Discount;
 
 class ProductController extends Controller
 {
@@ -24,8 +25,10 @@ class ProductController extends Controller
     public function index()
     {
         if ($this->authorize('MOD1104-read')) {
-            $products = Product::where('status', '!=', 9)->
-                        orderBy('id', 'DESC')->paginate(10);
+            $products = Product::where('status', '!=', 9)
+                        ->with('Discount')
+                        ->orderBy('id', 'DESC')->paginate(10);
+
             foreach($products as $product) {
                 $products->product_price = intval($product->product_price);
             }
@@ -43,12 +46,14 @@ class ProductController extends Controller
             // jika search terisi
             if (!empty($search)) {
                 $products = Product::where('status', '!=', 9)
+                            ->with('Discount')
                             ->where('product_name', 'LIKE', '%'.$search.'%')
                             ->orWhere('product_code', 'LIKE', '%'.$search.'%')
                             ->orderBy('product_name', 'ASC')
                             ->paginate($perpage);
             } else {
                 $products = Product::where('status', '!=', 9)
+                            ->with('Discount')
                             ->orderBy('id', 'DESC')
                             ->paginate($perpage);
             }
@@ -166,6 +171,13 @@ class ProductController extends Controller
             $product->product_stock       = $request->product_stock;
             $product->status              = $request->status;
             $product->save();
+
+            if (isset($request->discount)) {
+                $discount = new Discount;
+                $discount->product_id = $product->id;
+                $discount->discount = $request->discount;
+                $discount->save();
+            }
 
             $rekam = new RekamJejak;
             $rekam->user_id     = auth()->user()->id;

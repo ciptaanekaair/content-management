@@ -69,16 +69,52 @@
 							<div class="col-md-12 col-lg-6">
 								<div class="form-group">
 									<label for="product_price">Harga Product *</label>
-									<input type="text" name="product_price" id="product_price" class="form-control" value="{{ old('product_price', $product->product_price) }}" placeholder="Harga jual Product">
+									<input type="number" name="product_price" id="product_price" class="form-control" value="{{ old('product_price', $product->product_price) }}" placeholder="Harga jual Product">
 									<div class="alert-massage">
 										<code id="product_priceError"></code>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-12 col-lg-6">
+								<div class="form-group" id="dicountForm">
+									@if(isset($product->Discount->discount))
+									<div class="row">
+										<div class="col-md-7 col-lg-7">
+											<div class="form-group">
+												<label for="is_discount">Discount</label>
+												<input type="number" name="discount" id="discount" value="" placeholder="Discount Product" class="form-control">
+											</div>
+										</div>
+										<div class="col-md-5 col-lg-5">
+											<div class="form-group">
+												<label for="gak_discount">Discount?</label>
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="gak_discount" id="gak_discount" value="1">
+													<label class="form-check-label" for="gak_discount">
+														Tidak Discount
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="alert-massage">
+										<code id="is_discount"></code>
+									</div>
+									@else
+										<label for="is_discount">Discount?</label>
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="is_discount" id="is_discount" value="1">
+											<label class="form-check-label" for="is_discount">
+												Memiliki Discount
+											</label>
+										</div>
+									@endif
+								</div>
+							</div>
+							<div class="col-md-12 col-lg-6">
 								<div class="form-group">
 									<label for="product_stock">Stock Product *</label>
-									<input type="text" name="product_stock" id="product_stock" class="form-control" value="{{ old('product_stock', $product->product_stock) }}" placeholder="Stok Product">
+									<input type="number" name="product_stock" id="product_stock" class="form-control" value="{{ old('product_stock', $product->product_stock) }}" placeholder="Stok Product">
 									<div class="alert-massage">
 										<code id="product_stockError"></code>
 									</div>
@@ -266,6 +302,44 @@ $(function() {
 			}
 		});
 	});
+});
+
+$('body').on('change', '#is_discount', function() {
+	$('#dicountForm').html(`
+		<div class="row">
+			<div class="col-md-7 col-lg-7">
+				<div class="form-group">
+					<label for="is_discount">Discount</label>
+					<input type="number" name="discount" id="discount" value="" placeholder="Discount Product" class="form-control">
+				</div>
+			</div>
+			<div class="col-md-5 col-lg-5">
+				<div class="form-group">
+					<label for="gak_discount">Discount?</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="gak_discount" id="gak_discount" value="1">
+						<label class="form-check-label" for="gak_discount">
+							Tidak Discount
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="alert-massage">
+			<code id="is_discount"></code>
+		</div>
+	`);
+});
+$('body').on('change', '#gak_discount', function() {
+	$('#dicountForm').html(`
+		<label for="is_discount">Discount?</label>
+		<div class="form-check">
+			<input class="form-check-input" type="radio" name="is_discount" id="is_discount" value="1">
+			<label class="form-check-label" for="is_discount">
+				Memiliki Discount
+			</label>
+		</div>
+	`);
 });
 
 function newData() {

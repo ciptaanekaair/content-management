@@ -37,4 +37,9 @@ class Product extends Model
     {
         return $this->transactionDetail()->sum('qty');
     }
+
+    public function Discount()
+    {
+        return $this->hasOne(Discount::class);
+    }
 }
