@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use App\Models\Product;
+use App\Models\Discount;
 use App\Models\TransactionTemporary;
 
 class CartController extends Controller
@@ -14,7 +15,7 @@ class CartController extends Controller
     public function index()
     {
         $items = TransactionTemporary::where('user_id', Auth::user()->id)
-                ->with('products')
+                ->with('products.Discount')
                 ->get();
 
         $harga_total = 0;
@@ -70,6 +71,14 @@ class CartController extends Controller
         // load data produk
         $produk      = Product::findOrFail($request->product_id);
 
+        $hargaDiscount = 0;
+
+        if ($this->checkDiscount($request->product_id) == true) {
+            $discount      = Discount::where('product_id', $request->product_id)->first();
+            $nilaiDiscount = ($discount->discount / 100);
+            $hargaDiscount = ($produk->product_price * $nilaiDiscount);
+        }
+
         // melakukan check apabila produk sudah pernah di add ke dalam cart.
         $cek_produk = TransactionTemporary::where('user_id', Auth::user()->id)
                     ->where('product_id', $request->product_id)
@@ -77,9 +86,11 @@ class CartController extends Controller
 
         // jika ada produk, akan melakukan update
         if (!empty($cek_produk)) {
+            $qtyAwal        = $cek_produk->qty;
+            $totalPriceAwal = $cek_produk->total_price;
 
-            $cek_produk->qty         += $request->qty;
-            $cek_produk->total_price += ($produk->product_price * $request->qty);
+            $cek_produk->qty         = ($qtyAwal + $request->qty);
+            $cek_produk->total_price = (($produk->product_price - $hargaDiscount) * ($qtyAwal + $request->qty));
             $cek_produk->update();
 
             $response = [
@@ -96,7 +107,7 @@ class CartController extends Controller
         $cart->user_id     = Auth::user()->id;
         $cart->product_id  = $request->product_id;
         $cart->qty         = $request->qty;
-        $cart->total_price = $produk->product_price * $request->qty;
+        $cart->total_price = (($produk->product_price - $hargaDiscount) * $request->qty);
         $cart->save();
 
         $response = [
@@ -136,8 +147,18 @@ class CartController extends Controller
 
         $produk = Product::find($product_incart->product_id);
 
-        $product_incart->qty        += 1;
-        $product_incart->total_price = $produk->product_price * $product_incart->qty;
+        $hargaDiscount  = 0;
+        $qtyAwal        = $product_incart->qty;
+        $totalPriceAwal = $product_incart->total_price;
+
+        if ($this->checkDiscount($product_incart->product_id) == true) {
+            $diskon        = Discount::where('product_id', $product_incart->product_id)->first();
+            $nilaiDiscount = ($diskon->discount / 100);
+            $hargaDiscount = ($produk->product_price * $nilaiDiscount);
+        }
+
+        $product_incart->qty         = $qtyAwal + 1;
+        $product_incart->total_price = (($produk->product_price - $hargaDiscount) * ($qtyAwal + 1));
         $product_incart->update();
 
         return response([
@@ -189,8 +210,18 @@ class CartController extends Controller
             ], 200);
         }
 
-        $product_incart->qty        -= 1;
-        $product_incart->total_price = $produk->product_price * $product_incart->qty;
+        $hargaDiscount  = 0;
+        $qtyAwal        = $product_incart->qty;
+        $totalPriceAwal = $product_incart->total_price;
+
+        if ($this->checkDiscount($product_incart->product_id) == true) {
+            $discount      = Discount::where('product_id', $product_incart->product_id)->first();
+            $nilaiDiscount = ($discount->discount / 100);
+            $hargaDiscount = ($produk->product_price * $nilaiDiscount);
+        }
+
+        $product_incart->qty         = $qtyAwal - 1;
+        $product_incart->total_price = (($produk->product_price - $hargaDiscount) * ($qtyAwal - 1));
         $product_incart->update();
 
         return response([
@@ -212,5 +243,16 @@ class CartController extends Controller
         ];
 
         return response($response, 200);
+    }
+
+    public function checkDiscount($productID)
+    {
+        $check = Discount::where('product_id', $productID)->first();
+
+        if (!empty($check)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
