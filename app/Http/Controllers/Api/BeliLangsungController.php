@@ -9,6 +9,7 @@ use App\Mail\SendInvoiceMail;
 use Validator;
 use Auth;
 use App\Models\Product;
+use App\Models\Discount;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 
@@ -70,8 +71,8 @@ class BeliLangsungController extends Controller
         $hargaDiscount = 0;
 
         if ($this->checkDiscount($request->product_id) == true) {
-            $discount      = Discount::where($request->product_id)->first();
-            $nilaiDiscount = ($discount / 100);
+            $diskon        = Discount::where('product_id', $request->product_id)->first();
+            $nilaiDiscount = ($diskon->discount / 100);
             $hargaDiscount = ($product->product_price * $nilaiDiscount);
         }
 
@@ -115,7 +116,7 @@ class BeliLangsungController extends Controller
                 ->with('paymentMethod')
                 ->first();
 
-        Mail::to(Auth::user()->email)->send(new SendInvoiceMail($data));
+        // Mail::to(Auth::user()->email)->send(new SendInvoiceMail($data));
 
         return response([
             'success' => true,

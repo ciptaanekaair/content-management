@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Models\TransactionTemporary;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Models\Discount;
 use App\Models\Voucher;
 use App\Models\User;
 
@@ -114,11 +115,23 @@ class CheckoutController extends Controller
             $transaksi->payment_code_id = $request->payment_code_id;
         }
 
+        $totalDiscount = 0;
+        // hitung discount
+        foreach ($lProduct as $prod) {
+            $diskon = Discount::where('product_id', $prod->product_id)
+                    ->with('Product')
+                    ->first();
+
+            if (!empty($diskon)) {
+                $totalDiscount += ($diskon->Product->product_price * ($diskon->discount / 100));
+            }
+        }
+
         $transaksi->transaction_code     = 'TRN-'.date('ymd').rand('000', '999');
         $transaksi->transaction_date     = date('Y-m-d');
         $transaksi->total_item           = Auth::user()->countQty();
         $transaksi->total_price          = $total_price;
-        $transaksi->discount             = $discount;
+        $transaksi->discount             = ($discount + $totalDiscount);
         $transaksi->price_after_discount = $p_after_discount;
         $transaksi->pajak_ppn            = $pajakPPN;
         $transaksi->sub_total_price      = $p_after_discount + $pajakPPN;
