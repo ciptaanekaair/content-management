@@ -96,7 +96,7 @@ class BeliLangsungController extends Controller
         $transaksi->transaction_date     = date('Y-m-d');
         $transaksi->total_item           = 1;
         $transaksi->total_price          = $total_price;
-        $transaksi->discount             = $discount;
+        $transaksi->discount             = $discount + $hargaDiscount;
         $transaksi->price_after_discount = $p_after_discount;
         $transaksi->pajak_ppn            = $pajakPPN;
         $transaksi->sub_total_price      = $p_after_discount + $pajakPPN;
