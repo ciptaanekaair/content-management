@@ -6,33 +6,59 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Discount;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $produk = Product::orderBy('id', 'DESC')->get();
+        $produk = Product::orderBy('id', 'DESC')->with('Discount')->get();
 
         if ($produk->count() > 0) {
 
             $response = [
                 'success' => true,
                 'message' => 'Data berhasil di load.',
-                'data' => $produk
+                'data'    => $produk
             ];
 
         } else {
 
-            $response = ['success' => true, 'message' => 'Belum ada data barang yang di input oleh admin. Silahkan hubungi admin!'];
+            $response = [
+                'success' => true,
+                'message' => 'Belum ada data barang yang di input oleh admin. Silahkan hubungi admin!'
+            ];
 
         }        
 
             return response($response, 200);
     }
 
+    public function index_discount()
+    {
+        $product = Discount::join('products', 'products.id', '=', 'discounts.product_id')->orderBy('products.id', 'DESC')->get();
+
+        if ($product->count() > 0) {
+            $response = [
+                'success' => true,
+                'message' => 'Data berhasil di load.',
+                'data'    => $product
+            ];
+            
+            return response($response, 200);
+        } else {
+            $response = [
+                'error' => true,
+                'message' => 'Belum ada data barang yang memiliki discount yang telah di input oleh admin. Silahkan hubungi admin!'
+            ];
+            
+            return response($response, 404);
+        }
+    }
+
     public function show($slug)
     {
-        $produk = Product::where('slug', $slug)->first();
+        $produk = Product::with('Discount')->where('slug', $slug)->first();
         $pImage = ProductImage::where('product_id', $produk->id)->get();
 
         if ($produk->count() < 1) {
@@ -55,6 +81,7 @@ class ProductController extends Controller
                 'products.product_name', 'products.slug', 'products.product_description', 
                 'products.product_images', 'products.product_price', 'products.product_stock', 
                 'products.status')
+                    ->with('Discount')
                     ->where('status', 1)
                     ->get();
         } else {
@@ -62,6 +89,7 @@ class ProductController extends Controller
                 'products.product_name', 'products.slug', 'products.product_description', 
                 'products.product_images', 'products.product_price', 'products.product_stock', 
                 'products.status')
+                    ->with('Discount')
                     ->where('product_name', 'LIKE', '%'.$keyword.'%')
                     ->orWhere('product_code', 'LIKE', '%'.$keyword.'%')
                     ->where('status', 1)

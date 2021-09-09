@@ -43,6 +43,9 @@ Route::get('/products/{slug}', [ProductController::class, 'show'])->name('api_pr
 Route::get('search/products', [ProductController::class, 'searching'])->name('api_product_searching');
 Route::post('/products/search', [ProductController::class, 'search'])->name('api_product_search');
 
+// Product Discount
+Route::get('discount-products', [ProductController::class, 'index_discount'])->name('api_discount_products_data');
+
 // Product Categories
 Route::get('product-category', [ProductCategoryController::class, 'index'])->name('api_product_cat_data');
 Route::get('product-category/{slug}', [ProductCategoryController::class, 'show'])->name('api_product_cat_detail');

@@ -67,7 +67,15 @@ class BeliLangsungController extends Controller
             ], 401);
         }
 
-        $total_price = $product->product_price;
+        $hargaDiscount = 0;
+
+        if ($this->checkDiscount($request->product_id) == true) {
+            $discount      = Discount::where($request->product_id)->first();
+            $nilaiDiscount = ($discount / 100);
+            $hargaDiscount = ($product->product_price * $nilaiDiscount);
+        }
+
+        $total_price = $product->product_price - $hargaDiscount;
 
         if (!empty($code_vcr)) {
             $voucher = $this->vcrValidasi($code_vcr);
@@ -114,5 +122,16 @@ class BeliLangsungController extends Controller
             'message' => 'Berhasil checkout! Silahkan lakukan pembayaran dan konfirmasikan pembayaran anda.',
             'data' => $transaksi
         ]);
+    }
+
+    public function checkDiscount($productID)
+    {
+        $check = Discount::where('product_id', $productID)->first();
+
+        if (!empty($check)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
