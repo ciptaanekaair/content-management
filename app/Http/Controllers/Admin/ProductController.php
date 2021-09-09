@@ -223,6 +223,7 @@ class ProductController extends Controller
                         ->orderBy('category_name', 'ASC')
                         ->get();
             $product   = Product::with('productImages')
+                        ->with('Discount')
                         ->where('id', $id)
                         ->first();
             // $images    = ProductImage::where('product_id', $id)->paginate();
@@ -306,6 +307,33 @@ class ProductController extends Controller
             $product->status              = $request->status;
             $product->update();
 
+
+            if ($this->checkDiscount($product->id) == true) {
+                if (isset($request->discount)) {
+                    $load = Discount::where('product_id', $id)->first();
+
+                    if (!empty($load)) {
+                        $load->discount = $request->discount;
+                        $load->update();
+                    } else {
+                        $newDiscount = new Discount;
+                        $newDiscount->product_id = $product->id;
+                        $newDiscount->discount   = $request->discount;
+                        $newDiscount->save();
+                    }
+                } else {
+                    $load = Discount::where('product_id', $id)->first();
+                    $load->delete();
+                }
+            } else {
+                if (isset($request->discount)) {
+                    $newDiscount = new Discount;
+                    $newDiscount->product_id = $product->id;
+                    $newDiscount->discount   = $request->discount;
+                    $newDiscount->save();
+                }
+            }
+
             $rekam = new RekamJejak;
             $rekam->user_id     = auth()->user()->id;
             $rekam->modul_code  = '[MOD1104] products';
@@ -347,5 +375,16 @@ class ProductController extends Controller
                 'message' => 'Berhasil menghapus data: '.$product->product_name.'.',
             ], 200);
          }
+    }
+
+    public function checkDiscount($productID)
+    {
+        $check = Discount::where('product_id', $productID)->first();
+
+        if (!empty($check)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

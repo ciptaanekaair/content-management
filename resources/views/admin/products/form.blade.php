@@ -82,7 +82,7 @@
 										<div class="col-md-7 col-lg-7">
 											<div class="form-group">
 												<label for="is_discount">Discount</label>
-												<input type="number" name="discount" id="discount" value="" placeholder="Discount Product" class="form-control">
+												<input type="number" name="discount" id="discount" value="{{ $product->Discount->discount }}" placeholder="Discount Product" class="form-control">
 											</div>
 										</div>
 										<div class="col-md-5 col-lg-5">
