@@ -36,9 +36,19 @@ class ProductController extends Controller
 
     public function index_discount()
     {
-        $product = Discount::join('products', 'products.id', '=', 'discounts.product_id')->orderBy('products.id', 'DESC')->get();
+        $product = Product::whereHas('Discount')
+                ->orderBy('id', 'DESC')
+                ->get();
 
         if ($product->count() > 0) {
+
+            foreach ($product as $item) {
+                $harga_awal = $item->product_price;
+                $diskonan   = ($harga_awal * ($item->Discount->discount / 100));
+
+                $item['harga_setelah_discount'] = ($harga_awal - $diskonan);
+            }
+
             $response = [
                 'success' => true,
                 'message' => 'Data berhasil di load.',
