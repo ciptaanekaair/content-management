@@ -79,12 +79,19 @@ class ProductController extends Controller
             $response = ['error' => 'true', 'message' => 'Error! Produk yang di pilih tidak terdapat di dalam database. Harap segera hubungi Admin.'];
 
             return response($response, 203);
-        } 
+        }
+
+        if (!empty($produk->Discount)) {
+            $harga_awal = $produk->product_price;
+            $diskonan   = ($harga_awal * ($produk->Discount->discount / 100));
+
+            $produk['harga_setelah_discount'] = ($harga_awal - $diskonan);
+        }
 
         $response = [
             'success'        => 'true', 
             'data'           => $produk, 
-            'image'          => $pImage,
+            'image'          => $pImage, 
             'product_serupa' => $product_serupa
         ];
 
