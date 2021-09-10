@@ -60,16 +60,25 @@ class ProductController extends Controller
     {
         $produk = Product::with('Discount')->where('slug', $slug)->first();
         $pImage = ProductImage::where('product_id', $produk->id)->get();
+        $product_serupa = Product::where('product_category_id', $produk->product_category_id)
+                        ->where('id', '!=', $produk->id)
+                        ->orderBy('id', 'DESC')
+                        ->get();
 
         if ($produk->count() < 1) {
             $response = ['error' => 'true', 'message' => 'Error! Produk yang di pilih tidak terdapat di dalam database. Harap segera hubungi Admin.'];
 
             return response($response, 203);
-        } else {
-            $response = ['success' => 'true', 'data' => $produk, 'image' => $pImage];
+        } 
 
-            return response($response, 200);
-        }
+        $response = [
+            'success'        => 'true', 
+            'data'           => $produk, 
+            'image'          => $pImage,
+            'product_serupa' => $product_serupa
+        ];
+
+        return response($response, 200);
     }
 
     public function searching(Request $request)
