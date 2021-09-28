@@ -12,7 +12,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $produk = Product::orderBy('id', 'DESC')->with('Discount')->get();
+        $produk = Product::where('status', '!=', 9)
+                    ->orderBy('id', 'DESC')
+                    ->with('Discount')
+                    ->get();
 
         if ($produk->count() > 0) {
 
@@ -37,6 +40,7 @@ class ProductController extends Controller
     public function index_discount()
     {
         $product = Product::whereHas('Discount')
+                ->where('status', '!=', 9)
                 ->orderBy('id', 'DESC')
                 ->get();
 
