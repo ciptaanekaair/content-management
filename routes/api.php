@@ -17,7 +17,11 @@ use App\Http\Controllers\Api\PaymentMethodController;
  */
 //route registrasi account
 Route::post('/register', [AutentikasiController::class, 'registrasi'])->name('api_registrasi');
-// route login
+
+// Route Email Confirmation.
+Route::post('confirm-registration', [AutentikasiController::class, 'registrationConfirmation'])->name('api_email_confirm');
+
+// route login.
 Route::post('/login', [AutentikasiController::class, 'login'])->name('api_login');
 // route socialite
 Route::get('/login/{service}', [SocialLoginController::class, 'redirect']);

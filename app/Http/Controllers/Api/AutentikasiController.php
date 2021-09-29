@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\ConfirmRegistrationMail;
 use Auth;
 use Validator;
@@ -12,7 +13,6 @@ use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\DetailPerusahaan;
 use App\Models\Provinsi;
-use App\Models\Kota;
 use App\Models\Kota;
 use App\Models\UserConfirmation;
 
@@ -122,12 +122,33 @@ class AutentikasiController extends Controller
                 'username' => $username,
                 'password' => Hash::make($request['password']),
                 'company'  => 0,
-                'level_id' => 1
+                'level_id' => 1,
+                // 'status'   => 0
             ]);
 
         }
 
         UserDetail::create(['user_id' => $user->id]);
+
+        $cekConfirm = UserConfirmation::where('email', $request['email'])->first();
+
+        if (!empty($cekConfirm)) {
+
+            $cekConfirm->code = base64_encode($request['email'].date('Y-m-d'));
+            $cekConfirm->save();
+
+            Mail::to($request['email'])->send(new ConfirmRegistrationMail($cekConfirm));
+
+        } else {
+
+            $confirm = UserConfirmation::create([
+                'email' => $request['email'],
+                'code'  => base64_encode($request['email'].date('Y-m-d'))
+            ]);
+
+            Mail::to($request['email'])->send(new ConfirmRegistrationMail($confirm));
+
+        }
 
         // Generate token untuk API (sanctum)
         $token = $user->createToken('usertoken')->plainTextToken;

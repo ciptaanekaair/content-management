@@ -24,7 +24,6 @@ class ProductSeeder extends Seeder
         $produk1->product_description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua.';
         $produk1->product_images      = 'product-images/0d98dad3689d87a13bb0fef1e18629e0.jpeg';
         $produk1->product_price       = 29000000;
-        $produk1->product_commision   = 10;
         $produk1->product_stock       = 1000;
         $produk1->status              = 1;
         $produk1->save();
@@ -37,7 +36,6 @@ class ProductSeeder extends Seeder
         $produk2->product_description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua.';
         $produk2->product_images      = 'product-images/4210ca147391331cc27600f77529ae94.jpeg';
         $produk2->product_price       = 360000;
-        $produk2->product_commision   = 10;
         $produk2->product_stock       = 100;
         $produk2->status              = 1;
         $produk2->save();
@@ -50,7 +48,6 @@ class ProductSeeder extends Seeder
         $produk3->product_description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua.';
         $produk3->product_images      = 'product-images/cf682b73be1afad47d0f32559ac34627.jpeg';
         $produk3->product_price       = 2600000;
-        $produk3->product_commision   = 10;
         $produk3->product_stock       = 200;
         $produk3->status              = 1;
         $produk3->save();
@@ -63,7 +60,6 @@ class ProductSeeder extends Seeder
         $produk4->product_description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua.';
         $produk4->product_images      = 'product-images/f26b0d8f252a76f2f99337cced08314b.jpeg';
         $produk4->product_price       = 750000;
-        $produk4->product_commision   = 10;
         $produk4->product_stock       = 1000;
         $produk4->status              = 1;
         $produk4->save();

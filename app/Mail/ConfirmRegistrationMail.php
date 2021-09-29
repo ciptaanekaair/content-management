@@ -27,7 +27,7 @@ class ConfirmRegistrationMail extends Mailable
     {
         return $this->from('admin@filterpedia.co.id')
                     ->subject('Confirm Registration Account Filterpedia.co.id')
-                    ->view('emails.confim-registration')
+                    ->view('emails.confirm-email')
                     ->with('data', $this->data);
     }
 }
