@@ -57,8 +57,8 @@ class AutentikasiController extends Controller
                 'username' => $username,
                 'password' => Hash::make($request['password']),
                 'company'  => 1,
-                'level_id' => 1,
-                // 'status'   => 0
+                'level_id' => 5,
+                'status'   => 0
             ]);
 
             $perusahaan = new DetailPerusahaan;
@@ -122,8 +122,8 @@ class AutentikasiController extends Controller
                 'username' => $username,
                 'password' => Hash::make($request['password']),
                 'company'  => 0,
-                'level_id' => 1,
-                // 'status'   => 0
+                'level_id' => 5,
+                'status'   => 0
             ]);
 
         }
@@ -154,7 +154,11 @@ class AutentikasiController extends Controller
         $token = $user->createToken('usertoken')->plainTextToken;
 
         // Give response dalam bentuk array
-        $response = ['message' => 'Berhasil register data.', 'data' => $user, 'token' => $token];
+        $response = [
+            'message' => 'Berhasil register data.', 
+            'data'    => $user, 
+            'token'   => $token
+        ];
 
         return response($response, 201);
     }
@@ -192,13 +196,14 @@ class AutentikasiController extends Controller
             ], 403);
         }
 
-        $confirm = UserConfirmation::where('email', $user->email)
+        $confirm = UserConfirmation::where('email', $request->email)
                     ->where('code', $request->code)
                     ->first();
         $confirm->delete();
 
         $user = User::where('email', $request->email)->first();
         $user->email_verified_at = date('Y-m-d H:i:s');
+        $user->level_id          = 1;
         $user->status            = 1;
         $user->update();
 
@@ -237,7 +242,11 @@ class AutentikasiController extends Controller
         $token = $user->createToken('usertoken')->plainTextToken;
 
         // Give response dalam bentuk array
-        $response = ['message' => 'Berhasil melakukan autentikasi.', 'data'=> $user, 'token' => $token];
+        $response = [
+            'message' => 'Berhasil melakukan autentikasi.', 
+            'data'    => $user, 
+            'token'   => $token
+        ];
 
         return response($response, 200);
     }
