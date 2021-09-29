@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\ConfirmRegistrationMail;
 use Auth;
 use Validator;
 use App\Models\User;
@@ -12,6 +13,8 @@ use App\Models\UserDetail;
 use App\Models\DetailPerusahaan;
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Models\Kota;
+use App\Models\UserConfirmation;
 
 class AutentikasiController extends Controller
 {
@@ -54,7 +57,8 @@ class AutentikasiController extends Controller
                 'username' => $username,
                 'password' => Hash::make($request['password']),
                 'company'  => 1,
-                'level_id' => 1
+                'level_id' => 1,
+                // 'status'   => 0
             ]);
 
             $perusahaan = new DetailPerusahaan;
@@ -134,6 +138,55 @@ class AutentikasiController extends Controller
         return response($response, 201);
     }
 
+    public function registrationConfirmation(Request $request)
+    {
+        $rules = [
+            'email' => 'required|email',
+            'code'  => 'required'
+        ];
+
+        $pesan = [
+            'email.required' => 'Link sudah kadaluarsa, silahkan lakukan confirmasi email ulang',
+            'email.email'    => 'Link sudah kadaluarsa, silahkan lakukan confirmasi email ulang',
+            'code.required'  => 'Link sudah kadaluarsa, silahkan lakukan confirmasi email ulang'
+        ];
+
+        $validasi = Validator::make($request->all(), $rules, $pesan);
+
+        if ($validasi->fails()) {
+
+            return response([
+                'error'   => true,
+                'message' => $validasi->errors()
+            ], 403);
+
+        }
+
+        $cek = $this->checkRegistration($request->email, $request->code);
+
+        if ($cek == false) {
+            return response([
+                'error'   => true,
+                'message' => 'Link error. Silahkan lakukan konfimasi email kembali.'
+            ], 403);
+        }
+
+        $confirm = UserConfirmation::where('email', $user->email)
+                    ->where('code', $request->code)
+                    ->first();
+        $confirm->delete();
+
+        $user = User::where('email', $request->email)->first();
+        $user->email_verified_at = date('Y-m-d H:i:s');
+        $user->status            = 1;
+        $user->update();
+
+        return response([
+            'success' => true,
+            'message' => 'Berhasil melakukan konfirmasi email. Selamat berbelanja.'
+        ]);
+    }
+
     public function login(Request $request)
     {
         $rules = [
@@ -178,6 +231,19 @@ class AutentikasiController extends Controller
                 return false;
             }
 
+            return true;
+        }
+
+        return false;
+    }
+
+    public function checkRegistration($pengguna, $kode)
+    {
+        $check = UserConfirmation::where('email', $pengguna)
+                ->where('code', $kode)
+                ->first();
+
+        if (!empty($check)) {
             return true;
         }
 
