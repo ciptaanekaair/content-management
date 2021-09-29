@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductLiked;
 use App\Models\Discount;
 
 class ProductController extends Controller
@@ -34,7 +35,7 @@ class ProductController extends Controller
 
         }        
 
-            return response($response, 200);
+        return response($response, 200);
     }
 
     public function index_discount()

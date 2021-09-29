@@ -9,13 +9,33 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $appends    = ['imageurl'];
+    protected $appends    = ['imageurl', 'liked', 'likedCount'];
 
     public function getImageurlAttribute()
     {
         $productpicurl = ENV('APP_URL').'/storage/'.$this->product_images;
 
         return $productpicurl;
+    }
+
+    public function getLikedAttribute()
+    {
+        if (isset(auth()->user()->id)) {
+            $cek = $this->Liked->where('user_id', auth()->user()->id)
+                        ->where('product_id', $this->id)
+                        ->first();
+
+            if (!empty($cek)) {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    public function getLikedCountAttribute()
+    {
+        return $jumlah = $this->Liked()->count();
     }
 
     public function productImages()
@@ -41,5 +61,10 @@ class Product extends Model
     public function Discount()
     {
         return $this->hasOne(Discount::class);
+    }
+
+    public function Liked()
+    {
+        return $this->hasMany(ProductLiked::class);
     }
 }

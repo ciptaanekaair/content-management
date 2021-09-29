@@ -105,6 +105,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('review/transaction', [App\Http\Controllers\Api\ProductReviewController::class, 'store'])->name('product-review.store');
 
     Route::post('confirm-payment', [App\Http\Controllers\Api\PaymentConfirmationController::class, 'store'])->name('api_payment_confrimation'); // Payment Confirmation
+
+    // Like Product
+    Route::post('liked/product', [App\Http\Controllers\Api\ProductLikedController::class, 'store'])->name('api_like_product');
     
     // Logout route
     Route::get('logout', [AutentikasiController::class, 'logout'])->name('api_logout');
