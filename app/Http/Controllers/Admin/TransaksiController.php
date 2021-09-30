@@ -117,6 +117,27 @@ class TransaksiController extends Controller
 
     public function destroy($id)
     {
-        //
+        if ($this->authorize('MOD1008-delete')) {
+
+            $transaksi = Transaction::find($id);
+
+            if (!empty($transaksi)) {
+
+                $transaksi->status = 9;
+                $transaksi->update();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil menghapus transaksi.'
+                ]);
+
+            }
+
+            return response()->json([
+                'error'   => true,
+                'message' => 'Gagal mengubah status transaksi. Silahkan refresh browser anda.'
+            ]);
+
+        }
     }
 }

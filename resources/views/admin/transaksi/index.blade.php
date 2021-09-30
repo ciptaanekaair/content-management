@@ -54,6 +54,10 @@
 </div>
 @endsection
 
+@section('formodal')
+    @include('admin.transaksi.form')
+@endsection
+
 @section('jq-script')
 <script type="text/javascript">
 const loadingModal = $('#modal-loading');
@@ -94,6 +98,11 @@ $(function() {
 		fetch_table(page, perpage, search, jenis_transaksi);
 	});
 
+	$('#transaction_delete_form').on('submit', function(e) {
+		e.preventDefault();
+
+	})
+
 });
 
 function refresh() {
@@ -103,6 +112,23 @@ function refresh() {
 	jenis_transaksi = $('#jenis_transaksi').val();
 
 	fetch_table(page, perpage, search, jenis_transaksi);
+}
+
+function deleteData(id) {
+	$.ajax({
+		url: '{{ url("transactions") }}/'+id,
+		type: 'GET'
+	})
+	.done(response => {
+		console.log(response);
+	})
+	.fail(error => {
+		Swal.fire(
+			'Error!',
+			response.responseJSON.errors.message,
+			'error'
+		);
+	});
 }
 
 function cariData(search) {
@@ -123,10 +149,10 @@ function fetch_table(page, perpage, search, jenis_transaksi) {
 	})
 	.fail(error => {
 		Swal.fire(
-      'Error!',
-      response.responseJSON.errors.message,
-      'error'
-    );
+			'Error!',
+			response.responseJSON.errors.message,
+			'error'
+		);
 	});
 }
 
