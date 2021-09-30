@@ -15,7 +15,7 @@
     <tbody>
     @if($products->isEmpty())
       <tr>
-        <td colspan="5">
+        <td colspan="8" class="text-center">
           <b><i>
             Belum ada data products, silahkan hubungi admin.
           </i></b>
