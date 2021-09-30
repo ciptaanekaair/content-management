@@ -25,7 +25,9 @@ class DashboardController extends Controller
                 $userCount       = User::where('level_id', 1)
                                     ->where('status', '!=', 9)
                                     ->count();
-                $productCount    = Product::orderBy('id', 'DESC')->count();
+                $productCount    = Product::where('status', '!=', 9)
+                                    ->orderBy('id', 'DESC')
+                                    ->count();
                 $trnsctCount     = Transaction::where('status', 1)->count();
                 $verifikasiBayar = Transaction::where('status', 2)->count();
                 $pengemasan      = Transaction::where('status', 3)->count();
