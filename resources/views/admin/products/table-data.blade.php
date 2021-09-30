@@ -3,7 +3,6 @@
     <thead>
       <tr>
         <th width="100">No</th>
-        <th width="100">#</th>
         <th>Part Code</th>
         <th>Product Name</th>
         <th>Price</th>
@@ -28,7 +27,6 @@
           <td>
             {{ $products->firstItem() + $index }}
           </td>
-          <td>{{ $item->id }}</td>
           <td>{{ $item->product_code }}</td>
           <td>{{ $item->product_name }}</td>
           <td>Rp. {{ number_format($item->product_price) }}</td>
@@ -50,7 +48,7 @@
           <td>
             <div class="dropdown">
               <botton class="btn btn-primary" type="button" id="actionMenu{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Aksi &nbsp&nbsp<i class="fa fa-arrow-down"></i> 
+                Aksi <i class="fa fa-arrow-down"></i> 
               </botton>
               <div class="dropdown-menu" aria-labelledby="actionMenu{{ $item->id }}">
                 <a onclick="seeDetail({{ $item->id }})" class="dropdown-item">

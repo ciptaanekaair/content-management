@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body">
           <div class="table-data">
             @include('admin.products.table-data')
           </div>
