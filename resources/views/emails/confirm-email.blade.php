@@ -260,7 +260,7 @@
                                     <tbody>
                                       <tr>
                                         <td align="center" style="font-size:0px;padding-top:10px;padding-bottom:10px;word-break:break-word;">
-                                          <a href="https://www.filterpedia.co.id/confirm?email={{ $data->email }}&kode={{ $data->code }}" style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#fff;font-weight:bolder;">
+                                          <a href="https://www.filterpedia.co.id/#/confirm-email?email={{ $data->email }}&kode={{ $data->code }}" style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#fff;font-weight:bolder;">
                                             Confirm Email
                                           </a>
                                         </td>

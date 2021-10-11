@@ -46,6 +46,13 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
+        if (auth()->user()->status == 0) {
+            return response([
+                'error' => true,
+                'message' => 'Anda tidak dapat membeli, sebelum melakukan konfirmasi email'
+            ], 422);
+        }
+
         // tambahkan produk kedalam cart
         $rules = [
             'user_id'    => 'required',
