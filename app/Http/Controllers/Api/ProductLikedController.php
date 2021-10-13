@@ -40,6 +40,7 @@ class ProductLikedController extends Controller
 
             return response([
                 'success' => true,
+                'liked'   => false,
                 'message' => 'Berhasil unliked product.'
             ], 200);
         }
@@ -51,6 +52,7 @@ class ProductLikedController extends Controller
 
         return response([
             'success' => true,
+            'liked'   => true,
             'message' => 'Berhasil like product.'
         ], 200);
     }

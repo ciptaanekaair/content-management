@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,9 +21,9 @@ class Product extends Model
 
     public function getLikedAttribute()
     {
-        if (isset(auth()->user()->id)) {
-            $cek = $this->Liked()->where('user_id', auth()->user()->id)
-                        ->where('product_id', $this->id)
+        if (Auth::check()) {
+            $cek = $this->Liked()->where('product_id', $this->id)
+                        ->where('user_id', auth()->user()->id)
                         ->first();
 
             if (!empty($cek)) {
@@ -31,6 +32,8 @@ class Product extends Model
 
             return false;
         }
+
+        return false;
     }
 
     public function getLikedCountAttribute()
