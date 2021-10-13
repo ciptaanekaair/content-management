@@ -16,7 +16,7 @@ class ProductController extends Controller
         $produk = Product::where('status', '!=', 9)
                     ->orderBy('id', 'DESC')
                     ->with('Discount')
-                    ->get();
+                    ->paginate(8);
 
         if ($produk->count() > 0) {
 
@@ -78,6 +78,7 @@ class ProductController extends Controller
         $product_serupa = Product::where('product_category_id', $produk->product_category_id)
                         ->where('id', '!=', $produk->id)
                         ->orderBy('id', 'DESC')
+                        ->limit(4)
                         ->get();
 
         if ($produk->count() < 1) {
