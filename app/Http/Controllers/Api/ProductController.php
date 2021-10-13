@@ -16,7 +16,7 @@ class ProductController extends Controller
         $produk = Product::where('status', '!=', 9)
                     ->orderBy('id', 'DESC')
                     ->with('Discount')
-                    ->paginate(8);
+                    ->get();
 
         if ($produk->count() > 0) {
 
